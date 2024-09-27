@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import TabView from "../components/SideBar";
-import CreateTask from "../pages/CreateTask";
-import Tasks from "../pages/Tasks";
+import TabView from "../components/TabView";
 
 const routes: RouteObject[] = [
   {

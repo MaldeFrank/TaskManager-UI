@@ -1,6 +1,6 @@
-import { useGetAllTasks } from "../services/queries";
-import { Task } from "../model/Task";
-import TaskItem from "../components/TaskItem";
+import { useGetAllTasks } from "../../services/queries";
+import { Task } from "../../model/Task";
+import TaskItem from "../TaskItem";
 
 function Tasks() {
   const { data, isLoading, isError, error } = useGetAllTasks();
