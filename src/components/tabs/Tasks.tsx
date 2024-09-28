@@ -1,8 +1,24 @@
-import { useGetAllAssignedTasks } from "../../services/queries";
+import { useEffect } from "react";
+import { useGetAllAssignedTasks, useGetAllTasks } from "../../services/queries";
 import { Table } from "antd";
+import { Task } from "../../model/Task";
 
-function AssignedTasks() {
-  const { data, isLoading, isError, error } = useGetAllAssignedTasks();
+interface props{
+  setTasks:any,
+  tasks:Task[]
+}
+
+function Tasks({
+  setTasks,
+  tasks
+}:props) {
+  const { data, isLoading, isError, error } = useGetAllTasks();
+
+  useEffect(() => {
+    if (data) {
+        setTasks(data);
+    }
+  }, [data, setTasks]);
 
   if (isLoading) {
     return <div>Loading tasks...</div>;
@@ -24,25 +40,12 @@ function AssignedTasks() {
     {
       title: 'Points',
       dataIndex: 'points',
-    },
-    {
-      title: 'Tildelt',
-      dataIndex: 'assignedTo',
-    },
-    {
-      title: 'Oprettet',
-      dataIndex: 'date',
-    },
-    {
-      title: 'Udført',
-      dataIndex: 'completed',
-    },
-    
+    }, 
   ];
 
   return (
-    <Table  dataSource={data} columns={columns}/>
+    <Table  dataSource={tasks} columns={columns}/>
   );
 }
 
-export default AssignedTasks;
+export default Tasks;

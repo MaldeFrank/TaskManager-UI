@@ -1,12 +1,16 @@
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
 import { postTask } from "../../services/api";
 import { Task } from "../../model/Task";
-export default function AddTaskForm() {
+
+interface props{
+setTasks:any
+}
+
+export default function AddTaskForm({setTasks}:props) {
   type FieldType = {
     title: string;
     description: string;
     points: number;
-    assignedTo: string;
   };
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
@@ -19,7 +23,8 @@ export default function AddTaskForm() {
       id: 0,
     };
 
-    postTask(task);
+    const data = postTask(task);
+    setTasks((prevTasks:any) => [...prevTasks, data]);
 
 };
 
@@ -52,14 +57,6 @@ export default function AddTaskForm() {
         label="Beskrivelse"
         name="description"
         rules={[{ required: true, message: "Beskriv opgaven" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        label="Tildelt"
-        name="assignedTo"
-        rules={[{ required: true, message: "Tildel opgaven til en person" }]}
       >
         <Input />
       </Form.Item>

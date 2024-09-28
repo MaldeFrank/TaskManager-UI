@@ -1,9 +1,10 @@
 import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
-import AssignedTasks from "./tabs/Tasks";
+import AssignedTasks from "./tabs/AssignedTasks";
 import AddTaskForm from "./tabs/AddTaskForm";
 import { useState } from "react";
 import { AssignedTask, Task } from "../model/Task";
+import Tasks from "./tabs/Tasks";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -29,17 +30,20 @@ function TabView() {
     {
       key: '1',
       label: '1. Ugens opgaver',
-      children: <AssignedTasks />,
+      children: <AssignedTasks 
+      setAssignedTasks={setAssignedTasks}
+      assignedTasks={assignedTasks}
+       />,
     },
     {
       key: '2',
       label: '2. Opgave liste',
-      children: "Hello"
+      children: <Tasks setTasks={setTasks} tasks={tasks}/>
     },
     {
       key: '3',
       label: '3. Opret opgave',
-      children: <AddTaskForm/>,
+      children: <AddTaskForm setTasks={setTasks}/>,
     },
   ];
 
