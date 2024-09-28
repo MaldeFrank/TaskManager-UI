@@ -1,9 +1,8 @@
-import { useGetAllTasks } from "../../services/queries";
-import { Task } from "../../model/Task";
-import TaskItem from "../TaskItem";
+import { useGetAllAssignedTasks } from "../../services/queries";
+import { Table } from "antd";
 
-function Tasks() {
-  const { data, isLoading, isError, error } = useGetAllTasks();
+function AssignedTasks() {
+  const { data, isLoading, isError, error } = useGetAllAssignedTasks();
 
   if (isLoading) {
     return <div>Loading tasks...</div>;
@@ -13,13 +12,37 @@ function Tasks() {
     return <div>Error: {error.message}</div>;
   }
 
+  const columns = [
+    {
+      title: 'Titel',
+      dataIndex: 'title',
+    },
+    {
+      title: 'Beskrivelse',
+      dataIndex: 'description',
+    },
+    {
+      title: 'Points',
+      dataIndex: 'points',
+    },
+    {
+      title: 'Tildelt',
+      dataIndex: 'assignedTo',
+    },
+    {
+      title: 'Oprettet',
+      dataIndex: 'date',
+    },
+    {
+      title: 'Udført',
+      dataIndex: 'completed',
+    },
+    
+  ];
+
   return (
-    <div>
-      {data?.map((task: Task) => (
-        <TaskItem {...task} />
-      ))}
-    </div>
+    <Table  dataSource={data} columns={columns}/>
   );
 }
 
-export default Tasks;
+export default AssignedTasks;
