@@ -13,3 +13,9 @@ export interface Task{
   description: string;
   points: number;
 }
+
+export interface TaskDto{
+  title: string;
+  description: string;
+  points: number;
+}

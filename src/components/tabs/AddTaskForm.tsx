@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
 import { postTask } from "../../services/api";
-import { Task } from "../../model/Task";
+import { Task, TaskDto } from "../../model/Task";
 
 interface props{
 setTasks:any
@@ -16,8 +16,7 @@ export default function AddTaskForm({setTasks}:props) {
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     console.log("Success:", values);
 
-    const task: Task = {
-      id: 0,
+    const task: TaskDto = {
       title: values.title,
       description: values.description,
       points: values.points,
