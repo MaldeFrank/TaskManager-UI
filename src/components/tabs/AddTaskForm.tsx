@@ -13,7 +13,7 @@ export default function AddTaskForm({setTasks}:props) {
     points: number;
   };
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     console.log("Success:", values);
 
     const task: Task = {
@@ -23,9 +23,8 @@ export default function AddTaskForm({setTasks}:props) {
       points: values.points,
     };
 
-    const data = postTask(task);
-    setTasks((prevTasks:any) => [...prevTasks, data]);
-
+    const response = await postTask(task);
+    setTasks((prevTasks:any) => [...prevTasks, response.data]);
 };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
