@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetAllAssignedTasks, useGetAllTasks } from "../../services/queries";
+import { useGetAllTasks } from "../../services/queries";
 import { Table } from "antd";
 import { Task } from "../../model/Task";
 

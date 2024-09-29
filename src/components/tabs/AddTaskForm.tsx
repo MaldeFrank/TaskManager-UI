@@ -17,10 +17,10 @@ export default function AddTaskForm({setTasks}:props) {
     console.log("Success:", values);
 
     const task: Task = {
+      id: 0,
       title: values.title,
       description: values.description,
       points: values.points,
-      id: 0,
     };
 
     const data = postTask(task);
