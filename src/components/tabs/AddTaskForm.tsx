@@ -62,9 +62,9 @@ export default function AddTaskForm({setTasks}:props) {
       <Form.Item<FieldType>
         label="Points"
         name="points"
-        rules={[{ required: true, message: "Tildel opgaven points" }]}
+        rules={[{ required: true, message: "Tildel opgaven points"}]}
       >
-        <Input />
+        <Input type="number" />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
