@@ -68,6 +68,7 @@ function AssignedTasks({
       dataIndex: 'completed',
       render: (_:any, record:AssignedTask) => (
          <Switch 
+         checked={record.completed}
          style={{backgroundColor:record.completed?"green":"red"}}
          onClick={()=>switchTaskState(record)}
          />
