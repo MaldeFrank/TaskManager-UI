@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useGetAllAssignedTasks } from "../../services/queries";
-import { Table } from "antd";
+import { Switch, Table } from "antd";
 import { AssignedTask } from "../../model/Task";
 
 interface props{
@@ -55,7 +55,12 @@ function AssignedTasks({
       title: 'Udført',
       dataIndex: 'completed',
       key: 'completed',
-      render: (completed: boolean) => completed ? 'Ja' : 'Nej',
+      render: (record:AssignedTask) => (
+        <Switch 
+        style={{backgroundColor:record.completed?"green":"red"}}
+        onClick={}
+        />
+      )
     },
   ];
 
