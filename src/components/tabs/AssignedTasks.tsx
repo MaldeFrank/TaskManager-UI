@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useGetAllAssignedTasks } from "../../services/queries";
 import { Switch, Table } from "antd";
 import { AssignedTask } from "../../model/Task";
+import { updateAssignTask } from "../../services/api";
 
 interface props{
   setAssignedTasks:any,
@@ -24,6 +25,7 @@ function AssignedTasks({
         }
       })
     );
+    updateAssignTask(record)
   };
 
   useEffect(() => {

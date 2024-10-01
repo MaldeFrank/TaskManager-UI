@@ -31,6 +31,12 @@ export const postAssignTask = async (assignedTaskDto:AssignedTaskDto) => {
     return await axiosInstance.post<AssignedTask>("/assignedTask", responseBody, { headers: { "Content-Type": "application/json" } });
 };
 
+export const updateAssignTask = async (assignedTask:AssignedTask) => {
+  
+  
+  return await axiosInstance.put<AssignedTask>(`/assignedTask/${assignedTask.id}`, assignedTask, { headers: { "Content-Type": "application/json" } });
+};
+
 export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
     const response = await axiosInstance.get<AssignedTask[]>("/assignedTask", {
         headers: {"Content-Type": "application/json"}
