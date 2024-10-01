@@ -1,21 +1,35 @@
 import { useEffect } from "react";
 import { useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table } from "antd";
-import { Task } from "../../model/Task";
-import { useDeleteTask } from "../../services/mutations";
+import { AssignedTask, AssignedTaskDto, Task } from "../../model/Task";
+import { useCreateAssignTask, useDeleteTask } from "../../services/mutations";
+import AssignedTasks from "./AssignedTasks";
+import { postAssignTask } from "../../services/api";
 
 interface props {
   setTasks: any;
   tasks: Task[];
+  setAssignedTasks: any
 }
 
-function Tasks({ setTasks, tasks }: props) {
+function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
   const { data, isLoading, isError, error } = useGetAllTasks();
-  const {mutate:deleteTask} = useDeleteTask();
+  const { mutate: deleteTask } = useDeleteTask();
 
-  const deleteTaskFunction = (id: number) =>{
-   deleteTask(id)
-   setTasks((prevTasks:Task[]) => prevTasks.filter((task) => task.id !== id));
+  const deleteTaskFunction = (id: number) => {
+    deleteTask(id);
+    setTasks((prevTasks: Task[]) => prevTasks.filter((task) => task.id !== id));
+  };
+
+  const postAssignedTaskFunction = async (task:Task) =>{
+   const assingedTaskDto:AssignedTaskDto = {
+    assignedTo:"",
+    completed:false,
+    task: task
+   }
+
+   const response = await postAssignTask(assingedTaskDto)
+   setAssignedTasks((prevAssignedTask:any)=> [...prevAssignedTask,response.data])
   }
 
   useEffect(() => {
@@ -47,11 +61,13 @@ function Tasks({ setTasks, tasks }: props) {
     },
     {
       title: "Handlinger",
-      render: (record:Task) => (
+      render: (record: Task) => (
         <div>
           <Space>
-            <Button danger onClick={()=>deleteTaskFunction(record.id)}>Slet</Button>
-            <Button type="primary">Tilføj til ugen</Button>
+            <Button danger onClick={() => deleteTaskFunction(record.id)}>
+              Slet
+            </Button>
+            <Button type="primary" onClick={()=> postAssignedTaskFunction(record)}>Tilføj til ugen</Button>
           </Space>
         </div>
       ),

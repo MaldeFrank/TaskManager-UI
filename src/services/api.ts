@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AssignedTask, Task, TaskDto } from "../model/Task";
+import { AssignedTask, AssignedTaskDto, Task, TaskDto } from "../model/Task";
 
 const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -21,12 +21,11 @@ export const getAllTasks = async (): Promise<Task[]> => {
     return response.data;
 };
 
-export const postAssignTask = async (assignedTask:AssignedTask) => {
+export const postAssignTask = async (assignedTaskDto:AssignedTaskDto) => {
     const responseBody = {
-        assignedTo: assignedTask.assignedTo,
-        completed:assignedTask.completed,
-        dateTime:assignedTask.dateTime,
-        task:assignedTask.task
+        assignedTo: assignedTaskDto.assignedTo,
+        completed:assignedTaskDto.completed,
+        task:assignedTaskDto.task
     }
     
     return await axiosInstance.post<AssignedTask>("/assignedTask", responseBody, { headers: { "Content-Type": "application/json" } });

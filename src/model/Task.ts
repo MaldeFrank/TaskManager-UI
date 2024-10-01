@@ -19,3 +19,9 @@ export interface TaskDto{
   description: string;
   points: number;
 }
+
+export interface AssignedTaskDto{
+  assignedTo: string;
+  completed:boolean;
+  task:Task;
+  }

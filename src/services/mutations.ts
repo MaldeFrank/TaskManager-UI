@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { Task } from "../model/Task";
-import { deleteTask, postTask } from "./api";
+import { AssignedTask, AssignedTaskDto, Task } from "../model/Task";
+import { deleteTask, postAssignTask, postTask } from "./api";
 
 export function useCreateTask(){
     return useMutation({
@@ -11,5 +11,11 @@ export function useCreateTask(){
 export function useDeleteTask(){
     return useMutation({
         mutationFn: (id: number) => deleteTask(id)
+    })
+}
+
+export function useCreateAssignTask(){
+    return useMutation({
+        mutationFn: (data: AssignedTaskDto) => postAssignTask(data)
     })
 }

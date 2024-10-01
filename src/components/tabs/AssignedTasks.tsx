@@ -31,15 +31,16 @@ function AssignedTasks({
   const columns = [
     {
       title: 'Titel',
-      dataIndex: 'title',
+      dataIndex: ['task', 'title'],
+      key: 'title',
     },
     {
       title: 'Beskrivelse',
-      dataIndex: 'description',
+      dataIndex: ['task', 'description'],
     },
     {
       title: 'Points',
-      dataIndex: 'points',
+      dataIndex: ['task', 'points']
     },
     {
       title: 'Tildelt',
@@ -47,13 +48,15 @@ function AssignedTasks({
     },
     {
       title: 'Oprettet',
-      dataIndex: 'date',
+      dataIndex: 'dateTime',
+      key: 'dateTime',
     },
     {
       title: 'Udført',
       dataIndex: 'completed',
+      key: 'completed',
+      render: (completed: boolean) => completed ? 'Ja' : 'Nej',
     },
-    
   ];
 
   return (

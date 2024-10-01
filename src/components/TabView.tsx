@@ -9,7 +9,7 @@ import Tasks from "./tabs/Tasks";
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
-
+  
   
   const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
@@ -38,7 +38,7 @@ function TabView() {
     {
       key: '2',
       label: '2. Opgave liste',
-      children: <Tasks setTasks={setTasks} tasks={tasks}/>
+      children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasks={setAssignedTasks}/>
     },
     {
       key: '3',
