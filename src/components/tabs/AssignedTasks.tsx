@@ -13,6 +13,18 @@ function AssignedTasks({
   assignedTasks
 }:props) {
   const { data, isLoading, isError, error } = useGetAllAssignedTasks();
+  const switchTaskState = (record: AssignedTask) => {
+    setAssignedTasks((prev: AssignedTask[]) =>
+      prev.map((task) => {
+        if (task.id === record.id) {
+          task.completed = !task.completed;
+          return task;
+        } else {
+          return task;
+        }
+      })
+    );
+  };
 
   useEffect(() => {
     if (data) {
@@ -32,7 +44,6 @@ function AssignedTasks({
     {
       title: 'Titel',
       dataIndex: ['task', 'title'],
-      key: 'title',
     },
     {
       title: 'Beskrivelse',
@@ -49,18 +60,16 @@ function AssignedTasks({
     {
       title: 'Oprettet',
       dataIndex: 'dateTime',
-      key: 'dateTime',
     },
     {
       title: 'Udført',
       dataIndex: 'completed',
-      key: 'completed',
-      render: (record:AssignedTask) => (
-        <Switch 
-        style={{backgroundColor:record.completed?"green":"red"}}
-        onClick={}
-        />
-      )
+      render: (_:any, record:AssignedTask) => (
+         <Switch 
+         style={{backgroundColor:record.completed?"green":"red"}}
+         onClick={()=>switchTaskState(record)}
+         />
+      ),
     },
   ];
 
