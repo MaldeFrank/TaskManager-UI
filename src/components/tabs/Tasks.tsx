@@ -5,6 +5,7 @@ import { AssignedTask, AssignedTaskDto, Task } from "../../model/Task";
 import { useCreateAssignTask, useDeleteTask } from "../../services/mutations";
 import AssignedTasks from "./AssignedTasks";
 import { postAssignTask } from "../../services/api";
+import { User } from "../../model/Profile";
 
 interface props {
   setTasks: any;
@@ -22,8 +23,13 @@ function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
   };
 
   const postAssignedTaskFunction = async (task:Task) =>{
+    const emptyUser:User = {
+      id:0,
+      name:"",
+      points:0
+    }
    const assingedTaskDto:AssignedTaskDto = {
-    assignedTo:"",
+    assignedTo:emptyUser,
     completed:false,
     task: task
    }
