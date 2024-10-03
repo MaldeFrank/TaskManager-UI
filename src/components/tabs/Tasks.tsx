@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table } from "antd";
-import { AssignedTask, AssignedTaskDto, Task } from "../../model/Task";
+import { Task } from "../../model/Task";
 import { useCreateAssignTask, useDeleteTask } from "../../services/mutations";
 import AssignedTasks from "./AssignedTasks";
 import { Profile } from "../../model/Profile";
 import { postAssignTask } from "../../services/apiAssignedTasks";
+import { AssignedTaskDto } from "../../model/AssignedTask";
 
 interface props {
   setTasks: any;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AssignedTask, AssignedTaskDto, Task, TaskDto } from "../model/Task";
+import { Task, TaskDto } from "../model/Task";
 
 const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });

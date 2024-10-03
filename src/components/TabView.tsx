@@ -3,9 +3,10 @@ import StickyBox from "react-sticky-box";
 import AssignedTasks from "./tabs/AssignedTasks";
 import AddTaskForm from "./tabs/AddTaskForm";
 import { useState } from "react";
-import { AssignedTask, Task } from "../model/Task";
+import {Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
 import { Profile } from "../model/Profile";
+import { AssignedTask } from "../model/AssignedTask";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);

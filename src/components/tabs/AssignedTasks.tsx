@@ -4,10 +4,10 @@ import {
   useGetAllProfiles
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table } from "antd";
-import { AssignedTask } from "../../model/Task";
 import { Profile } from "../../model/Profile";
 import { UserOutlined } from "@ant-design/icons";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
+import { AssignedTask } from "../../model/AssignedTask";
 
 interface props {
   setAssignedTasks: any;
