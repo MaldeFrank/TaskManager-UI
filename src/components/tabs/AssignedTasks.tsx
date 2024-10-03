@@ -24,12 +24,37 @@ function AssignedTasks({
 }: props) {
 
   const { data, isLoading, isError, error } = useGetAllAssignedTasks();
+  const [thisWeeksTasks,setThisWeeksTasks] = useState<AssignedTask[]>([]);
+
+  const today: Date = new Date();// Todays date
+  const nextWeek: Date = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); //A week from today
+
+  const formattedTodayDate = new Date(`${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`);
+  const formattedNextWeekDate = new Date(`${nextWeek.getFullYear()}/${nextWeek.getMonth() + 1}/${nextWeek.getDate()}`);
+
   const {
     data: profilesData,
     isLoading: isProfilesLoading,
     isError: isProfilesError,
   } = useGetAllProfiles();
 
+  //Function to filter tasks based on the date
+  const filterTasksForThisWeek = () => {
+    const filteredTasks = assignedTasks.filter((task) => {
+      if (!task.dateTime) return false; // Skip tasks without a date
+
+      // Convert task date to a Date object
+      const taskDate = new Date(task.dateTime);
+
+      // Check if task date is between today and next week
+      return (
+        taskDate >= formattedTodayDate && taskDate < formattedNextWeekDate
+      );
+    });
+    setThisWeeksTasks(filteredTasks);
+  };
+
+  //Function to switch state to done and back
   const switchTaskState = (record: AssignedTask) => {
     setAssignedTasks((prev: AssignedTask[]) =>
       prev.map((task) => {
@@ -43,7 +68,8 @@ function AssignedTasks({
     );
     updateAssignTask(record);
   };
-// Handles clicks in dropdown
+
+// Handles clicks on dropdown items
 const handleMenuClick = (record: AssignedTask) => (e: any) => {
   const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
   if (selectedProfile) {
@@ -66,6 +92,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
   useEffect(() => {
     if (data) {
       setAssignedTasks(data);
+      filterTasksForThisWeek();
     }
   }, [data, setAssignedTasks]);
 
@@ -133,7 +160,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     },
   ];
 
-  return <Table dataSource={assignedTasks} columns={columns} />;
+  return <Table dataSource={thisWeeksTasks} columns={columns} />;
 }
 
 export default AssignedTasks;
