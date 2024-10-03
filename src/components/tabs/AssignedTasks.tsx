@@ -43,18 +43,20 @@ function AssignedTasks({
     );
     updateAssignTask(record);
   };
-
-  const handleMenuClick = (record: AssignedTask) => (e: any) => {
-    const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
-    if (selectedProfile) {
-      setAssignedTasks((prev: AssignedTask[]) =>
-        prev.map((task) =>
-          task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
-        )
-      );
-      message.info("User assigned successfully");
-    }
-  };
+// Handles clicks in dropdown
+const handleMenuClick = (record: AssignedTask) => (e: any) => {
+  const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
+  if (selectedProfile) {
+    setAssignedTasks((prev: AssignedTask[]) =>
+      prev.map((task) =>
+        task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
+      ),
+      record.assignedTo=selectedProfile
+    );
+    message.info("User assigned successfully");
+    updateAssignTask(record);
+  }
+};
 
   const items: MenuProps["items"] = profiles.map((profile) => ({
     key: profile.id,

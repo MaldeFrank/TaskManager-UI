@@ -7,5 +7,6 @@ export const getAllProfiles = async (): Promise<Profile[]> => {
     const response = await axiosInstance.get<Profile[]>("/profiles", {
         headers: {"Content-Type": "application/json"}
     });
+    console.log("Responses",response.data)
     return response.data;
 };

@@ -16,14 +16,14 @@ export const postAssignTask = async (assignedTaskDto:AssignedTaskDto) => {
 
 export const updateAssignTask = async (assignedTask:AssignedTask) => {
   
-  const assignedTaskDto: AssignedTaskUpdateDto = {
+  const assignedTaskDto: AssignedTask = {
   id:assignedTask.id,
-  assignedTo: assignedTask.assignedTo?.id,
+  assignedTo: assignedTask?.assignedTo,
   completed: assignedTask.completed,
   dateTime: assignedTask.dateTime,
   task: assignedTask.task
   }
-  console.log(assignedTaskDto)
+  console.log("This is assignDto",assignedTaskDto)
   return await axiosInstance.put<AssignedTaskUpdateDto>(`/assignedTask/${assignedTaskDto.id}`, assignedTaskDto, { headers: { "Content-Type": "application/json" } });
 };
 
