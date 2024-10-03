@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
-import { postTask } from "../../services/api";
+import { postTask } from "../../services/apiTasks";
 import { TaskDto } from "../../model/Task";
 
 interface props{

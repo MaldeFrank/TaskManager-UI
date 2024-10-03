@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { getAllAssignTasks, getAllTasks } from "./api";
+import { getAllTasks } from "./apiTasks";
+import { getAllAssignTasks } from "./apiAssignedTasks";
 
 export function useGetAllTasks() {
     return useQuery({

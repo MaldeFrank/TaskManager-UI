@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useGetAllAssignedTasks } from "../../services/queries";
 import { Switch, Table } from "antd";
 import { AssignedTask } from "../../model/Task";
-import { updateAssignTask } from "../../services/api";
+import { updateAssignTask } from "../../services/apiAssignedTasks";
 
 interface props{
   setAssignedTasks:any,

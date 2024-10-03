@@ -4,8 +4,8 @@ import { Button, Space, Table } from "antd";
 import { AssignedTask, AssignedTaskDto, Task } from "../../model/Task";
 import { useCreateAssignTask, useDeleteTask } from "../../services/mutations";
 import AssignedTasks from "./AssignedTasks";
-import { postAssignTask } from "../../services/api";
 import { User } from "../../model/Profile";
+import { postAssignTask } from "../../services/apiAssignedTasks";
 
 interface props {
   setTasks: any;
