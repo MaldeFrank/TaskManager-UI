@@ -1,4 +1,4 @@
-export interface User {
+export interface Profile {
   id: number;
   name: string;
   points: number;

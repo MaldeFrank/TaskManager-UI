@@ -5,11 +5,12 @@ import AddTaskForm from "./tabs/AddTaskForm";
 import { useState } from "react";
 import { AssignedTask, Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
+import { Profile } from "../model/Profile";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
-  
+  const [profiles,setProfiles] = useState<Profile[]>([])
   
   const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
@@ -30,9 +31,11 @@ function TabView() {
     {
       key: '1',
       label: '1. Ugens opgaver',
-      children: <AssignedTasks 
+      children: <AssignedTasks
       setAssignedTasks={setAssignedTasks}
       assignedTasks={assignedTasks}
+      setProfiles={setProfiles}
+      profiles={profiles}
        />,
     },
     {

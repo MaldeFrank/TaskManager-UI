@@ -1,8 +1,8 @@
-import { User } from "./Profile";
+import { Profile } from "./Profile";
 
 export interface AssignedTask{
 id: number;
-assignedTo: User;
+assignedTo: Profile;
 completed:boolean;
 dateTime:string;
 task:Task;
@@ -22,7 +22,7 @@ export interface TaskDto{
 }
 
 export interface AssignedTaskDto{
-  assignedTo: User;
+  assignedTo: Profile;
   completed:boolean;
   task:Task;
   }

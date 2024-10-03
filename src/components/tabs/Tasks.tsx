@@ -4,7 +4,7 @@ import { Button, Space, Table } from "antd";
 import { AssignedTask, AssignedTaskDto, Task } from "../../model/Task";
 import { useCreateAssignTask, useDeleteTask } from "../../services/mutations";
 import AssignedTasks from "./AssignedTasks";
-import { User } from "../../model/Profile";
+import { Profile } from "../../model/Profile";
 import { postAssignTask } from "../../services/apiAssignedTasks";
 
 interface props {
@@ -23,7 +23,7 @@ function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
   };
 
   const postAssignedTaskFunction = async (task:Task) =>{
-    const emptyUser:User = {
+    const emptyUser:Profile = {
       id:0,
       name:"",
       points:0
