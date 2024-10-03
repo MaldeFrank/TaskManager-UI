@@ -22,8 +22,6 @@ function AssignedTasks({
   setProfiles,
   profiles,
 }: props) {
-  // Add state to track selected user for each task
-  const [profile, setProfile] = useState<Profile>();
 
   const { data, isLoading, isError, error } = useGetAllAssignedTasks();
   const {
@@ -46,13 +44,16 @@ function AssignedTasks({
     updateAssignTask(record);
   };
 
-  // Modified handleMenuClick to update the selected user
-  const handleMenuClick = (record:AssignedTask) => (e: any) => {
-    const selectedProfile = profiles.find(profile => profile.id === e.key);
+  const handleMenuClick = (record: AssignedTask) => (e: any) => {
+    const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
     if (selectedProfile) {
-     setProfile(record.assignedTo)
+      setAssignedTasks((prev: AssignedTask[]) =>
+        prev.map((task) =>
+          task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
+        )
+      );
+      message.info("User assigned successfully");
     }
-    message.info("User assigned successfully");
   };
 
   const items: MenuProps["items"] = profiles.map((profile) => ({
@@ -109,7 +110,7 @@ function AssignedTasks({
           placement="bottom"
           icon={<UserOutlined />}
         >
-          {profile?.name|| "Ikke sat"}
+           {record.assignedTo?.name ? record.assignedTo.name : "Ikke sat"} 
         </Dropdown.Button>
       ),
     },
