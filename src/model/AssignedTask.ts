@@ -10,7 +10,15 @@ export interface AssignedTask {
 }
 
 export interface AssignedTaskDto {
-  assignedTo: Profile;
+  assignedTo: number;
   completed: boolean;
+  task: Task;
+}
+
+export interface AssignedTaskUpdateDto {
+  id: number;
+  assignedTo: number;
+  completed: boolean;
+  dateTime: string;
   task: Task;
 }

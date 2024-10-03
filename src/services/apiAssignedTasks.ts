@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Task, TaskDto } from "../model/Task";
-import { AssignedTask, AssignedTaskDto } from "../model/AssignedTask";
+import { AssignedTask, AssignedTaskDto, AssignedTaskUpdateDto } from "../model/AssignedTask";
 
 const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -16,8 +16,15 @@ export const postAssignTask = async (assignedTaskDto:AssignedTaskDto) => {
 
 export const updateAssignTask = async (assignedTask:AssignedTask) => {
   
-  
-  return await axiosInstance.put<AssignedTask>(`/assignedTask/${assignedTask.id}`, assignedTask, { headers: { "Content-Type": "application/json" } });
+  const assignedTaskDto: AssignedTaskUpdateDto = {
+  id:assignedTask.id,
+  assignedTo: assignedTask.assignedTo?.id,
+  completed: assignedTask.completed,
+  dateTime: assignedTask.dateTime,
+  task: assignedTask.task
+  }
+  console.log(assignedTaskDto)
+  return await axiosInstance.put<AssignedTaskUpdateDto>(`/assignedTask/${assignedTaskDto.id}`, assignedTaskDto, { headers: { "Content-Type": "application/json" } });
 };
 
 export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {

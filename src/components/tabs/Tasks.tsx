@@ -30,7 +30,7 @@ function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
       points:0
     }
    const assingedTaskDto:AssignedTaskDto = {
-    assignedTo:emptyUser,
+    assignedTo:0,
     completed:false,
     task: task
    }
