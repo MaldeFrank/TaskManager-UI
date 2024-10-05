@@ -35,17 +35,24 @@ function AssignedTasks({
 
   //Function to switch state to done and back
   const switchTaskState = (record: AssignedTask) => {
-    setAssignedTasksWeekly((prev: AssignedTask[]) =>
-      prev.map((task) => {
-        if (task.id === record.id) {
-          task.completed = !task.completed;
-          return task;
-        } else {
-          return task;
-        }
-      })
-    );
-    updateAssignTask(record);
+    
+    if(record.assignedTo){
+      setAssignedTasksWeekly((prev: AssignedTask[]) =>
+        prev.map((task) => {
+          if (task.id === record.id) {
+            task.completed = !task.completed;
+            return task;
+          } else {
+            return task;
+          }
+        })
+      );
+
+      record.completed?record.assignedTo.points += record.task.points:record.assignedTo.points -= record.task.points // On completion of task points goes up and opposite
+      updateAssignTask(record);
+    }else{
+      message.warning("Opgave er ikke tildelt")
+    }
   };
 
 // Handles clicks on dropdown items
