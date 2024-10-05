@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Task, TaskDto } from "../model/Task";
+import Tasks from "../components/tabs/Tasks";
 
 const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -12,6 +13,16 @@ export const postTask = async (taskData: TaskDto) => {
     }
     
     return await axiosInstance.post<Task>("/tasks", responseBody, { headers: { "Content-Type": "application/json" } });
+};
+
+export const putTask = async (taskData: Task) => {
+  const responseBody = {
+      title: taskData?.title,
+      description: taskData?.description,
+      points: taskData?.points,
+  }
+  
+  return await axiosInstance.put<Task>(`/tasks/${taskData.id}`, responseBody, { headers: { "Content-Type": "application/json" } });
 };
 
 export const getAllTasks = async (): Promise<Task[]> => {
