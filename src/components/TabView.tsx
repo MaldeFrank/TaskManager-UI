@@ -34,8 +34,8 @@ function TabView() {
       key: '1',
       label: '1. Ugens opgaver',
       children: <AssignedTasks
-      setAssignedTasks={setAssignedTasksWeekly}
-      assignedTasks={assignedTasksWeekly}
+      setAssignedTasksWeekly={setAssignedTasksWeekly}
+      assignedTasksWeekly={assignedTasksWeekly}
       setProfiles={setProfiles}
       profiles={profiles}
        />,
@@ -43,7 +43,7 @@ function TabView() {
     {
       key: '2',
       label: '2. Opgave liste',
-      children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasks={setAssignedTasksWeekly}/>
+      children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasksWeekly={setAssignedTasksWeekly}/>
     },
     {
       key: '3',

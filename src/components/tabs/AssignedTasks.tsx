@@ -11,15 +11,15 @@ import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
 
 interface props {
-  setAssignedTasks: any;
-  assignedTasks: AssignedTask[];
+  setAssignedTasksWeekly: any;
+  assignedTasksWeekly: AssignedTask[];
   setProfiles: any;
   profiles: Profile[];
 }
 
 function AssignedTasks({
-  setAssignedTasks,
-  assignedTasks,
+  setAssignedTasksWeekly,
+  assignedTasksWeekly,
   setProfiles,
   profiles,
 }: props) {
@@ -35,7 +35,7 @@ function AssignedTasks({
 
   //Function to switch state to done and back
   const switchTaskState = (record: AssignedTask) => {
-    setAssignedTasks((prev: AssignedTask[]) =>
+    setAssignedTasksWeekly((prev: AssignedTask[]) =>
       prev.map((task) => {
         if (task.id === record.id) {
           task.completed = !task.completed;
@@ -52,7 +52,7 @@ function AssignedTasks({
 const handleMenuClick = (record: AssignedTask) => (e: any) => {
   const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
   if (selectedProfile) {
-    setAssignedTasks((prev: AssignedTask[]) =>
+    setAssignedTasksWeekly((prev: AssignedTask[]) =>
       prev.map((task) =>
         task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
       ),
@@ -70,9 +70,9 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 
   useEffect(() => {
     if (data) {
-      setAssignedTasks(data);
+      setAssignedTasksWeekly(data);
     }
-  }, [data, setAssignedTasks]);
+  }, [data, setAssignedTasksWeekly]);
 
   useEffect(() => {
     if (profilesData) {
@@ -138,7 +138,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     },
   ];
 
-  return <Table dataSource={assignedTasks} columns={columns} />;
+  return <Table dataSource={assignedTasksWeekly} columns={columns} />;
 }
 
 export default AssignedTasks;

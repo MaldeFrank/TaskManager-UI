@@ -11,10 +11,10 @@ import { AssignedTaskDto } from "../../model/AssignedTask";
 interface props {
   setTasks: any;
   tasks: Task[];
-  setAssignedTasks: any
+  setAssignedTasksWeekly: any
 }
 
-function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
+function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: props) {
   const { data, isLoading, isError, error } = useGetAllTasks();
   const { mutate: deleteTask } = useDeleteTask();
 
@@ -36,7 +36,7 @@ function Tasks({ setTasks, tasks, setAssignedTasks }: props) {
    }
 
    const response = await postAssignTask(assingedTaskDto)
-   setAssignedTasks((prevAssignedTask:any)=> [...prevAssignedTask,response.data])
+   setAssignedTasksWeekly((prevAssignedTask:any)=> [...prevAssignedTask,response.data])
   }
 
   useEffect(() => {
