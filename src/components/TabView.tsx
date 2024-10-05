@@ -11,6 +11,7 @@ import { AssignedTask } from "../model/AssignedTask";
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
+  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<AssignedTask[]>([]);
   const [profiles,setProfiles] = useState<Profile[]>([])
   
   const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
@@ -33,8 +34,8 @@ function TabView() {
       key: '1',
       label: '1. Ugens opgaver',
       children: <AssignedTasks
-      setAssignedTasks={setAssignedTasks}
-      assignedTasks={assignedTasks}
+      setAssignedTasks={setAssignedTasksWeekly}
+      assignedTasks={assignedTasksWeekly}
       setProfiles={setProfiles}
       profiles={profiles}
        />,
@@ -42,7 +43,7 @@ function TabView() {
     {
       key: '2',
       label: '2. Opgave liste',
-      children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasks={setAssignedTasks}/>
+      children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasks={setAssignedTasksWeekly}/>
     },
     {
       key: '3',

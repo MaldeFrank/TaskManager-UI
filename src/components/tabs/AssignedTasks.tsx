@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   useGetAllAssignedTasks,
+  useGetAllAssignedTasksWeekly,
   useGetAllProfiles
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table } from "antd";
@@ -23,13 +24,7 @@ function AssignedTasks({
   profiles,
 }: props) {
 
-  const { data, isLoading, isError, error } = useGetAllAssignedTasks();
-
-  const today: Date = new Date();// Todays date
-  const nextWeek: Date = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); //A week from today
-  const lastWeek: Date = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000); //A week back
-  const formattedNextWeekDate = new Date(`${nextWeek.getFullYear()}/${nextWeek.getMonth() + 1}/${nextWeek.getDate()}`);
-  const formattedLastWeek = new Date(`${lastWeek.getFullYear()}/${lastWeek.getMonth() + 1}/${lastWeek.getDate()}`);
+  const { data, isLoading, isError, error } = useGetAllAssignedTasksWeekly();
 
   const {
     data: profilesData,
@@ -37,13 +32,6 @@ function AssignedTasks({
     isError: isProfilesError,
   } = useGetAllProfiles();
 
-  //Function to filter tasks based on the date
-  const filteredTasks = assignedTasks.filter(task => {
-    const taskDateTime = new Date(task.dateTime);
-    const formattedNextWeekDateTime = new Date(formattedNextWeekDate); 
-    const formattedLastWeekDateTime = new Date(formattedLastWeek);
-    return  taskDateTime>=formattedLastWeekDateTime&&taskDateTime <= formattedNextWeekDateTime;
-  });
 
   //Function to switch state to done and back
   const switchTaskState = (record: AssignedTask) => {
@@ -150,7 +138,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     },
   ];
 
-  return <Table dataSource={filteredTasks} columns={columns} />;
+  return <Table dataSource={assignedTasks} columns={columns} />;
 }
 
 export default AssignedTasks;

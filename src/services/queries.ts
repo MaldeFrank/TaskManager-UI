@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { getAllTasks } from "./apiTasks";
-import { getAllAssignTasks } from "./apiAssignedTasks";
+import { getAllAssignTasks, getAllAssignTasksWeekly } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
 
 export function useGetAllTasks() {
@@ -16,6 +16,13 @@ export function useGetAllTasks() {
     queryFn: getAllAssignTasks
   })
   }
+
+  export function useGetAllAssignedTasksWeekly(){
+    return useQuery({
+      queryKey: ["getAllAssignTasks"],
+      queryFn: getAllAssignTasksWeekly
+    })
+    }
 
   export function useGetAllProfiles(){
     return useQuery({

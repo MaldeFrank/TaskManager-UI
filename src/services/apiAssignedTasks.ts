@@ -33,3 +33,10 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
     });
     return response.data;
 };
+
+export const getAllAssignTasksWeekly = async (): Promise<AssignedTask[]> => {
+    const response = await axiosInstance.get<AssignedTask[]>("/assignedTask/weekly", {
+        headers: {"Content-Type": "application/json"}
+    });
+    return response.data;
+};
