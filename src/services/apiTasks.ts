@@ -6,13 +6,8 @@ const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const postTask = async (taskData: TaskDto) => {
-    const responseBody = {
-        title: taskData.title,
-        description: taskData.description,
-        points: taskData.points,
-    }
-    
-    return await axiosInstance.post<Task>("/tasks", responseBody, { headers: { "Content-Type": "application/json" } });
+  const response = await axiosInstance.post<Task>("/tasks", taskData, { headers: { "Content-Type": "application/json" } });
+  return response.data; // Return only the task data from the response
 };
 
 export const putTask = async (taskData: Task) => {

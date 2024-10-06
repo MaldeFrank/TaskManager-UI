@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table, Form, Input, InputNumber } from "antd";
-import { Task } from "../../model/Task";
+import { Task, TaskDto } from "../../model/Task";
 import { useDeleteTask, usePutTask } from "../../services/mutations";
 import { Profile } from "../../model/Profile";
 import { postAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTaskDto } from "../../model/AssignedTask";
+import { EditableCellProps } from "../../types/Cells";
+import { postTask } from "../../services/apiTasks";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -13,15 +15,6 @@ interface Props {
   setAssignedTasksWeekly: any;
 }
 
-interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
-  editing: boolean;
-  dataIndex: string;
-  title: string;
-  inputType: 'text' | 'number';
-  record: Task;
-  index: number;
-  children: React.ReactNode;
-}
 
 const EditableCell: React.FC<EditableCellProps> = ({
   editing,
@@ -87,6 +80,20 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
+  };
+
+  const createNewTask = async () => {
+    const newTask: any = {
+      title: "Edit",
+      description: "Edit",
+      points: 0,
+    };
+  
+    const createdTask = await postTask(newTask);
+  
+    setTasks((prev: Task[]) => {
+      return [...prev, createdTask];
+    });
   };
 
   const deleteTaskFunction = (id: number) => {
@@ -192,6 +199,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
 
   return (
     <Form form={form} component={false}>
+      <Button type="primary" onClick={createNewTask}>Tilføj opgave</Button>
       <Table
         components={{
           body: {
