@@ -61,12 +61,12 @@ function UsersList({ setProfiles, profiles }: props) {
                 )
               }
 
-            description={"Points: " + item.points}
+            description={"Point i alt: " + item.points}
           />
         </List.Item>
       )}
     >
-      <Button onClick={addUser}>Tilføj bruger</Button>
+      <Button type="primary" onClick={addUser}>Tilføj bruger</Button>
     </List>
   );
 }

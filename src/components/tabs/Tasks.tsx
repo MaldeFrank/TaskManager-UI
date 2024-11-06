@@ -199,7 +199,6 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
 
   return (
     <Form form={form} component={false}>
-      <Button type="primary" onClick={createNewTask}>Tilføj opgave</Button>
       <Table
         components={{
           body: {
@@ -210,6 +209,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
         columns={mergedColumns}
         rowClassName="editable-row"
       />
+      <Button type="primary" onClick={createNewTask}>Tilføj opgave</Button>
     </Form>
   );
 }
