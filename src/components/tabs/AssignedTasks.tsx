@@ -145,7 +145,14 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     },
   ];
 
-  return <Table dataSource={assignedTasksWeekly} columns={columns} />;
+  return(
+  <div>
+    <h2 style={{textAlign:"center", color:"red"}}>Ikke udført</h2>
+  <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===false)} columns={columns}/>
+    <h2 style={{textAlign:"center", color:"green"}}>Udført</h2>
+  <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===true)} columns={columns}/>
+  </div>
+) 
 }
 
 export default AssignedTasks;
