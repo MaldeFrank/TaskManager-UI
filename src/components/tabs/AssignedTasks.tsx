@@ -4,7 +4,7 @@ import {
   useGetAllAssignedTasksWeekly,
   useGetAllProfiles
 } from "../../services/queries";
-import { Dropdown, MenuProps, message, Switch, Table } from "antd";
+import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
 import { Profile } from "../../model/Profile";
 import { UserOutlined } from "@ant-design/icons";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
@@ -103,14 +103,17 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     {
       title: "Titel",
       dataIndex: ["task", "title"],
+      width:100,
     },
     {
       title: "Beskrivelse",
       dataIndex: ["task", "description"],
+      width:100,
     },
     {
       title: "Points",
       dataIndex: ["task", "points"],
+      width:100,
     },
     {
       title: "Tildelt",
@@ -127,10 +130,12 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
            {record.assignedTo?.name ? record.assignedTo.name : "Ikke sat"} 
         </Dropdown.Button>
       ),
+      width:100,
     },
     {
       title: "Oprettet",
       dataIndex: "dateTime",
+      width:100,
     },
     {
       title: "Udført",
@@ -142,14 +147,16 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
           onClick={() => switchTaskState(record)}
         />
       ),
+      width:100,
     },
   ];
 
   return(
   <div>
-    <h2 style={{textAlign:"center", color:"red"}}>Ikke udført</h2>
+    
+    <h2 style={{textAlign:"center", color:"red"}}><Tag color="red">Ikke udført</Tag></h2>
   <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===false)} columns={columns}/>
-    <h2 style={{textAlign:"center", color:"green"}}>Udført</h2>
+    <h2 style={{textAlign:"center", color:"green"}}><Tag color="green">Udført</Tag></h2>
   <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===true)} columns={columns}/>
   </div>
 ) 
