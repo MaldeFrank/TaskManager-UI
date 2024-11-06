@@ -6,6 +6,7 @@ import {Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
 import { Profile } from "../model/Profile";
 import { AssignedTask } from "../model/AssignedTask";
+import UsersList from "./tabs/UserList";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -44,6 +45,11 @@ function TabView() {
       label: '2. Opgave liste',
       children: <Tasks setTasks={setTasks} tasks={tasks} setAssignedTasksWeekly={setAssignedTasksWeekly}/>
     },
+    {
+      key: '3',
+      label: '3. Brugere',
+      children: <UsersList setProfiles={setProfiles} profiles={profiles}/>
+    }
   ];
 
   return (

@@ -10,3 +10,16 @@ export const getAllProfiles = async (): Promise<Profile[]> => {
     console.log("Responses",response.data)
     return response.data;
 };
+
+export const createProfile = async (profile:Profile): Promise<Profile[]> => {
+    const data ={
+    name:profile.name,
+    points: profile.points
+    }
+
+    const response = await axiosInstance.post<Profile[]>("/profile",data, {
+        headers: {"Content-Type": "application/json"}
+    });
+    
+    return response.data;
+};
