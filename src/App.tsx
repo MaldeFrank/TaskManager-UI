@@ -50,6 +50,7 @@ function App() {
     
     // Store the token in localStorage for persistence
     localStorage.setItem('google_token', response.credential);
+    localStorage.setItem('user_id', decodedToken.sub);
   };
 
   const handleLogout = () => {

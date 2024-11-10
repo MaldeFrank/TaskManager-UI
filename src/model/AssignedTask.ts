@@ -13,6 +13,7 @@ export interface AssignedTaskDto {
   assignedTo: number;
   completed: boolean;
   task: Task;
+  userId:any;
 }
 
 export interface AssignedTaskUpdateDto {

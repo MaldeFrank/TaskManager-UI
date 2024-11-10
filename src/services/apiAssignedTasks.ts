@@ -8,7 +8,8 @@ const axiosInstance = axios.create({ baseURL: BASE_URL });
 export const postAssignTask = async (assignedTaskDto:AssignedTaskDto) => {
     const responseBody = {
         completed:assignedTaskDto.completed,
-        task:assignedTaskDto.task
+        task:assignedTaskDto.task,
+        userId: assignedTaskDto.userId
     }
     
     return await axiosInstance.post<AssignedTask>("/assignedTask", responseBody, { headers: { "Content-Type": "application/json" } });
@@ -35,7 +36,8 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
 };
 
 export const getAllAssignTasksWeekly = async (): Promise<AssignedTask[]> => {
-    const response = await axiosInstance.get<AssignedTask[]>("/assignedTask/weekly", {
+    const userId = localStorage.getItem("user_id");
+    const response = await axiosInstance.get<AssignedTask[]>(`/assignedTask/weekly/${userId}`, {
         headers: {"Content-Type": "application/json"}
     });
     return response.data;

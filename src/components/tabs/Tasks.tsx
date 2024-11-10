@@ -102,16 +102,12 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
   };
 
   const postAssignedTaskFunction = async (task: Task) => {
-    const emptyUser: Profile = {
-      id: 0,
-      name: "",
-      points: 0
-    };
 
     const assignedTaskDto: AssignedTaskDto = {
       assignedTo: 0,
       completed: false,
-      task: task
+      task: task,
+      userId: localStorage.getItem("user_id")
     };
 
     const response = await postAssignTask(assignedTaskDto);
