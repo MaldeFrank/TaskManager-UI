@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Menu, theme } from 'antd';
+import Friendlist from './Friendlist';
 
 const { Header, Content } = Layout;
 
@@ -8,7 +9,7 @@ interface Props {
   userName: String|undefined;
 }
 
-function TopBar({ logout, userName }: Props) {
+ function TopBar({ logout, userName }: Props) {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -19,9 +20,7 @@ function TopBar({ logout, userName }: Props) {
       label: <button onClick={logout}>Logout</button>,  
     },
     { key: 2,
-      label: 'nav 2' },
-    { key: 3,
-      label: 'nav 3'},
+      label: <Friendlist></Friendlist>},
   ];
 
   return (
@@ -43,3 +42,4 @@ function TopBar({ logout, userName }: Props) {
 }
 
 export default TopBar;
+
