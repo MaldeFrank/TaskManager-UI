@@ -3,6 +3,7 @@ import './styles/App.css';
 import router from './router/Router';
 import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import TopBar from './components/TopBar';
 
 // Declare google global type
 declare global {
@@ -100,6 +101,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      
       <div className="app">
         {!isAuthenticated ? (
           <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -110,26 +112,7 @@ function App() {
           </div>
         ) : (
           <div>
-            {user && (
-              <div className="p-4 bg-gray-100 border-b">
-                <div className="flex items-center justify-between max-w-7xl mx-auto">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src={user.picture} 
-                      alt={user.name} 
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span className="font-medium">{user.name}</span>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            )}
+            <TopBar logout={handleLogout} userName={user?.name}/>
             <RouterProvider router={router} />
           </div>
         )}
