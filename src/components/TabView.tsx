@@ -52,8 +52,24 @@ function TabView() {
     }
   ];
 
+  const onEdit = (
+    targetKey: React.MouseEvent | React.KeyboardEvent | string,
+    action: 'add' | 'remove',
+  ) => {
+    if (action === 'add') {
+      console.log("Add")
+    } else {
+      console.log("Remove")
+    }
+  };
+
   return (
-    <Tabs size="large" renderTabBar={renderTabBar} type="card" defaultActiveKey="1" items={items}></Tabs>
+    <Tabs size="large"
+     renderTabBar={renderTabBar}
+     type="editable-card"
+     defaultActiveKey="1"
+     onEdit={onEdit}
+     items={items}></Tabs>
   );
 }
 
