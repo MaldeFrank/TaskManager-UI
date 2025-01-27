@@ -1,7 +1,7 @@
 import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
 import AssignedTasks from "./tabs/AssignedTasks";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
 import { Profile } from "../model/Profile";
@@ -15,23 +15,11 @@ function TabView() {
   const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
   const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<AssignedTask[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [activeKey, setActiveKey] = useState('1');
+  const newTabIndex = useRef(0);
 
-  const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
-    <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
-      <DefaultTabBar
-        {...props}
-        tabPosition="top"
-        tabBarGutter={10}
-        style={{ backgroundColor: "white" }}
-        onTabScroll={(event) => {
-          const scrollAmount = 100;
-          window.scrollTo(0, window.scrollY + scrollAmount);
-        }}
-      />
-    </StickyBox>
-  );
-
-  const initialTabs = [
+  // Create a function to generate tab items
+  const generateTabs = () => [
     {
       key: '1',
       label: '1. Ugens opgaver',
@@ -62,15 +50,35 @@ function TabView() {
     },
   ];
 
-  const [activeKey, setActiveKey] = useState(initialTabs[0].key);
-  const [items, setItems] = useState(initialTabs);
-  const newTabIndex = useRef(0);
+  const [items, setItems] = useState(generateTabs());
+
+  // Update items when dependencies change
+  useEffect(() => {
+    setItems(generateTabs());
+  }, [tasks, assignedTasksWeekly, profiles]);
+
+  const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
+    <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
+      <DefaultTabBar
+        {...props}
+        tabPosition="top"
+        tabBarGutter={10}
+        style={{ backgroundColor: "white" }}
+        onTabScroll={(event) => {
+          const scrollAmount = 100;
+          window.scrollTo(0, window.scrollY + scrollAmount);
+        }}
+      />
+    </StickyBox>
+  );
 
   const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
+    const newTabName = `Shared tab ${items.length + 1}`;
+    
     const newPanes = [...items];
     newPanes.push({
-      label: `Shared tab ${newPanes.length + 1}`,
+      label: newTabName,
       children: (
         <AssignedTasklist
           setAssignedTasksWeekly={setAssignedTasksWeekly}
@@ -81,13 +89,29 @@ function TabView() {
       ),
       key: newActiveKey,
     });
+
     setItems(newPanes);
     setActiveKey(newActiveKey);
-    const tasklist = {
-    listName: `Shared tab ${newPanes.length + 1}`
-    }
 
-    const response = await createTasklist(tasklist);
+    const tasklist = {
+      listName: newTabName
+    };
+
+    try {
+      const response = await createTasklist(tasklist);
+    } catch (error) {
+      console.error('Failed to create tasklist:', error);
+    }
+  };
+
+  const remove = (targetKey: string) => {
+    const newItems = items.filter(item => item.key !== targetKey);
+    setItems(newItems);
+
+    // If the active tab is being removed, switch to the first tab
+    if (activeKey === targetKey) {
+      setActiveKey(newItems[0]?.key || '1');
+    }
   };
 
   const onEdit = (
@@ -97,8 +121,7 @@ function TabView() {
     if (action === 'add') {
       add();
     } else {
-      console.log("Remove"); 
-      // Handle tab removal logic here (remove the tab from the 'items' state)
+      remove(targetKey as string);
     }
   };
 
@@ -107,9 +130,10 @@ function TabView() {
       size="large"
       renderTabBar={renderTabBar}
       type="editable-card"
-      defaultActiveKey="1"
+      activeKey={activeKey}
+      onChange={setActiveKey}
       onEdit={onEdit}
-      items={items} 
+      items={items}
     />
   );
 }
