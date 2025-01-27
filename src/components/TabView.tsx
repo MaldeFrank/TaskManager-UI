@@ -13,16 +13,19 @@ import { createTasklist } from "../services/apiTasklist";
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
-  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<AssignedTask[]>([]);
+  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<
+    AssignedTask[]
+  >([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [activeKey, setActiveKey] = useState('1');
+  const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
 
   // Create a function to generate tab items
   const generateTabs = () => [
     {
-      key: '1',
-      label: '1. Ugens opgaver',
+      key: "1",
+      label: "1. Ugens opgaver",
+      closable: false,
       children: (
         <AssignedTasks
           setAssignedTasksWeekly={setAssignedTasksWeekly}
@@ -33,8 +36,9 @@ function TabView() {
       ),
     },
     {
-      key: '2',
-      label: '2. Opgave liste',
+      key: "2",
+      label: "2. Opgave liste",
+      closable: false,
       children: (
         <Tasks
           setTasks={setTasks}
@@ -44,8 +48,9 @@ function TabView() {
       ),
     },
     {
-      key: '3',
-      label: '3. Brugere',
+      key: "3",
+      label: "3. Brugere",
+      closable: false,
       children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
     },
   ];
@@ -57,7 +62,7 @@ function TabView() {
     setItems(generateTabs());
   }, [tasks, assignedTasksWeekly, profiles]);
 
-  const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
+  const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
       <DefaultTabBar
         {...props}
@@ -75,7 +80,7 @@ function TabView() {
   const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
     const newTabName = `Shared tab ${items.length + 1}`;
-    
+
     const newPanes = [...items];
     newPanes.push({
       label: newTabName,
@@ -88,37 +93,37 @@ function TabView() {
         />
       ),
       key: newActiveKey,
+      closable: true, // Add closable: true here
     });
-
     setItems(newPanes);
     setActiveKey(newActiveKey);
 
     const tasklist = {
-      listName: newTabName
+      listName: newTabName,
     };
 
     try {
       const response = await createTasklist(tasklist);
     } catch (error) {
-      console.error('Failed to create tasklist:', error);
+      console.error("Failed to create tasklist:", error);
     }
   };
 
   const remove = (targetKey: string) => {
-    const newItems = items.filter(item => item.key !== targetKey);
+    const newItems = items.filter((item) => item.key !== targetKey);
     setItems(newItems);
 
     // If the active tab is being removed, switch to the first tab
     if (activeKey === targetKey) {
-      setActiveKey(newItems[0]?.key || '1');
+      setActiveKey(newItems[0]?.key || "1");
     }
   };
 
   const onEdit = (
     targetKey: React.MouseEvent | React.KeyboardEvent | string,
-    action: 'add' | 'remove',
+    action: "add" | "remove"
   ) => {
-    if (action === 'add') {
+    if (action === "add") {
       add();
     } else {
       remove(targetKey as string);
