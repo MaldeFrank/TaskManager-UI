@@ -7,6 +7,8 @@ import Tasks from "./tabs/Tasks";
 import { Profile } from "../model/Profile";
 import { AssignedTask } from "../model/AssignedTask";
 import UsersList from "./tabs/UserList";
+import AssignedTasklist from "./tabs/AssignedTasklist";
+import { createTasklist } from "../services/apiTasklist";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -64,13 +66,13 @@ function TabView() {
   const [items, setItems] = useState(initialTabs);
   const newTabIndex = useRef(0);
 
-  const add = () => {
+  const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
     const newPanes = [...items];
     newPanes.push({
-      label: 'Shared tab',
+      label: `Shared tab ${newPanes.length + 1}`,
       children: (
-        <AssignedTasks
+        <AssignedTasklist
           setAssignedTasksWeekly={setAssignedTasksWeekly}
           assignedTasksWeekly={assignedTasksWeekly}
           setProfiles={setProfiles}
@@ -81,6 +83,11 @@ function TabView() {
     });
     setItems(newPanes);
     setActiveKey(newActiveKey);
+    const tasklist = {
+    listName: `Shared tab ${newPanes.length + 1}`
+    }
+
+    const response = await createTasklist(tasklist);
   };
 
   const onEdit = (

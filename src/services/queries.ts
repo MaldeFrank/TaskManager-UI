@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getAllTasks } from "./apiTasks";
 import { getAllAssignTasks, getAllAssignTasksWeekly } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
+import { getAssignedTasks } from "./apiTasklist";
 
 export function useGetAllTasks() {
     return useQuery({
