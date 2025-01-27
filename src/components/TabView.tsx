@@ -12,14 +12,11 @@ import { createTasklist } from "../services/apiTasklist";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
-  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<
-    AssignedTask[]
-  >([]);
+  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<AssignedTask[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-
+  
   // Create a function to generate tab items
   const generateTabs = () => [
     {
@@ -86,10 +83,9 @@ function TabView() {
       label: newTabName,
       children: (
         <AssignedTasklist
-          setAssignedTasksWeekly={setAssignedTasksWeekly}
-          assignedTasksWeekly={assignedTasksWeekly}
           setProfiles={setProfiles}
           profiles={profiles}
+          tasklistName={newTabName}
         />
       ),
       key: newActiveKey,

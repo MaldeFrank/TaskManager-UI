@@ -19,6 +19,14 @@ export const getTasklist = async (id: number) => {
   return response.data;
 };
 
+export const getAllTasklist = async () => {
+  const response = await axiosInstance.get(`tasklist/getAll`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  console.log("Responses", response.data);
+  return response.data;
+};
+
 export const deleteTasklist = async (id: number) => {
   const response = await axiosInstance.delete(`tasklist/deleteTasklist/${id}`, {
     headers: { "Content-Type": "application/json" },

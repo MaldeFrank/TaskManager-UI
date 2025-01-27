@@ -1,33 +1,40 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 import { getAllTasks } from "./apiTasks";
 import { getAllAssignTasks, getAllAssignTasksWeekly } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
 import { getAssignedTasks } from "./apiTasklist";
 
 export function useGetAllTasks() {
-    return useQuery({
-      queryKey: ["getAllTasks"],
-      queryFn: getAllTasks,
-    });
-  }
+  return useQuery({
+    queryKey: ["getAllTasks"],
+    queryFn: getAllTasks,
+  });
+}
 
-  export function useGetAllAssignedTasks(){
+export function useGetAllAssignedTasks() {
   return useQuery({
     queryKey: ["getAllAssignTasks"],
-    queryFn: getAllAssignTasks
-  })
-  }
+    queryFn: getAllAssignTasks,
+  });
+}
 
-  export function useGetAllAssignedTasksWeekly(){
-    return useQuery({
-      queryKey: ["getAllAssignTasks"],
-      queryFn: getAllAssignTasksWeekly
-    })
-    }
+export function useGetAllAssignedTasksWeekly() {
+  return useQuery({
+    queryKey: ["getAllAssignTasks"],
+    queryFn: getAllAssignTasksWeekly,
+  });
+}
 
-  export function useGetAllProfiles(){
-    return useQuery({
-      queryKey: ["getAllProfiles"],
-      queryFn: getAllProfiles
-    })
-    }
+export function useGetAllProfiles() {
+  return useQuery({
+    queryKey: ["getAllProfiles"],
+    queryFn: getAllProfiles,
+  });
+}
+
+export function useGetAssingedTasks(id: number) {
+  return useQuery({
+    queryKey: ['getAssignedTasks', id], 
+    queryFn: () => getAssignedTasks(id), 
+  });
+}
