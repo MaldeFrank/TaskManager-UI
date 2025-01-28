@@ -86,7 +86,6 @@ function TabView() {
         <AssignedTasklist
           setProfiles={setProfiles}
           profiles={profiles}
-          tasklistName={newTabName}
           tasklistId={tasklistId}
         />
       ),

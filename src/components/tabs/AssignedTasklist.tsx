@@ -8,14 +8,12 @@ import { useGetAssingedTasks } from "../../services/queries";
 interface props {
   setProfiles: any;
   profiles: Profile[];
-  tasklistName: any;
   tasklistId:number;
 }
 
 function AssignedTasklist({
   setProfiles,
   profiles,
-  tasklistName,
   tasklistId
 }: props) {
   const { data: assignedTasksFetch, isLoading, error } = useGetAssingedTasks(tasklistId);
