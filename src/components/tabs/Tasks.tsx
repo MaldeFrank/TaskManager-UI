@@ -171,7 +171,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
                 <Button type="primary" onClick={() => postAssignedTaskFunction(record)}>
                   Tilføj til ugen
                 </Button>
-                <AddTask tasklists={tasklists}/>
+                <AddTask tasklists={tasklists} task={record}/>
               </>
             )}
           </Space>

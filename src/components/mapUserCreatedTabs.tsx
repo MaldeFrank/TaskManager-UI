@@ -7,10 +7,13 @@ interface Props {
   profiles: any,
 }
 
-function mapUserCreatedTabs({ allTasklists, setProfiles, profiles}: Props) {
+function mapUserCreatedTabs({ allTasklists, setProfiles, profiles }: Props) {
   const generateSavedTabs = () => {
-    
-    const tabs = allTasklists.map((tasklist) => ({
+    if (!allTasklists) {
+      return [];
+    }
+
+    const tabs = allTasklists.map((tasklist, index) => ({
       key: tasklist.taskId,
       label: tasklist.listName,
       closable: true,
@@ -18,14 +21,14 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles}: Props) {
         <AssignedTasklist
           setProfiles={setProfiles}
           profiles={profiles}
-          tasklistId={tasklist.id}
+          tasklistId={tasklist.taskId} // Use tasklist.taskId instead of index
         />
       ),
     }));
     return tabs;
   };
 
-  return generateSavedTabs(); 
+  return generateSavedTabs();
 }
 
 export default mapUserCreatedTabs;
