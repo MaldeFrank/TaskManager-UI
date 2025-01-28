@@ -9,15 +9,17 @@ interface props {
   setProfiles: any;
   profiles: Profile[];
   tasklistName: any;
+  tasklistId:number;
 }
 
 function AssignedTasklist({
   setProfiles,
   profiles,
-  tasklistName
+  tasklistName,
+  tasklistId
 }: props) {
-  const { data: assignedTasksFetch, isLoading, error } = useGetAssingedTasks(123);
-  const [assignedTasks,setAssignedTasks] = useState<any[]>(assignedTasksFetch)
+  const { data: assignedTasksFetch, isLoading, error } = useGetAssingedTasks(tasklistId);
+  const [assignedTasks,setAssignedTasks] = useState<any[]>()
  
 
   return (
@@ -25,7 +27,7 @@ function AssignedTasklist({
       <button>Press here</button>
       <AssignedTasks
         setAssignedTasksWeekly={setAssignedTasks}
-        assignedTasksWeekly={assignedTasks}
+        assignedTasksWeekly={assignedTasks != null ? assignedTasks : []}
         setProfiles={setProfiles}
         profiles={profiles}
       />

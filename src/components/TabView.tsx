@@ -16,7 +16,8 @@ function TabView() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  
+  const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
+
   // Create a function to generate tab items
   const generateTabs = () => [
     {
@@ -86,6 +87,7 @@ function TabView() {
           setProfiles={setProfiles}
           profiles={profiles}
           tasklistName={newTabName}
+          tasklistId={tasklistId}
         />
       ),
       key: newActiveKey,
@@ -100,6 +102,8 @@ function TabView() {
 
     try {
       const response = await createTasklist(tasklist);
+      console.log("Here is tasklist: ",response)
+      setTasklisId(response.taskId)
     } catch (error) {
       console.error("Failed to create tasklist:", error);
     }
