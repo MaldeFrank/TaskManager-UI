@@ -35,6 +35,7 @@ function App() {
     name: string;
     picture: string;
   } | null>(null);
+  const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
 
   const handleCallbackResponse = (response: { credential: string }) => {
     // Decode the JWT token
@@ -59,11 +60,48 @@ function App() {
     setUser(null);
     localStorage.removeItem('google_token');
     // Prevent auto-select of the previously logged in account
-    window.google.accounts.id.disableAutoSelect();
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.disableAutoSelect();
+    }
   };
 
+  // Initialize Google Sign-In
+  const initializeGoogleSignIn = () => {
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.initialize({
+        client_id: "144539137320-fjf8rp49u33evb065t053u95d50mndah.apps.googleusercontent.com",
+        callback: handleCallbackResponse
+      });
+
+      // Render the Google Sign-In button if not authenticated
+      if (!isAuthenticated) {
+        const signInDiv = document.getElementById("signInDiv");
+        if (signInDiv) {
+          window.google.accounts.id.renderButton(
+            signInDiv,
+            { theme: "outline", size: "large" }
+          );
+        }
+      }
+      setIsGoogleLoaded(true);
+    }
+  };
+
+  // Check for Google API loading
   useEffect(() => {
-    // Check for existing token on mount
+    const checkGoogleLoaded = setInterval(() => {
+      if (window.google?.accounts?.id) {
+        clearInterval(checkGoogleLoaded);
+        initializeGoogleSignIn();
+      }
+    }, 100);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(checkGoogleLoaded);
+  }, []);
+
+  // Check for existing token
+  useEffect(() => {
     const token = localStorage.getItem('google_token');
     if (token) {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
@@ -80,34 +118,19 @@ function App() {
         localStorage.removeItem('google_token');
       }
     }
-
-    // Initialize Google Sign-In
-    window.google.accounts.id.initialize({
-      client_id: "144539137320-fjf8rp49u33evb065t053u95d50mndah.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    });
-
-    // Render the Google Sign-In button if not authenticated
-    if (!isAuthenticated) {
-      const signInDiv = document.getElementById("signInDiv");
-      if (signInDiv) {
-        window.google.accounts.id.renderButton(
-          signInDiv,
-          { theme: "outline", size: "large" }
-        );
-      }
-    }
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      
       <div className="app">
         {!isAuthenticated ? (
           <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="p-8 bg-white rounded-lg shadow-md">
               <h1 className="mb-6 text-2xl font-bold text-center">Welcome</h1>
               <div id="signInDiv" className="mb-4"></div>
+              {!isGoogleLoaded && (
+                <p className="text-gray-600 text-center">Loading sign-in...</p>
+              )}
             </div>
           </div>
         ) : (
