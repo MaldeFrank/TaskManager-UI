@@ -47,6 +47,7 @@ function TabView() {
       closable: false,
       children: (
         <Tasks
+          tasklists={fetchedTasklists}
           setTasks={setTasks}
           tasks={tasks}
           setAssignedTasksWeekly={setAssignedTasksWeekly}

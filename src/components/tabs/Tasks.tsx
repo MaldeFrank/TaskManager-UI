@@ -8,11 +8,13 @@ import { postAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTaskDto } from "../../model/AssignedTask";
 import { EditableCellProps } from "../../types/Cells";
 import { postTask } from "../../services/apiTasks";
+import AddTask from "../AddTask";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   tasks: Task[];
   setAssignedTasksWeekly: any;
+  tasklists:any[];
 }
 
 
@@ -50,7 +52,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
+function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
   const { data, isLoading, isError, error } = useGetAllTasks();
@@ -169,6 +171,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly }: Props) {
                 <Button type="primary" onClick={() => postAssignedTaskFunction(record)}>
                   Tilføj til ugen
                 </Button>
+                <AddTask tasklists={tasklists}/>
               </>
             )}
           </Space>
