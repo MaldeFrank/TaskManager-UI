@@ -9,6 +9,8 @@ import { AssignedTask } from "../model/AssignedTask";
 import UsersList from "./tabs/UserList";
 import AssignedTasklist from "./tabs/AssignedTasklist";
 import { createTasklist } from "../services/apiTasklist";
+import { useGetAllTasklist } from "../services/queries";
+import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -17,8 +19,15 @@ function TabView() {
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
   const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
+  const {data:fetchedTasklists} = useGetAllTasklist();
+  const [tasklists,setTasklists] = useState<any[]>(fetchedTasklists)
 
-  // Create a function to generate tab items
+  const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
+    allTasklists: fetchedTasklists,
+    setProfiles,
+    profiles
+  }) : [];
+
   const generateTabs = () => [
     {
       key: "1",
@@ -51,6 +60,7 @@ function TabView() {
       closable: false,
       children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
     },
+    ...userCreatedTabs
   ];
 
   const [items, setItems] = useState(generateTabs());
