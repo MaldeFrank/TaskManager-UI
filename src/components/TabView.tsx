@@ -8,7 +8,7 @@ import { Profile } from "../model/Profile";
 import { AssignedTask } from "../model/AssignedTask";
 import UsersList from "./tabs/UserList";
 import AssignedTasklist from "./tabs/AssignedTasklist";
-import { createTasklist } from "../services/apiTasklist";
+import { createTasklist, deleteTasklist } from "../services/apiTasklist";
 import { useGetAllTasklist } from "../services/queries";
 import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
@@ -137,6 +137,7 @@ function TabView() {
       add();
     } else {
       remove(targetKey as string);
+      deleteTasklist(Number(targetKey))
     }
   };
 
