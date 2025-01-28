@@ -9,8 +9,9 @@ interface Props {
 
 function mapUserCreatedTabs({ allTasklists, setProfiles, profiles}: Props) {
   const generateSavedTabs = () => {
+    
     const tabs = allTasklists.map((tasklist) => ({
-      key: "4",
+      key: tasklist.taskId,
       label: tasklist.listName,
       closable: true,
       children: (

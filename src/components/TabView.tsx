@@ -19,8 +19,7 @@ function TabView() {
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
   const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
-  const {data:fetchedTasklists} = useGetAllTasklist();
-  const [tasklists,setTasklists] = useState<any[]>(fetchedTasklists)
+  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllTasklist();
 
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
     allTasklists: fetchedTasklists,
@@ -67,8 +66,9 @@ function TabView() {
 
   // Update items when dependencies change
   useEffect(() => {
+    refetchTasklists();
     setItems(generateTabs());
-  }, [tasks, assignedTasksWeekly, profiles]);
+  }, [tasks, assignedTasksWeekly, profiles, fetchedTasklists]);
 
   const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
