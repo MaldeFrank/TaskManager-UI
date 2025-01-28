@@ -81,7 +81,9 @@ function TabView() {
 
     const newPanes = [...items];
     newPanes.push({
+      key: newActiveKey,
       label: newTabName,
+      closable: true, 
       children: (
         <AssignedTasklist
           setProfiles={setProfiles}
@@ -89,8 +91,7 @@ function TabView() {
           tasklistId={tasklistId}
         />
       ),
-      key: newActiveKey,
-      closable: true, // Add closable: true here
+      
     });
     setItems(newPanes);
     setActiveKey(newActiveKey);
