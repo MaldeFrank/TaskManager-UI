@@ -85,14 +85,22 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   };
 
   const createNewTask = async () => {
+    const userId = localStorage.getItem("user_id");
+
+    if(userId === null) {
+      console.error("User not logged in");
+      return;
+    }
+
     const newTask: any = {
       title: "Edit",
       description: "Edit",
       points: 0,
+      googleId: userId,
     };
   
-    const createdTask = await postTask(newTask);
-  
+    const createdTask = await postTask(userId,newTask);
+    console.log("Created task", createdTask);
     setTasks((prev: Task[]) => {
       return [...prev, createdTask];
     });
@@ -103,13 +111,14 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
     setTasks((prevTasks: Task[]) => prevTasks.filter((task) => task.id !== id));
   };
 
-  const postAssignedTaskFunction = async (task: Task) => {
+  const postAssignedTaskFunction = async (task:any) => {
 
-    const assignedTaskDto: AssignedTaskDto = {
+    const assignedTaskDto: any = {
       assignedTo: 0,
       completed: false,
       task: task,
-      userId: localStorage.getItem("user_id")
+      googleId: localStorage.getItem("user_id"),
+      userId: localStorage.getItem("user_id") //Maybe get rid of userId, since there is now google account
     };
 
     const response = await postAssignTask(assignedTaskDto);

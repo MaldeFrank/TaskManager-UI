@@ -6,11 +6,7 @@ import { AssignedTaskDto } from "../model/AssignedTask";
 import { createProfile } from "./apiProfile";
 import { Profile } from "../model/Profile";
 
-export function useCreateTask(){
-    return useMutation({
-        mutationFn: (data: Task) => postTask(data)
-    })
-}
+
 
 export function usePutTask(){
     return useMutation({

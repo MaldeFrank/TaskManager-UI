@@ -12,6 +12,9 @@ export const postAssignTask = async (assignedTaskDto:any) => {
         tasklist: { 
             taskId: assignedTaskDto.tasklistId 
         }, 
+        googleAccount: {
+            id: assignedTaskDto.googleId
+        },
         userId: assignedTaskDto.userId
     }
     

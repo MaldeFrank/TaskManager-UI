@@ -1,16 +1,27 @@
 import axios from "axios";
 import { Task, TaskDto } from "../model/Task";
-import Tasks from "../components/tabs/Tasks";
 
 const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
-export const postTask = async (taskData: TaskDto) => {
-  const response = await axiosInstance.post<Task>("/tasks", taskData, { headers: { "Content-Type": "application/json" } });
-  return response.data; // Return only the task data from the response
+export const postTask = async (googleId:any, taskData:any) => { 
+  console.log('Google id received', googleId);
+  const data = {
+    title: taskData?.title,
+    description: taskData?.description,
+    points: taskData?.points,
+    googleAccount: {
+      id: googleId, 
+    },
+  };
+
+  const response = await axiosInstance.post<any>("/tasks", data, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data;
 };
 
-export const putTask = async (taskData: Task) => {
+export const putTask = async (taskData: any) => {
   const responseBody = {
       title: taskData?.title,
       description: taskData?.description,
