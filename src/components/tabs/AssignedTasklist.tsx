@@ -16,9 +16,13 @@ function AssignedTasklist({
   profiles,
   tasklistId
 }: props) {
-  const { data: assignedTasksFetch, isLoading, error } = useGetAssingedTasks(tasklistId);
-  const [assignedTasks,setAssignedTasks] = useState<any[]>()
+  const { data: assignedTasksFetch} = useGetAssingedTasks(tasklistId);
+  const [assignedTasks,setAssignedTasks] = useState<any[]>(assignedTasksFetch)
  
+  useEffect(() => {
+   console.log("AssignedTasks",assignedTasks)
+   console.log("Id",tasklistId)
+  }, [assignedTasks]);
 
   return (
     <>

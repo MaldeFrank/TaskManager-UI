@@ -4,6 +4,7 @@ import router from './router/Router';
 import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
+import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
 
 // Declare google global type
 declare global {
@@ -37,7 +38,7 @@ function App() {
   } | null>(null);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
 
-  const handleCallbackResponse = (response: { credential: string }) => {
+  const handleCallbackResponse = async (response: { credential: string }) => {
     // Decode the JWT token
     const decodedToken = JSON.parse(atob(response.credential.split('.')[1]));
     
@@ -53,6 +54,22 @@ function App() {
     // Store the token in localStorage for persistence
     localStorage.setItem('google_token', response.credential);
     localStorage.setItem('user_id', decodedToken.sub);
+    const doesExist = await checkIfAccountExists(decodedToken.sub);
+    console.log("Does account exist", doesExist);
+    //Creates the account if it does not already exist in the db
+    if (!doesExist) {  // Make sure doesExist is checking googleId
+      const acc = {
+          googleId: decodedToken.sub,
+          name: decodedToken.name,
+      };
+  
+      try {
+          const createdAccount = await createAccount(acc);
+          console.log("Account created and returned:", createdAccount);
+      } catch (error) {
+          console.error("Error in account creation flow:", error);
+      }
+  }
   };
 
   const handleLogout = () => {
