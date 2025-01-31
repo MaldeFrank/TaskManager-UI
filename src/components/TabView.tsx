@@ -105,7 +105,7 @@ function TabView() {
     });
     setItems(newPanes);
     setActiveKey(newActiveKey);
-
+     
     const tasklist = {
       listName: newTabName,
     };
@@ -114,6 +114,7 @@ function TabView() {
       const response = await createTasklist(tasklist);
       console.log("Here is tasklist: ",response)
       setTasklisId(response.taskId)
+      refetchTasklists();
     } catch (error) {
       console.error("Failed to create tasklist:", error);
     }
