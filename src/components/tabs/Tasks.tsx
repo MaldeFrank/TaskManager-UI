@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetAllTasks } from "../../services/queries";
+import { useGetAllAccTasks, useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table, Form, Input, InputNumber } from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask, usePutTask } from "../../services/mutations";
@@ -53,7 +53,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
-  const { data, isLoading, isError, error } = useGetAllTasks();
+  const { data, isLoading, isError, error } = useGetAllAccTasks(localStorage.getItem("user_id"));
   const { mutate: deleteTask } = useDeleteTask();
   const { mutate: updateTask } = usePutTask();
 
