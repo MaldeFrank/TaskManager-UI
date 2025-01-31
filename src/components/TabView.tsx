@@ -36,8 +36,8 @@ function TabView() {
       closable: false,
       children: (
         <AssignedTasks
-          setAssignedTasksWeekly={setAssignedTasks}
-          assignedTasksWeekly={assignedTasks}
+          setAssignedTasks={setAssignedTasks}
+          assignedTasks={assignedTasks}
           setProfiles={setProfiles}
           profiles={profiles}
         />

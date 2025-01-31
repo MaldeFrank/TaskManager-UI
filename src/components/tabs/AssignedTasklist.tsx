@@ -34,8 +34,8 @@ function AssignedTasklist({
     <>
       <button>Press here</button>
       <AssignedTasks
-        setAssignedTasksWeekly={setFilteredAssignedTasks}
-        assignedTasksWeekly={filteredAssignedTasks != null ? filteredAssignedTasks : []}
+        setAssignedTasks={setFilteredAssignedTasks}
+        assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}
         setProfiles={setProfiles}
         profiles={profiles}
       />

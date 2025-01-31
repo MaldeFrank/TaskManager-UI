@@ -12,15 +12,15 @@ import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
 
 interface props {
-  setAssignedTasksWeekly: any;
-  assignedTasksWeekly: AssignedTask[];
+  setAssignedTasks: any;
+  assignedTasks: AssignedTask[];
   setProfiles: any;
   profiles: Profile[];
 }
 
 function AssignedTasks({
-  setAssignedTasksWeekly,
-  assignedTasksWeekly,
+  setAssignedTasks,
+  assignedTasks,
   setProfiles,
   profiles,
 }: props) {
@@ -38,7 +38,7 @@ function AssignedTasks({
   const switchTaskState = (record: any) => {
     
     if(record.assignedTo){
-      setAssignedTasksWeekly((prev: any[]) =>
+      setAssignedTasks((prev: any[]) =>
         prev.map((task) => {
           if (task.id === record.id) {
             task.completed = !task.completed;
@@ -60,7 +60,7 @@ function AssignedTasks({
 const handleMenuClick = (record: AssignedTask) => (e: any) => {
   const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
   if (selectedProfile) {
-    setAssignedTasksWeekly((prev: AssignedTask[]) =>
+    setAssignedTasks((prev: AssignedTask[]) =>
       prev.map((task) =>
         task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
       ),
@@ -151,9 +151,9 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
   <div>
     
     <h2 style={{textAlign:"center", color:"red"}}><Tag color="red">Ikke udført</Tag></h2>
-  <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===false)} columns={columns}/>
+  <Table dataSource={assignedTasks.filter((task)=>task.completed===false)} columns={columns}/>
     <h2 style={{textAlign:"center", color:"green"}}><Tag color="green">Udført</Tag></h2>
-  <Table dataSource={assignedTasksWeekly.filter((task)=>task.completed===true)} columns={columns}/>
+  <Table dataSource={assignedTasks.filter((task)=>task.completed===true)} columns={columns}/>
   </div>
 ) 
 }
