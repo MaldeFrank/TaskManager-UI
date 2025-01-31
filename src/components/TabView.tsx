@@ -10,6 +10,7 @@ import AssignedTasklist from "./tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
 import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
 import mapUserCreatedTabs from "./mapUserCreatedTabs";
+import MyTasks from "./tabs/MyTasks";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,15 +32,14 @@ function TabView() {
   const generateTabs = () => [
     {
       key: "1",
-      label: "1. Ugens opgaver",
+      label: "1. Mine opgaver",
       closable: false,
       children: (
-        <AssignedTasks
+        <MyTasks
           setAssignedTasks={setAssignedTasks}
           assignedTasks={assignedTasks}
           setProfiles={setProfiles}
-          profiles={profiles}
-        />
+          profiles={profiles}/>
       ),
     },
     {

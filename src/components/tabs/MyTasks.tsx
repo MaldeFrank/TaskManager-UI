@@ -6,15 +6,13 @@ import { useGetAccAssignedTasks } from "../../services/queries";
 interface props {
   setProfiles: any;
   profiles: Profile[];
-  tasklistId: number;
   setAssignedTasks: any;
   assignedTasks: any;
 }
 
-function AssignedTasklist({
+function MyTasks({
   setProfiles,
   profiles,
-  tasklistId,
   setAssignedTasks,
   assignedTasks
 }: props) {
@@ -24,7 +22,7 @@ function AssignedTasklist({
   useEffect(() => { 
     if (data) { 
       refetch();
-      setFilteredAssignedTasks(data.filter((task: any) => task.tasklistId === tasklistId));
+      setFilteredAssignedTasks(data);
     } else {
       setFilteredAssignedTasks([]); 
     }
@@ -33,7 +31,6 @@ function AssignedTasklist({
 
   return (
     <>
-      <button>Press here</button>
       <AssignedTasks
         setAssignedTasks={setFilteredAssignedTasks}
         assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}
@@ -44,4 +41,4 @@ function AssignedTasklist({
   );
 }
 
-export default AssignedTasklist;
+export default MyTasks;
