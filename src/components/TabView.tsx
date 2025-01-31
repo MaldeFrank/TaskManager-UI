@@ -14,7 +14,7 @@ import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<any[]>([]);
+  const [assignedTasks, setAssignedTasks] = useState<any[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
@@ -25,8 +25,8 @@ function TabView() {
     allTasklists: fetchedTasklists,
     setProfiles,
     profiles,
-    setAssignedTasks: setAssignedTasksWeekly,
-    assignedTasks: assignedTasksWeekly,
+    setAssignedTasks: setAssignedTasks,
+    assignedTasks: assignedTasks,
   }) : [];
 
   const generateTabs = () => [
@@ -36,8 +36,8 @@ function TabView() {
       closable: false,
       children: (
         <AssignedTasks
-          setAssignedTasksWeekly={setAssignedTasksWeekly}
-          assignedTasksWeekly={assignedTasksWeekly}
+          setAssignedTasksWeekly={setAssignedTasks}
+          assignedTasksWeekly={assignedTasks}
           setProfiles={setProfiles}
           profiles={profiles}
         />
@@ -52,7 +52,7 @@ function TabView() {
           tasklists={fetchedTasklists}
           setTasks={setTasks}
           tasks={tasks}
-          setAssignedTasksWeekly={setAssignedTasksWeekly}
+          setAssignedTasksWeekly={setAssignedTasks}
         />
       ),
     },
@@ -71,7 +71,7 @@ function TabView() {
   useEffect(() => {
     refetchTasklists();
     setItems(generateTabs());
-  }, [tasks, assignedTasksWeekly, profiles, fetchedTasklists]);
+  }, [tasks, assignedTasks, profiles, fetchedTasklists]);
 
   const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
@@ -99,8 +99,8 @@ function TabView() {
       closable: true, 
       children: (
         <AssignedTasklist
-          setAssignedTasks={setAssignedTasksWeekly}
-          assignedTasks={assignedTasksWeekly}
+          setAssignedTasks={setAssignedTasks}
+          assignedTasks={assignedTasks}
           setProfiles={setProfiles}
           profiles={profiles}
           tasklistId={tasklistId}

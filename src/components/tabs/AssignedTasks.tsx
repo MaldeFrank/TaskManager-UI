@@ -77,13 +77,6 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
   }));
 
   useEffect(() => {
-    if (data) {
-      console.log("Data",data)
-      setAssignedTasksWeekly(data);
-    }
-  }, [data, setAssignedTasksWeekly]);
-
-  useEffect(() => {
     if (profilesData) {
       setProfiles(profilesData);
     }
