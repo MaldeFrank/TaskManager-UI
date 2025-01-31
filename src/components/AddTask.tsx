@@ -6,9 +6,10 @@ import { postAssignTask } from "../services/apiAssignedTasks";
 interface Props {
   tasklists: any[];
   task: any;
+  setAssignedTasks: any;
 }
 
-function AddTask({ tasklists, task }: Props) {
+function AddTask({ tasklists, task, setAssignedTasks }: Props) {
   const items: MenuProps["items"] = tasklists.map((tasklist) => ({
     key: tasklist.taskId,
     label: tasklist.listName,
@@ -26,7 +27,8 @@ function AddTask({ tasklists, task }: Props) {
       };
   
       const response = await postAssignTask(assignedTaskDto);
-      // Handle successful assignment (e.g., show a success message)
+      console.log("AssignedTask send up from AddTask", response);
+      setAssignedTasks([]);
     } catch (error) {
       console.error("Error assigning task:", error);
       // Show an error message to the user

@@ -120,7 +120,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
       googleAccountId: localStorage.getItem("user_id"),
       userId: localStorage.getItem("user_id") //Maybe get rid of userId, since there is now google account
     };
-
+    console.log("AssignedTask is now set and state has been updated")
     const response = await postAssignTask(assignedTask);
     setAssignedTasksWeekly((prevAssignedTask: any) => [...prevAssignedTask, response.data]);
   };
@@ -180,7 +180,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
                 <Button type="primary" onClick={() => postAssignedTaskFunction(record)}>
                   Tilføj til ugen
                 </Button>
-                <AddTask tasklists={tasklists} task={record}/>
+                <AddTask setAssignedTasks={setAssignedTasksWeekly} tasklists={tasklists} task={record}/>
               </>
             )}
           </Space>

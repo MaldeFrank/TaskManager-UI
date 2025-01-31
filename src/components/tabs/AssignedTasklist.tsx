@@ -18,11 +18,13 @@ function AssignedTasklist({
   setAssignedTasks,
   assignedTasks
 }: props) {
-  const { data} = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
+  const { data, refetch} = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
   const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
   
-  useEffect(() => {
+  useEffect(() => { 
     if (data) { 
+      refetch();
+      console.log("Hello")
       setFilteredAssignedTasks(data.filter((task: any) => task.tasklistId === tasklistId));
     } else {
       setFilteredAssignedTasks([]); 

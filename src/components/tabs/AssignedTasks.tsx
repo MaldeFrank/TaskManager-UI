@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   useGetAccAssignedTasks,
-  useGetAllAssignedTasks,
-  useGetAllAssignedTasksWeekly,
   useGetAllProfiles
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
@@ -25,7 +23,6 @@ function AssignedTasks({
   profiles,
 }: props) {
 
-  const { data, isLoading, isError, error } = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
 
   const {
     data: profilesData,
@@ -83,13 +80,6 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     }
   }, [profilesData, setProfiles]);
 
-  if (isLoading || isProfilesLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
 
   if (isProfilesError) {
     return <div>Error loading profiles</div>;
