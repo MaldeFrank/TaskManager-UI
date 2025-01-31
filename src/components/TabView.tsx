@@ -14,7 +14,7 @@ import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasks, setAssignedTasks] = useState<any[]>([]);
+  const [assignedTasks, setAssignedTasks] = useState<any[]>([]); //Right now it is always empty and is just used to make child components rerender
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
