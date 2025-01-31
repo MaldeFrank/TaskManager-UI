@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAccAssignedTasks } from "../../services/queries";
+import { addAccToTasklist } from "../../services/apiTasklist";
 
 interface props {
   setProfiles: any;
@@ -20,6 +21,7 @@ function AssignedTasklist({
 }: props) {
   const { data, refetch} = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
   const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
+  const [email, setEmail] = useState("");
   
   useEffect(() => { 
     if (data) { 
@@ -30,10 +32,18 @@ function AssignedTasklist({
     }
   }, [data,setAssignedTasks,assignedTasks]); 
 
+  const addUserToTasklist = async () => {
+    addAccToTasklist(email, tasklistId);
+  };
+
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
 
   return (
     <>
-      <button>Press here</button>
+      <input onChange={(e)=>handleEmailChange(e)} type="text" placeholder="Email.." />
+      <button onClick={()=>addUserToTasklist()}>Del</button>
       <AssignedTasks
         setAssignedTasks={setFilteredAssignedTasks}
         assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}

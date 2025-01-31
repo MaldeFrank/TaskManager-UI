@@ -54,6 +54,7 @@ function App() {
     // Store the token in localStorage for persistence
     localStorage.setItem('google_token', response.credential);
     localStorage.setItem('user_id', decodedToken.sub);
+    localStorage.setItem('Email', decodedToken.email);
     const doesExist = await checkIfAccountExists(decodedToken.sub);
     console.log("Does account exist", doesExist);
     //Creates the account if it does not already exist in the db
@@ -61,6 +62,7 @@ function App() {
       const acc = {
           googleId: decodedToken.sub,
           name: decodedToken.name,
+          email: decodedToken.email,
       };
   
       try {

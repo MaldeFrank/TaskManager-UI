@@ -33,6 +33,7 @@ export const createAccount = async (googleAcc: any) => {
   const data = {
     id: googleAcc.googleId,
     name: googleAcc.name,
+    email: googleAcc.email,
   };
 
   const response = await axiosInstance.post("/create", data, {
