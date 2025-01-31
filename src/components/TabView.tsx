@@ -67,11 +67,7 @@ function TabView() {
 
   const [items, setItems] = useState(generateTabs());
 
-  // Update items when dependencies change
-  useEffect(() => {
-    refetchTasklists();
-    setItems(generateTabs());
-  }, [tasks, assignedTasks, profiles, fetchedTasklists]);
+
 
   const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
@@ -145,6 +141,12 @@ function TabView() {
       deleteTasklist(Number(targetKey))
     }
   };
+
+   // Update items when dependencies change
+ useEffect(() => {
+  refetchTasklists();
+  setItems(generateTabs());
+}, [tasks, assignedTasks, profiles, fetchedTasklists,add]);
 
   return (
     <Tabs

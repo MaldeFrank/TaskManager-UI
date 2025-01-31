@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table, Form, Input, InputNumber } from "antd";
-import { Task, TaskDto } from "../../model/Task";
+import { Task } from "../../model/Task";
 import { useDeleteTask, usePutTask } from "../../services/mutations";
-import { Profile } from "../../model/Profile";
 import { postAssignTask } from "../../services/apiAssignedTasks";
-import { AssignedTaskDto } from "../../model/AssignedTask";
 import { EditableCellProps } from "../../types/Cells";
 import { postTask } from "../../services/apiTasks";
 import AddTask from "../AddTask";
