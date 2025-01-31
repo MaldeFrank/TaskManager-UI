@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  useGetAccAssignedTasks,
   useGetAllProfiles
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";

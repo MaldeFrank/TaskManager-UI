@@ -5,11 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
 import { Profile } from "../model/Profile";
-import { AssignedTask } from "../model/AssignedTask";
 import UsersList from "./tabs/UserList";
 import AssignedTasklist from "./tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
-import { useGetAllTasklist } from "../services/queries";
+import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
 import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
 function TabView() {
@@ -19,7 +18,7 @@ function TabView() {
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
   const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
-  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllTasklist();
+  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
 
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
     allTasklists: fetchedTasklists,
@@ -86,8 +85,8 @@ function TabView() {
 
   const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
-    const newTabName = `Shared tab ${items.length + 1}`;
-
+    const newTabName = `Delt liste ${items.length + 1}`;
+   
     const newPanes = [...items];
     newPanes.push({
       key: newActiveKey,
@@ -146,7 +145,7 @@ function TabView() {
  useEffect(() => {
   refetchTasklists();
   setItems(generateTabs());
-}, [tasks, assignedTasks, profiles, fetchedTasklists,add]);
+}, [tasks, assignedTasks, profiles, fetchedTasklists]);
 
   return (
     <Tabs

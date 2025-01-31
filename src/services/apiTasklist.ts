@@ -19,6 +19,7 @@ export const getTasklist = async (id: number) => {
   return response.data;
 };
 
+//Not used anymore since it is now fetched through google account
 export const getAllTasklist = async () => {
   const response = await axiosInstance.get(`tasklist/getAll`, {
     headers: { "Content-Type": "application/json" },
@@ -37,7 +38,10 @@ export const deleteTasklist = async (id: number) => {
 
 export const createTasklist = async (tasklist: any) => {
   const data = {
-    listName: tasklist.listName,  // Matches Java property name
+    listName: tasklist.listName, 
+    googleAccount: {
+      id: localStorage.getItem("user_id"), 
+    },
   };
   
   const response = await axiosInstance.post(`tasklist/createTasklist`, data, {

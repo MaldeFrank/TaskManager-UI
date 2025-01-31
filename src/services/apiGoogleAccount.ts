@@ -57,3 +57,11 @@ export const getAccAssignedTasks = async (id: any) => {
 
   return response.data;
 };
+
+export const getAllAccTasklist = async (userId:any) => {
+  const response = await axiosInstance.get(`/tasklists/${userId}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  console.log("Responses", response.data);
+  return response.data;
+};
