@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
+import { useGetAccAssignedTasks } from "../../services/queries";
 
 interface props {
   setProfiles: any;
@@ -15,15 +16,26 @@ function AssignedTasklist({
   profiles,
   tasklistId,
   setAssignedTasks,
-  assignedTasks,
+  assignedTasks
 }: props) {
+  const { data} = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
+  const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
+  
+  useEffect(() => {
+    if (data) { 
+      setFilteredAssignedTasks(data.filter((task: any) => task.tasklistId === tasklistId));
+    } else {
+      setFilteredAssignedTasks([]); 
+    }
+  }, [data,setAssignedTasks,assignedTasks]); 
+
 
   return (
     <>
       <button>Press here</button>
       <AssignedTasks
-        setAssignedTasksWeekly={setAssignedTasks}
-        assignedTasksWeekly={assignedTasks != null ? assignedTasks : []}
+        setAssignedTasksWeekly={setFilteredAssignedTasks}
+        assignedTasksWeekly={filteredAssignedTasks != null ? filteredAssignedTasks : []}
         setProfiles={setProfiles}
         profiles={profiles}
       />

@@ -76,6 +76,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     label: profile.name,
   }));
 
+
   useEffect(() => {
     if (profilesData) {
       setProfiles(profilesData);
