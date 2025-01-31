@@ -2,6 +2,7 @@ import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
+import Friendlist from './Friendlist';
 
 interface props{
 
@@ -10,14 +11,11 @@ interface props{
 const items: MenuProps['items'] = [
     {
       key: '1',
-      label: 'Friendlist',
-    },
-    {
-      type: 'divider',
+      label: <Friendlist></Friendlist>,
     },
   ];
 
-function Friendlist({}:props){
+function AccountDropdown({}:props){
 
 return(
 <Dropdown menu={{ items }}>
@@ -31,4 +29,4 @@ return(
 )
 }
 
-export default Friendlist;
+export default AccountDropdown;
