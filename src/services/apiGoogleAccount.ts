@@ -49,3 +49,11 @@ export const deleteAccount = async (id: number) => {
 
   return response.data;
 };
+
+export const getAccAssignedTasks = async (id: any) => {
+  const response = await axiosInstance.get<any>(`/getAssignedTasks/${id}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response.data;
+};

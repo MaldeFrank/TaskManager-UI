@@ -1,28 +1,22 @@
 import { useEffect, useState } from "react";
-import { AssignedTask } from "../../model/AssignedTask";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
-import { getAssignedTasks } from "../../services/apiTasklist";
-import { useGetAssingedTasks } from "../../services/queries";
 
 interface props {
   setProfiles: any;
   profiles: Profile[];
-  tasklistId:number;
+  tasklistId: number;
+  setAssignedTasks: any;
+  assignedTasks: any;
 }
 
 function AssignedTasklist({
   setProfiles,
   profiles,
-  tasklistId
+  tasklistId,
+  setAssignedTasks,
+  assignedTasks,
 }: props) {
-  const { data: assignedTasksFetch} = useGetAssingedTasks(tasklistId);
-  const [assignedTasks,setAssignedTasks] = useState<any[]>(assignedTasksFetch)
- 
-  useEffect(() => {
-   console.log("AssignedTasks",assignedTasks)
-   console.log("Id",tasklistId)
-  }, [assignedTasks]);
 
   return (
     <>

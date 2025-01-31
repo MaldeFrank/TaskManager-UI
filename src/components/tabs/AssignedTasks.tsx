@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  useGetAccAssignedTasks,
   useGetAllAssignedTasks,
   useGetAllAssignedTasksWeekly,
   useGetAllProfiles
@@ -24,7 +25,7 @@ function AssignedTasks({
   profiles,
 }: props) {
 
-  const { data, isLoading, isError, error } = useGetAllAssignedTasksWeekly();
+  const { data, isLoading, isError, error } = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
 
   const {
     data: profilesData,
@@ -34,10 +35,10 @@ function AssignedTasks({
 
 
   //Function to switch state to done and back
-  const switchTaskState = (record: AssignedTask) => {
+  const switchTaskState = (record: any) => {
     
     if(record.assignedTo){
-      setAssignedTasksWeekly((prev: AssignedTask[]) =>
+      setAssignedTasksWeekly((prev: any[]) =>
         prev.map((task) => {
           if (task.id === record.id) {
             task.completed = !task.completed;
@@ -77,6 +78,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 
   useEffect(() => {
     if (data) {
+      console.log("Data",data)
       setAssignedTasksWeekly(data);
     }
   }, [data, setAssignedTasksWeekly]);

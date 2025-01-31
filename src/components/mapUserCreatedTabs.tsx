@@ -5,9 +5,11 @@ interface Props {
   allTasklists: any[],
   setProfiles: any,
   profiles: any,
+  setAssignedTasks:any,
+  assignedTasks:any,
 }
 
-function mapUserCreatedTabs({ allTasklists, setProfiles, profiles }: Props) {
+function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTasks,assignedTasks }: Props) {
   const generateSavedTabs = () => {
     if (!allTasklists) {
       return [];
@@ -21,6 +23,8 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles }: Props) {
       closable: true,
       children: (
         <AssignedTasklist
+          setAssignedTasks={setAssignedTasks}
+          assignedTasks={assignedTasks}
           setProfiles={setProfiles}
           profiles={profiles}
           tasklistId={tasklist.taskId} // Use tasklist.taskId instead of index

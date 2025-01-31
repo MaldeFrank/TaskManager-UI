@@ -14,7 +14,7 @@ import mapUserCreatedTabs from "./mapUserCreatedTabs";
 
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<AssignedTask[]>([]);
+  const [assignedTasksWeekly, setAssignedTasksWeekly] = useState<any[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
@@ -24,7 +24,9 @@ function TabView() {
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
     allTasklists: fetchedTasklists,
     setProfiles,
-    profiles
+    profiles,
+    setAssignedTasks: setAssignedTasksWeekly,
+    assignedTasks: assignedTasksWeekly,
   }) : [];
 
   const generateTabs = () => [
@@ -97,6 +99,8 @@ function TabView() {
       closable: true, 
       children: (
         <AssignedTasklist
+          setAssignedTasks={setAssignedTasksWeekly}
+          assignedTasks={assignedTasksWeekly}
           setProfiles={setProfiles}
           profiles={profiles}
           tasklistId={tasklistId}

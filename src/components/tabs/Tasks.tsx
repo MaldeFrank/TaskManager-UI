@@ -113,15 +113,15 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
 
   const postAssignedTaskFunction = async (task:any) => {
 
-    const assignedTaskDto: any = {
+    const assignedTask: any = {
       assignedTo: 0,
       completed: false,
       task: task,
-      googleId: localStorage.getItem("user_id"),
+      googleAccountId: localStorage.getItem("user_id"),
       userId: localStorage.getItem("user_id") //Maybe get rid of userId, since there is now google account
     };
 
-    const response = await postAssignTask(assignedTaskDto);
+    const response = await postAssignTask(assignedTask);
     setAssignedTasksWeekly((prevAssignedTask: any) => [...prevAssignedTask, response.data]);
   };
 

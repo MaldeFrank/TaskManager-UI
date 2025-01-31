@@ -3,6 +3,7 @@ import { getAllTasks } from "./apiTasks";
 import { getAllAssignTasks, getAllAssignTasksWeekly } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
 import { getAllTasklist, getAssignedTasks } from "./apiTasklist";
+import { getAccAssignedTasks } from "./apiGoogleAccount";
 
 export function useGetAllTasks() {
   return useQuery({
@@ -43,5 +44,12 @@ export function useGetAllTasklist() {
   return useQuery({
     queryKey: ["getAllTasklist"], 
     queryFn: getAllTasklist, 
+  });
+}
+
+export function useGetAccAssignedTasks(id:any) {
+  return useQuery({
+    queryKey: ["getAllAssignTasks",id], 
+    queryFn: ()=>getAccAssignedTasks(id), 
   });
 }

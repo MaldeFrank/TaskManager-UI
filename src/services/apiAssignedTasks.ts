@@ -13,8 +13,8 @@ export const postAssignTask = async (assignedTaskDto:any) => {
             taskId: assignedTaskDto.tasklistId 
         }, 
         googleAccount: {
-            id: assignedTaskDto.googleId
-        },
+            id: localStorage.getItem("user_id"), 
+          },
         userId: assignedTaskDto.userId
     }
     
@@ -43,7 +43,7 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
 
 export const getAllAssignTasksWeekly = async (): Promise<AssignedTask[]> => {
     const userId = localStorage.getItem("user_id");
-    const response = await axiosInstance.get<AssignedTask[]>(`/assignedTask/weekly/${userId}`, {
+    const response = await axiosInstance.get<any[]>(`/assignedTask/weekly/${userId}`, {
         headers: {"Content-Type": "application/json"}
     });
     return response.data;
