@@ -37,16 +37,24 @@ export const deleteTasklist = async (id: number) => {
 };
 
 export const createTasklist = async (tasklist: any) => {
-  const data = {
-    listName: tasklist.listName, 
-    googleAccount: {
-      id: localStorage.getItem("user_id"), 
-    },
-  };
-  
-  const response = await axiosInstance.post(`tasklist/createTasklist`, data, {
-    headers: { "Content-Type": "application/json" },
-  });
+  const userId = localStorage.getItem("user_id");
 
-  return response.data;
+  if (!userId) {
+    throw new Error("User ID not found in localStorage"); // Handle missing user ID
+  }
+
+  const data = {
+    listName: tasklist.listName,
+    googleAccount: [{ id: userId }], // Wrap the user ID in an array
+  };
+
+  try {
+    const response = await axiosInstance.post(`tasklist/createTasklist`, data, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating tasklist:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
 };
