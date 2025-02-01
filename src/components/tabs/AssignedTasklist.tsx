@@ -3,6 +3,7 @@ import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAccAssignedTasks } from "../../services/queries";
 import { addAccToTasklist } from "../../services/apiTasklist";
+import { message, notification } from "antd";
 
 interface props {
   setProfiles: any;
@@ -33,7 +34,13 @@ function AssignedTasklist({
   }, [data,setAssignedTasks,assignedTasks]); 
 
   const addUserToTasklist = async () => {
-    addAccToTasklist(email, tasklistId);
+    const response = await  addAccToTasklist(email, tasklistId);
+    if(response === false){
+      message.error("Bruger med mail ikke fundet");
+    }else{
+      message.success("Bruger tilføjet til tasklist");
+    }
+   
   };
 
   const handleEmailChange = (e: any) => {
