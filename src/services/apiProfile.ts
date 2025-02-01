@@ -49,3 +49,11 @@ export const addGoogleAcc = async (id: any, googleId: any) => {
 
   return response.data;
 }
+
+export const addGoogleAccByEmail = async (profileId: any, googleAccEmail: any) => {
+  const response = await axiosInstance.put(`/profile/addGoogleAccByEmail/${profileId}/${googleAccEmail}`, {
+    headers: { "Content-Type": "application/json" }, 
+  });
+
+  return response.data;
+}

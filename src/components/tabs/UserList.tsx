@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, List } from "antd";
 import { Profile } from "../../model/Profile";
 import { createProfile, deleteProfile } from "../../services/apiProfile";
 import { UserDeleteOutlined } from "@ant-design/icons";
+import { useGetAllAccProfiles } from "../../services/queries";
 interface props {
   setProfiles: React.Dispatch<React.SetStateAction<Profile[]>>;
   profiles: Profile[];
@@ -10,6 +11,14 @@ interface props {
 
 function UsersList({ setProfiles, profiles }: props) {
   const [newUserName, setNewUserName] = useState("")
+  const userId = localStorage.getItem("user_id"); 
+  const {data} = useGetAllAccProfiles(userId)
+
+  useEffect(() => {
+    if(data){
+      setProfiles(data)
+    }
+  }, [data,setProfiles])
 
   function addUser() {
     const newProfile: Profile = {

@@ -78,6 +78,7 @@ function App() {
           const profileId = response.id;
           console.log("Profile :", response, "user_id:", decodedToken.sub);
           console.log("ProfileId:", profileId);
+          localStorage.setItem('profile_id', profileId);
           await addGoogleAcc(profileId, decodedToken.sub);
           console.log("Account created and returned:", createdAccount);
 

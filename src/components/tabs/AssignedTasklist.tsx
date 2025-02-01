@@ -4,6 +4,7 @@ import AssignedTasks from "./AssignedTasks";
 import { useGetAccAssignedTasks } from "../../services/queries";
 import { addAccToTasklist } from "../../services/apiTasklist";
 import { message, notification } from "antd";
+import { addGoogleAccByEmail } from "../../services/apiProfile";
 
 interface props {
   setProfiles: any;
@@ -40,7 +41,11 @@ function AssignedTasklist({
     }else{
       message.success("Bruger tilføjet til tasklist");
     }
-   
+
+    const response2 = await addGoogleAccByEmail(localStorage.getItem("profile_id"), email);
+    if(response2 === false){
+      message.error("Kunne ikke tilføje din profil til dem");
+    }
   };
 
   const handleEmailChange = (e: any) => {
