@@ -3,8 +3,8 @@ import axios from "axios";
 const BASE_URL = "http://localhost:8080";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
-export const getAllProfiles = async (): Promise<Profile[]> => {
-  const response = await axiosInstance.get<Profile[]>("/profiles", {
+export const getAllProfiles = async (): Promise<any[]> => {
+  const response = await axiosInstance.get<any[]>("/profiles", {
     headers: { "Content-Type": "application/json" },
   });
   console.log("Responses", response.data);
@@ -24,6 +24,16 @@ export const createProfile = async (profile: Profile) => {
   return response.data;
 };
 
+export const createGoogleProfile = async (profile: any) => {
+  
+
+  const response = await axiosInstance.post("/profile", profile, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response.data;
+};
+
 export const deleteProfile = async (id: number) => {
   const response = await axiosInstance.delete<Profile>(`/profile/${id}`, {
     headers: { "Content-Type": "application/json" },
@@ -31,3 +41,11 @@ export const deleteProfile = async (id: number) => {
 
   return response.data;
 };
+
+export const addGoogleAcc = async (id: any, googleId: any) => {
+  const response = await axiosInstance.put(`/profile/addGoogleAcc/${id}/${googleId}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response.data;
+}

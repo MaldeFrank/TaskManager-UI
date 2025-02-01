@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
 import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
+import { addGoogleAcc, createGoogleProfile } from './services/apiProfile';
 
 // Declare google global type
 declare global {
@@ -66,8 +67,20 @@ function App() {
       };
   
       try {
-          const createdAccount = await createAccount(acc);
+          const createdAccount = await createAccount(acc); //Create account in db
+          //Set a profile with the account
+          const profile ={
+            name: decodedToken.name,
+            points: 0,
+          }
+
+          const response = await createGoogleProfile(profile);
+          const profileId = response.id;
+          console.log("Profile :", response, "user_id:", decodedToken.sub);
+          console.log("ProfileId:", profileId);
+          await addGoogleAcc(profileId, decodedToken.sub);
           console.log("Account created and returned:", createdAccount);
+
       } catch (error) {
           console.error("Error in account creation flow:", error);
       }

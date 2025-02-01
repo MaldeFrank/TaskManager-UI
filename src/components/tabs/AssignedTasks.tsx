@@ -12,7 +12,7 @@ interface props {
   setAssignedTasks: any;
   assignedTasks: AssignedTask[];
   setProfiles: any;
-  profiles: Profile[];
+  profiles: any[];
 }
 
 function AssignedTasks({
