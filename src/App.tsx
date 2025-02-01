@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
 import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
-import { addGoogleAcc, createGoogleProfile } from './services/apiProfile';
+import { addGoogleAcc, createGoogleProfile, getProfileByName } from './services/apiProfile';
 
 // Declare google global type
 declare global {
@@ -52,12 +52,17 @@ function App() {
     
     setIsAuthenticated(true);
     
-    // Store the token in localStorage for persistence
+    // Tokens stored in local each time user logs in
     localStorage.setItem('google_token', response.credential);
     localStorage.setItem('user_id', decodedToken.sub);
     localStorage.setItem('Email', decodedToken.email);
+    const profile:any = await getProfileByName(decodedToken.name);
+    console.log("Profile:", profile);
+    console.log("ProfileId:", profile.id);
+    localStorage.setItem('profile_id', profile.id);
     const doesExist = await checkIfAccountExists(decodedToken.sub);
     console.log("Does account exist", doesExist);
+
     //Creates the account if it does not already exist in the db
     if (!doesExist) {  // Make sure doesExist is checking googleId
       const acc = {
@@ -78,7 +83,6 @@ function App() {
           const profileId = response.id;
           console.log("Profile :", response, "user_id:", decodedToken.sub);
           console.log("ProfileId:", profileId);
-          localStorage.setItem('profile_id', profileId);
           await addGoogleAcc(profileId, decodedToken.sub);
           console.log("Account created and returned:", createdAccount);
 

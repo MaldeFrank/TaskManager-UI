@@ -34,6 +34,15 @@ function AssignedTasklist({
     }
   }, [data,setAssignedTasks,assignedTasks]); 
 
+  const addProfiles = async () => {
+    const response = await addGoogleAccByEmail(localStorage.getItem("profile_id"), email);
+    if(response === false){
+      message.error("Bruger med mail ikke fundet");
+    }else{
+      message.success("Bruger tilføjet til tasklist");
+    }
+  }
+
   const addUserToTasklist = async () => {
     const response = await  addAccToTasklist(email, tasklistId);
     if(response === false){
@@ -41,11 +50,7 @@ function AssignedTasklist({
     }else{
       message.success("Bruger tilføjet til tasklist");
     }
-
-    const response2 = await addGoogleAccByEmail(localStorage.getItem("profile_id"), email);
-    if(response2 === false){
-      message.error("Kunne ikke tilføje din profil til dem");
-    }
+    addProfiles();
   };
 
   const handleEmailChange = (e: any) => {

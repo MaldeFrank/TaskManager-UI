@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  useGetAllProfiles
+  useGetAllAccProfiles,
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
-import { Profile } from "../../model/Profile";
 import { UserOutlined } from "@ant-design/icons";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
@@ -25,9 +24,8 @@ function AssignedTasks({
 
   const {
     data: profilesData,
-    isLoading: isProfilesLoading,
     isError: isProfilesError,
-  } = useGetAllProfiles();
+  } = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
 
 
   //Function to switch state to done and back

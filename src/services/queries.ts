@@ -26,7 +26,7 @@ export function useGetAllAssignedTasksWeekly() {
   });
 }
 
-export function useGetAllProfiles() {
+export function useGetAllProfiles() { //No longer used
   return useQuery({
     queryKey: ["getAllProfiles"],
     queryFn: getAllProfiles,

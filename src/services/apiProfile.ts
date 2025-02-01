@@ -11,6 +11,14 @@ export const getAllProfiles = async (): Promise<any[]> => {
   return response.data;
 };
 
+export const getProfileByName = async (name: any): Promise<any> => {
+  const response = await axiosInstance.get<any>(`/profile/getByName/${name}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response.data;
+};
+
 export const createProfile = async (profile: Profile) => {
   const data = {
     name: profile.name,
