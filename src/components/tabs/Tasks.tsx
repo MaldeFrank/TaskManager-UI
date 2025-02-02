@@ -3,7 +3,7 @@ import { useGetAllAccTasks, useGetAllTasks } from "../../services/queries";
 import { Button, Space, Table, Form, Input, InputNumber } from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask, usePutTask } from "../../services/mutations";
-import { postAssignTask } from "../../services/apiAssignedTasks";
+import { postAssignTask, postAssignTaskNoTasklist } from "../../services/apiAssignedTasks";
 import { EditableCellProps } from "../../types/Cells";
 import { postTask } from "../../services/apiTasks";
 import AddTask from "../AddTask";
@@ -115,11 +115,10 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
       assignedTo: 0,
       completed: false,
       task: task,
-      googleAccountId: localStorage.getItem("user_id"),
       userId: localStorage.getItem("user_id") //Maybe get rid of userId, since there is now google account
     };
     console.log("AssignedTask is now set and state has been updated")
-    const response = await postAssignTask(assignedTask);
+    const response = await postAssignTaskNoTasklist(assignedTask);
     setAssignedTasksWeekly((prevAssignedTask: any) => [...prevAssignedTask, response.data]);
   };
 

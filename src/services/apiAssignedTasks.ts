@@ -19,6 +19,17 @@ export const postAssignTask = async (assignedTaskDto:any) => {
     return await axiosInstance.post<any>("/assignedTask", responseBody, { headers: { "Content-Type": "application/json" } });
 };
 
+export const postAssignTaskNoTasklist = async (assignedTaskDto:any) => {
+    const responseBody = {
+        completed:assignedTaskDto.completed,
+        task:assignedTaskDto.task,
+        googleAccount: [{ id: localStorage.getItem("user_id") }], 
+        userId: assignedTaskDto.userId
+    }
+    
+    return await axiosInstance.post<any>("/assignedTask", responseBody, { headers: { "Content-Type": "application/json" } });
+};
+
 export const updateAssignTask = async (assignedTask:AssignedTask) => {
   
   const assignedTaskDto: AssignedTask = {
