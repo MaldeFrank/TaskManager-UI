@@ -2,9 +2,11 @@
 Frontend for clean application.
 
 ## Current bugs
-- Error occurs sometimes when a user is deleted.
 
-## Future fixes
-- When a user's task is moved to done, you have to refresh the page for total points to be seen in the user list tab.
+
+## Future development
+- Mine opgaver tab does not auto render when new assignment has been created.
+- User should be able to change tab names.
+- There should be added options to change how long an assignment is visible.
 
 
