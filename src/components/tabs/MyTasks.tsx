@@ -21,8 +21,11 @@ function MyTasks({
   
   useEffect(() => { 
     if (data) { 
+      const profileId = Number(localStorage.getItem("profile_id"))
       refetch();
-      setFilteredAssignedTasks(data);
+      if(profileId !== null && profileId !== 0){
+        setFilteredAssignedTasks(data.filter((task: any) => task.assignedTo.id === profileId));
+      }
     } else {
       setFilteredAssignedTasks([]); 
     }
