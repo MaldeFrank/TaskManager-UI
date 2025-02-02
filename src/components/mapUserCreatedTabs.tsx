@@ -27,7 +27,7 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTas
           assignedTasks={assignedTasks}
           setProfiles={setProfiles}
           profiles={profiles}
-          tasklistId={tasklist.taskId} // Use tasklist.taskId instead of index
+          tasklistId={tasklist.taskId} 
         />
       ),
     }));

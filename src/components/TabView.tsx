@@ -85,7 +85,7 @@ function TabView() {
 
   const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
-    const newTabName = `Delt liste ${items.length + 1}`;
+    const newTabName = `Opgave liste ${items.length -2}`;
    
     const newPanes = [...items];
     newPanes.push({
@@ -157,6 +157,7 @@ function TabView() {
       onChange={setActiveKey}
       onEdit={onEdit}
       items={items}
+      onTabClick={()=>console.log("Hello")}
     />
   );
 }
