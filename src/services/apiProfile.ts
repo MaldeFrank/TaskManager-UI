@@ -65,3 +65,14 @@ export const addGoogleAccByEmail = async (profileId: any, googleAccEmail: any) =
 
   return response.data;
 }
+
+export const getProfileByGoogleEmail = async (email: string) => {
+  try {
+    const response = await axiosInstance.get(`/getProfileByGoogleEmail/${email}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching profile by email:", error);
+    throw error; 
+  }
+};
+

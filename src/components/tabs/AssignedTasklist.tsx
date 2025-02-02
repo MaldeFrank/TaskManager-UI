@@ -4,7 +4,7 @@ import AssignedTasks from "./AssignedTasks";
 import { useGetAccAssignedTasks } from "../../services/queries";
 import { addAccToTasklist } from "../../services/apiTasklist";
 import { message, notification } from "antd";
-import { addGoogleAccByEmail } from "../../services/apiProfile";
+import { addGoogleAccByEmail, getProfileByGoogleEmail } from "../../services/apiProfile";
 
 interface props {
   setProfiles: any;
@@ -35,12 +35,11 @@ function AssignedTasklist({
   }, [data,setAssignedTasks,assignedTasks]); 
 
   const addProfiles = async () => {
-    const response = await addGoogleAccByEmail(localStorage.getItem("profile_id"), email);
-    if(response === false){
-      message.error("Bruger med mail ikke fundet");
-    }else{
-      message.success("Bruger tilføjet til tasklist");
-    }
+    await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc
+    const response = await getProfileByGoogleEmail(email)
+    console.log("Profile found with email: ",response)
+    console.log("Id of the profile found: ",response.id)
+    await addGoogleAccByEmail(response.id, localStorage.getItem("Email")); //Adds reciever profile to sender
   }
 
   const addUserToTasklist = async () => {
