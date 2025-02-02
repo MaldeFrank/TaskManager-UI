@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Button, List } from "antd";
 import { Profile } from "../../model/Profile";
-import { createProfile, deleteProfile } from "../../services/apiProfile";
+import { addGoogleAcc, createProfile, deleteProfile } from "../../services/apiProfile";
 import { UserDeleteOutlined } from "@ant-design/icons";
 import { useGetAllAccProfiles } from "../../services/queries";
 interface props {
@@ -57,13 +57,14 @@ function UsersList({ setProfiles, profiles }: props) {
                     onChange={(event)=>{
                        setNewUserName(event.target.value) 
                     }}
-                    onKeyDown={(event) => {
+                    onKeyDown={async (event) => {
                       if (event.key === "Enter") {
                         event.preventDefault();
                         const newItems = [...profiles]; 
                         newItems[index].name = newUserName;
                         setProfiles(newItems);
-                        createProfile(newItems[index])
+                        const response = await createProfile(newItems[index])
+                        addGoogleAcc(response.id,localStorage.getItem("user_id")) //Sets the current google account as the owner of the profile
                       }
                     }}
                   />
