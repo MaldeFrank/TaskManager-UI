@@ -57,3 +57,10 @@ export const getAllAssignTasksWeekly = async (): Promise<AssignedTask[]> => {
     });
     return response.data;
 };
+
+export const getAssignedTasksByProfileId = async (id: any): Promise<any[]> => {
+    const response = await axiosInstance.get<any[]>(`/assignedTasksByProfile/${id}`, {
+        headers: { "Content-Type": "application/json" } 
+    });
+    return response.data;
+};

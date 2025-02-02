@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllTasks } from "./apiTasks";
-import { getAllAssignTasks, getAllAssignTasksWeekly } from "./apiAssignedTasks";
+import { getAllAssignTasks, getAllAssignTasksWeekly, getAssignedTasksByProfileId } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
 import { getAllTasklist, getAssignedTasks } from "./apiTasklist";
 import { getAccAssignedTasks, getAllAccProfiles, getAllAccTasklist, getAllAccTasks } from "./apiGoogleAccount";
@@ -73,5 +73,12 @@ export function useGetAllAccProfiles(userId:any) {
   return useQuery({
     queryKey: ["getAllAccProfiles",userId], 
     queryFn:()=> getAllAccProfiles(userId), 
+  });
+}
+
+export function useGetAssignedTasksByProfileId(profileId: any) {
+  return useQuery({
+    queryKey: ["getAssignedTasksByProfileId", profileId], // Include profileId in the query key
+    queryFn: () => getAssignedTasksByProfileId(profileId),
   });
 }
