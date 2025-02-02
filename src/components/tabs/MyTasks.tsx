@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
-import { useGetAccAssignedTasks, useGetAssignedTasksByProfileId } from "../../services/queries";
+import { useGetAssignedTasksByProfileId } from "../../services/queries";
 
 interface props {
   setProfiles: any;
