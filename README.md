@@ -5,8 +5,9 @@ Frontend for clean application.
 
 
 ## Future development
-- Mine opgaver tab does not auto render when new assignment has been created.
+- Mine opgaver tab does not auto render when a new assignment has been created.
 - User should be able to change tab names.
-- There should be added options to change how long an assignment is visible.
+- Options should be added to change how long an assignment is visible.
+- Each assignment tab should have the names of each Google account that can see it.
 
 
