@@ -174,9 +174,6 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
                 <Button danger onClick={() => deleteTaskFunction(record.id)}>
                   Slet
                 </Button>
-                <Button type="primary" onClick={() => postAssignedTaskFunction(record)}>
-                  Tilføj til mine opgaver
-                </Button>
                 <AddTask setAssignedTasks={setAssignedTasksWeekly} tasklists={tasklists} task={record}/>
               </>
             )}
