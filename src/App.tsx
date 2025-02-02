@@ -64,7 +64,7 @@ function App() {
     console.log("Does account exist", doesExist);
 
     //Creates the account if it does not already exist in the db
-    if (!doesExist) {  // Make sure doesExist is checking googleId
+    if (!doesExist) {  
       const acc = {
           googleId: decodedToken.sub,
           name: decodedToken.name,
