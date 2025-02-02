@@ -19,7 +19,7 @@ export const getTasklist = async (id: number) => {
   return response.data;
 };
 
-//Not used anymore since it is now fetched through google account
+
 export const getAllTasklist = async () => {
   const response = await axiosInstance.get(`tasklist/getAll`, {
     headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ export const createTasklist = async (tasklist: any) => {
     return response.data;
   } catch (error) {
     console.error("Error creating tasklist:", error);
-    throw error; // Re-throw the error to be handled by the caller
+    throw error; 
   }
 };
 

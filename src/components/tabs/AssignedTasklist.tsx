@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
-import { useGetAccAssignedTasks } from "../../services/queries";
+import { useGetAccAssignedTasks, useGetAssingedTasks } from "../../services/queries";
 import { addAccToTasklist } from "../../services/apiTasklist";
 import { message, notification } from "antd";
 import { addGoogleAccByEmail, getProfileByGoogleEmail } from "../../services/apiProfile";
@@ -21,14 +21,14 @@ function AssignedTasklist({
   setAssignedTasks,
   assignedTasks
 }: props) {
-  const { data, refetch} = useGetAccAssignedTasks(localStorage.getItem("user_id") as string);
+  const { data, refetch} = useGetAssingedTasks(tasklistId);
   const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
   const [email, setEmail] = useState("");
   
   useEffect(() => { 
     if (data) { 
       refetch();
-      setFilteredAssignedTasks(data.filter((task: any) => task.tasklistId === tasklistId));
+      setFilteredAssignedTasks(data);
     } else {
       setFilteredAssignedTasks([]); 
     }
