@@ -50,12 +50,12 @@ function AssignedTasklist({
         setShownData(data)
         break;
       case "Weekly":
-        refetch();
+        refecthWeekly();
         console.log("Weekly")
         setShownData(weeklyTasks);
         break;
       case "Monthly":
-        refetch();
+        refecthMonthly();
         console.log("Monthly")
         setShownData(monthlyTasks);
         break;
@@ -63,7 +63,7 @@ function AssignedTasklist({
         setShownData([]);
         break;
     }
-  }, [data, setAssignedTasks, assignedTasks, setTaskFilter]);
+  }, [data,weeklyTasks,monthlyTasks, setAssignedTasks, assignedTasks, taskFilter]);
 
   const addProfiles = async () => {
     await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc

@@ -8,6 +8,7 @@ function TaskFetchOptions({setTaskFilter}: props) {
 
     const onClick=(value:any)=>{
     setTaskFilter(value)
+    console.log(value)
     }
 
   return (
