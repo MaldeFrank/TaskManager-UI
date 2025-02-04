@@ -81,7 +81,7 @@ export const getAssignedTaskWeekly = async (id: any) => {
   console.error("Error getting list weekly list", error);
   throw error;
 };
-}
+};
 
 export const getAssignedTaskMonthly = async (id: any) => {
   try {
