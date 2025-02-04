@@ -90,13 +90,9 @@ function AssignedTasklist({
   return (
     <>
       <div>
-        <input
-          onChange={(e) => handleEmailChange(e)}
-          type="text"
-          placeholder="Email.."
-        />
-        <button onClick={() => addUserToTasklist()}>Del</button>
-        <TaskFetchOptions setTaskFilter={setTaskFilter} taskFilter={taskFilter} />
+        <TaskFetchOptions 
+        setTaskFilter={setTaskFilter} 
+        taskFilter={taskFilter} />
       </div>
 
       <AssignedTasks
@@ -105,6 +101,12 @@ function AssignedTasklist({
         setProfiles={setProfiles}
         profiles={profiles}
       />
+       <input
+          onChange={(e) => handleEmailChange(e)}
+          type="text"
+          placeholder="Email.."
+        />
+        <button onClick={() => addUserToTasklist()}>Del</button>
     </>
   );
 }
