@@ -75,7 +75,7 @@ export const addAccToTasklist = async (email: any, tasklistId: any) => {
 
 export const getAssignedTaskWeekly = async (id: any) => {
   try {
-  const response = await axiosInstance.get(`/assignedTasksWeekly/${id}`);
+  const response = await axiosInstance.get(`tasklist/assignedTasksWeekly/${id}`);
   return response.data;
 } catch (error) {
   console.error("Error getting list weekly list", error);
@@ -85,7 +85,7 @@ export const getAssignedTaskWeekly = async (id: any) => {
 
 export const getAssignedTaskMonthly = async (id: any) => {
   try {
-  const response = await axiosInstance.get(`/assignedTasksMonthly/${id}`);
+  const response = await axiosInstance.get(`tasklist/assignedTasksMonthly/${id}`);
   return response.data;
 } catch (error) {
   console.error("Error getting Monthly list", error);

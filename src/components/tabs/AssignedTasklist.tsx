@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
-import { useGetAccAssignedTasks, useGetAssingedTasks } from "../../services/queries";
+import {
+  useGetAssignedTasksByTasklistMonthly,
+  useGetAssignedTasksByTasklistWeekly,
+  useGetAssingedTasks,
+} from "../../services/queries";
 import { addAccToTasklist } from "../../services/apiTasklist";
-import { message, notification } from "antd";
-import { addGoogleAccByEmail, getProfileByGoogleEmail } from "../../services/apiProfile";
+import { message } from "antd";
+import {
+  addGoogleAccByEmail,
+  getProfileByGoogleEmail,
+} from "../../services/apiProfile";
+import TaskFetchOptions from "../TaskFetchOptions";
 
 interface props {
   setProfiles: any;
@@ -19,34 +27,57 @@ function AssignedTasklist({
   profiles,
   tasklistId,
   setAssignedTasks,
-  assignedTasks
+  assignedTasks,
 }: props) {
-  const { data, refetch} = useGetAssingedTasks(tasklistId);
-  const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
+  const [taskFilter, setTaskFilter] = useState("All"); // Determines if assignedTasks are fetched for this week, month or just all.
+  const { data, refetch } = useGetAssingedTasks(tasklistId);
+
+  const { data: weeklyTasks, refetch: refecthWeekly } =
+    useGetAssignedTasksByTasklistWeekly(tasklistId);
+
+  const { data: monthlyTasks, refetch: refecthMonthly } =
+    useGetAssignedTasksByTasklistMonthly(tasklistId);
+
+  const [shownData, setShownData] = useState<any[]>([]); //Shows assignedTasks based on taskfilter
+
   const [email, setEmail] = useState("");
-  
-  useEffect(() => { 
-    if (data) { 
-      refetch();
-      setFilteredAssignedTasks(data);
-    } else {
-      setFilteredAssignedTasks([]); 
+
+  useEffect(() => {
+    switch (taskFilter) {
+      case "All":
+        refetch();
+        console.log("All")
+        setShownData(data)
+        break;
+      case "Weekly":
+        refetch();
+        console.log("Weekly")
+        setShownData(weeklyTasks);
+        break;
+      case "Monthly":
+        refetch();
+        console.log("Monthly")
+        setShownData(monthlyTasks);
+        break;
+      default:
+        setShownData([]);
+        break;
     }
-  }, [data,setAssignedTasks,assignedTasks]); 
+  }, [data, setAssignedTasks, assignedTasks, setTaskFilter]);
 
   const addProfiles = async () => {
     await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc
-    const response = await getProfileByGoogleEmail(email)
-    console.log("Profile found with email: ",response)
-    console.log("Id of the profile found: ",response.id)
+    const response = await getProfileByGoogleEmail(email);
+    console.log("Profile found with email: ", response);
+    console.log("Id of the profile found: ", response.id);
     await addGoogleAccByEmail(response.id, localStorage.getItem("Email")); //Adds reciever profile to sender
-  }
+  };
 
   const addUserToTasklist = async () => {
-    const response = await  addAccToTasklist(email, tasklistId);
-    if(response === false){
+    const response = await addAccToTasklist(email, tasklistId);
+    if (response === false) {
       message.error("Bruger med mail ikke fundet");
-    }else{
+    } else {
       message.success("Bruger tilføjet til tasklist");
     }
     addProfiles();
@@ -58,11 +89,19 @@ function AssignedTasklist({
 
   return (
     <>
-      <input onChange={(e)=>handleEmailChange(e)} type="text" placeholder="Email.." />
-      <button onClick={()=>addUserToTasklist()}>Del</button>
+      <div>
+        <input
+          onChange={(e) => handleEmailChange(e)}
+          type="text"
+          placeholder="Email.."
+        />
+        <button onClick={() => addUserToTasklist()}>Del</button>
+        <TaskFetchOptions setTaskFilter={setTaskFilter} />
+      </div>
+
       <AssignedTasks
-        setAssignedTasks={setFilteredAssignedTasks}
-        assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}
+        setAssignedTasks={setShownData}
+        assignedTasks={shownData != null ? shownData : []}
         setProfiles={setProfiles}
         profiles={profiles}
       />
