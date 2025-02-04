@@ -96,7 +96,7 @@ function AssignedTasklist({
           placeholder="Email.."
         />
         <button onClick={() => addUserToTasklist()}>Del</button>
-        <TaskFetchOptions setTaskFilter={setTaskFilter} />
+        <TaskFetchOptions setTaskFilter={setTaskFilter} taskFilter={taskFilter} />
       </div>
 
       <AssignedTasks
