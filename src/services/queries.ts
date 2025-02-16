@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllTasks } from "./apiTasks";
-import { getAllAssignTasks, getAllAssignTasksWeekly, getAssignedTasksByProfileId } from "./apiAssignedTasks";
+import { getAllAssignTasks, getAssignedTasksByProfileId } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
-import { getAllTasklist, getAssignedTasks } from "./apiTasklist";
+import { getAllTasklist, getAssignedTaskMonthly, getAssignedTasks, getAssignedTaskWeekly } from "./apiTasklist";
 import { getAccAssignedTasks, getAllAccProfiles, getAllAccTasklist, getAllAccTasks } from "./apiGoogleAccount";
 
 export function useGetAllTasks() {
@@ -16,13 +16,6 @@ export function useGetAllAssignedTasks() {
   return useQuery({
     queryKey: ["getAllAssignTasks"],
     queryFn: getAllAssignTasks,
-  });
-}
-
-export function useGetAllAssignedTasksWeekly() {
-  return useQuery({
-    queryKey: ["getAllAssignTasks"],
-    queryFn: getAllAssignTasksWeekly,
   });
 }
 
@@ -78,7 +71,22 @@ export function useGetAllAccProfiles(userId:any) {
 
 export function useGetAssignedTasksByProfileId(profileId: any) {
   return useQuery({
-    queryKey: ["getAssignedTasksByProfileId", profileId], // Include profileId in the query key
+    queryKey: ["getAssignedTasksByProfileId", profileId], 
     queryFn: () => getAssignedTasksByProfileId(profileId),
   });
 }
+
+export function useGetAssignedTasksByTasklistWeekly(id:any){
+  return useQuery({
+    queryKey:["getAssignedTasksWeekly",id] ,
+    queryFn: () => getAssignedTaskWeekly(id),
+  });
+};
+
+export function useGetAssignedTasksByTasklistMonthly(id:any){
+  return useQuery({
+    queryKey:["getAssignedTasksWeekly",id] ,
+    queryFn: () => getAssignedTaskMonthly(id),
+  });
+};
+

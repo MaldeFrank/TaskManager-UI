@@ -50,13 +50,6 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
     return response.data;
 };
 
-export const getAllAssignTasksWeekly = async (): Promise<AssignedTask[]> => {
-    const userId = localStorage.getItem("user_id");
-    const response = await axiosInstance.get<any[]>(`/assignedTask/weekly/${userId}`, {
-        headers: {"Content-Type": "application/json"}
-    });
-    return response.data;
-};
 
 export const getAssignedTasksByProfileId = async (id: any): Promise<any[]> => {
     const response = await axiosInstance.get<any[]>(`/assignedTasksByProfile/${id}`, {
