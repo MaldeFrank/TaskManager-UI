@@ -6,7 +6,7 @@ import {
   useGetAssignedTasksByTasklistWeekly,
   useGetAssingedTasks,
 } from "../../services/queries";
-import { addAccToTasklist } from "../../services/apiTasklist";
+import { addAccToTasklist, getTasklist } from "../../services/apiTasklist";
 import { message } from "antd";
 import {
   addGoogleAccByEmail,
@@ -29,7 +29,16 @@ function AssignedTasklist({
   setAssignedTasks,
   assignedTasks,
 }: props) {
-  const [taskFilter, setTaskFilter] = useState("All"); // Determines if assignedTasks are fetched for this week, month or just all.
+  
+  const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
+
+  useEffect(() => {
+    getTasklist(tasklistId).then((task) => {
+      setTaskFilter(task.periodFilter);
+      console.log("Tasklist fetched with given id: ",task)
+    });
+  }, [tasklistId]); // Fetch the periodFilter when the component mounts
+  
   const { data, refetch } = useGetAssingedTasks(tasklistId);
 
   const { data: weeklyTasks, refetch: refecthWeekly } =
@@ -91,6 +100,7 @@ function AssignedTasklist({
     <>
       <div>
         <TaskFetchOptions 
+        tasklistId={tasklistId}
         setTaskFilter={setTaskFilter} 
         taskFilter={taskFilter} />
       </div>

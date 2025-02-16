@@ -1,14 +1,17 @@
 import { Radio, RadioChangeEvent } from "antd";
+import { setPeriodFilter } from "../services/apiTasklist";
 
 interface props {
   setTaskFilter: any;
   taskFilter:any;
+  tasklistId:any;
 }
 
-function TaskFetchOptions({ setTaskFilter,taskFilter }: props) {
+function TaskFetchOptions({ setTaskFilter,taskFilter,tasklistId }: props) {
 
   const onClick = (e: RadioChangeEvent) => {
     setTaskFilter(e.target.value);
+    setPeriodFilter(tasklistId,e.target.value)
   };
 
   return (

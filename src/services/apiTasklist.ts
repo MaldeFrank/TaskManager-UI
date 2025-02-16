@@ -92,3 +92,15 @@ export const getAssignedTaskMonthly = async (id: any) => {
   throw error;
 };
 };
+
+export const setPeriodFilter = async (id: number, period: string) => {
+  try {
+    const response = await axiosInstance.put(
+      `/tasklist/setPeriodFilter/${id}/${period}`
+    );
+    return response.data; 
+  } catch (error) {
+    console.error("Error setting period filter", error);
+    throw error;
+  }
+};
