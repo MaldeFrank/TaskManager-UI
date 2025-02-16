@@ -55,15 +55,24 @@ function UsersList({ setProfiles, profiles }: props) {
                   <input
                     type="text"
                     onChange={(event)=>{
-                       setNewUserName(event.target.value) 
+                       setNewUserName(event.target.value) //On event sets the input name
                     }}
-                    onKeyDown={async (event) => {
+
+                    onKeyDown={async (event) => { //The event 
                       if (event.key === "Enter") {
                         event.preventDefault();
-                        const newItems = [...profiles]; 
-                        newItems[index].name = newUserName;
-                        setProfiles(newItems);
-                        const response = await createProfile(newItems[index])
+                        const newItems = [...profiles]; //Sets a list on the new event with all the profiles including the added empty profile
+
+                        const newProfile: Profile = { // Sets the input username in a profile
+                          id: 0,
+                          name: newUserName,
+                          points: 0,
+                        };
+
+                        newItems[index] = newProfile; //Sets the empty profile to be the new one with added name.
+                        const response = await createProfile(newItems[index]) //Creates the profile in the database.
+                        newItems[index].id = response.id; //Sets the id on the profile to allow dropdown select.
+                        setProfiles(newItems); //Sets the dropdown profile list.
                         addGoogleAcc(response.id,localStorage.getItem("user_id")) //Sets the current google account as the owner of the profile
                       }
                     }}
