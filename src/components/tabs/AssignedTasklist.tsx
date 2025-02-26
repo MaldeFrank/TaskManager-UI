@@ -37,7 +37,7 @@ function AssignedTasklist({
       setTaskFilter(task.periodFilter);
       console.log("Tasklist fetched with given id: ",task)
     });
-  }, [tasklistId]); // Fetch the periodFilter when the component mounts
+  }, [tasklistId]); 
   
   const { data, refetch } = useGetAssingedTasks(tasklistId);
 
@@ -69,7 +69,8 @@ function AssignedTasklist({
         setShownData(monthlyTasks);
         break;
       default:
-        setShownData([]);
+        refetch();
+        setShownData(data);
         break;
     }
   }, [data,weeklyTasks,monthlyTasks, setAssignedTasks, assignedTasks, taskFilter]);

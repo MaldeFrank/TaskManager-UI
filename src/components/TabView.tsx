@@ -108,6 +108,7 @@ function TabView() {
      
     const tasklist = {
       listName: newTabName,
+      periodFilter:"All"
     };
 
     try {
