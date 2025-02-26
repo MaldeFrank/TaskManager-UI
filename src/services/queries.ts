@@ -30,6 +30,7 @@ export function useGetAssingedTasks(id: number) {
   return useQuery({
     queryKey: ['getAssignedTasks', id], 
     queryFn: () => getAssignedTasks(id), 
+    enabled:false,
   });
 }
 
@@ -65,7 +66,7 @@ export function useGetAllAccTasks(userId:any) {
 export function useGetAllAccProfiles(userId:any) {
   return useQuery({
     queryKey: ["getAllAccProfiles",userId], 
-    queryFn:()=> getAllAccProfiles(userId), 
+    queryFn:()=> getAllAccProfiles(userId),
   });
 }
 
@@ -80,6 +81,7 @@ export function useGetAssignedTasksByTasklistWeekly(id:any){
   return useQuery({
     queryKey:["getAssignedTasksWeekly",id] ,
     queryFn: () => getAssignedTaskWeekly(id),
+    enabled:false,
   });
 };
 
@@ -87,6 +89,7 @@ export function useGetAssignedTasksByTasklistMonthly(id:any){
   return useQuery({
     queryKey:["getAssignedTasksWeekly",id] ,
     queryFn: () => getAssignedTaskMonthly(id),
+    enabled:false,
   });
 };
 

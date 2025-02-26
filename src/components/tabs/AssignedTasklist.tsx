@@ -33,10 +33,12 @@ function AssignedTasklist({
   const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
 
   useEffect(() => {
-    getTasklist(tasklistId).then((task) => {
+    const fetchTasklist = async () => {
+      const task = await getTasklist(tasklistId);
       setTaskFilter(task.periodFilter);
-      console.log("Tasklist fetched with given id: ",task)
-    });
+      console.log("Tasklist fetched with given id: ", task);
+    };
+    fetchTasklist();
   }, [tasklistId]); 
   
   const { data, refetch } = useGetAssingedTasks(tasklistId);

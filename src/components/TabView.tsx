@@ -113,9 +113,10 @@ function TabView() {
 
     try {
       const response = await createTasklist(tasklist);
-      console.log("Here is tasklist: ",response)
-      setTasklisId(response.taskId)
+      console.log("Here is tasklist: ",response);
+      console.log("This is the tasklist id:",response.taskId)
       refetchTasklists();
+      setTasklisId(response.taskId)
     } catch (error) {
       console.error("Failed to create tasklist:", error);
     }
