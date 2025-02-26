@@ -74,8 +74,7 @@ export const addAccToTasklist = async (email: any, tasklistId: any) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error updating tasklist:", error);
-    throw error;
+    console.error("Error adding user:", error);
   }
 };
 

@@ -87,12 +87,14 @@ function AssignedTasklist({
 
   const addUserToTasklist = async () => {
     const response = await addAccToTasklist(email, tasklistId);
+    
     if (response === false) {
       message.error("Bruger med mail ikke fundet");
     } else {
       message.success("Bruger tilføjet til tasklist");
+      addProfiles();
     }
-    addProfiles();
+    
   };
 
   const handleEmailChange = (e: any) => {

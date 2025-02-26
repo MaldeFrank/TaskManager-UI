@@ -72,7 +72,6 @@ export const getProfileByGoogleEmail = async (email: string) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching profile by email:", error);
-    throw error; 
   }
 };
 
