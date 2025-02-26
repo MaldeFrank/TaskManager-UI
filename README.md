@@ -3,7 +3,7 @@ Frontend for clean application.
 
 
 ## Bugs
-- When you try to add an email that is has not signed in before, it gives 500 error.
+
   
 ## Future development
 - User should be able to change tab names.
