@@ -18,7 +18,6 @@ function TabView() {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
   const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
 
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
@@ -97,7 +96,7 @@ function TabView() {
       const response = await createTasklist(tasklist);
       console.log("Here is tasklist: ", response);
       console.log("This is the tasklist id:", response.taskId);
-      setTasklisId(response.taskId); // Update state with the new tasklistId
+    
   
       // Now add the new tab with the correct tasklistId
       const newPanes = [...items];
