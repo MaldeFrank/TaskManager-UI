@@ -43,7 +43,7 @@ function TabView() {
     },
     {
       key: "2",
-      label: "2. Opgave liste",
+      label: "2. Opret opgaver",
       closable: false,
       children: (
         <Tasks
