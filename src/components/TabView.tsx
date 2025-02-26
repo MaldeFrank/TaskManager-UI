@@ -18,7 +18,6 @@ function TabView() {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  const [tasklistId, setTasklisId] = useState(0) // For setting the id of a created tasklist in add function
   const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
 
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
@@ -44,7 +43,7 @@ function TabView() {
     },
     {
       key: "2",
-      label: "2. Opgave liste",
+      label: "2. Opret opgaver",
       closable: false,
       children: (
         <Tasks
@@ -85,35 +84,39 @@ function TabView() {
 
   const add = async () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
-    const newTabName = `Opgave liste ${items.length -2}`;
-   
-    const newPanes = [...items];
-    newPanes.push({
-      key: newActiveKey,
-      label: newTabName,
-      closable: true, 
-      children: (
-        <AssignedTasklist
-          setAssignedTasks={setAssignedTasks}
-          assignedTasks={assignedTasks}
-          setProfiles={setProfiles}
-          profiles={profiles}
-          tasklistId={tasklistId}
-        />
-      ),
-      
-    });
-    setItems(newPanes);
-    setActiveKey(newActiveKey);
-     
+    const newTabName = `Opgave liste ${items.length - 2}`;
+  
     const tasklist = {
       listName: newTabName,
+      periodFilter: "All",
     };
-
+  
     try {
+      // Create the tasklist first
       const response = await createTasklist(tasklist);
-      console.log("Here is tasklist: ",response)
-      setTasklisId(response.taskId)
+      console.log("Here is tasklist: ", response);
+      console.log("This is the tasklist id:", response.taskId);
+    
+  
+      // Now add the new tab with the correct tasklistId
+      const newPanes = [...items];
+      newPanes.push({
+        key: newActiveKey,
+        label: newTabName,
+        closable: true,
+        children: (
+          <AssignedTasklist
+            setAssignedTasks={setAssignedTasks}
+            assignedTasks={assignedTasks}
+            setProfiles={setProfiles}
+            profiles={profiles}
+            tasklistId={response.taskId} // Pass the newly created tasklistId
+          />
+        ),
+      });
+      setItems(newPanes);
+      setActiveKey(newActiveKey);
+  
       refetchTasklists();
     } catch (error) {
       console.error("Failed to create tasklist:", error);

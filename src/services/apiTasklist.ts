@@ -12,11 +12,16 @@ export const getAssignedTasks = async (id: number): Promise<any> => {
 };
 
 export const getTasklist = async (id: number) => {
-  const response = await axiosInstance.get(`tasklist/getTasklist/${id}`, {
-    headers: { "Content-Type": "application/json" },
-  });
-  console.log("Responses", response.data);
-  return response.data;
+  try{
+    const response = await axiosInstance.get(`tasklist/getTasklist/${id}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("Responses", response.data);
+    return response.data;
+  }catch (error){
+    console.log("Tasklist could not be fetched")
+  }
+ 
 };
 
 export const getAllTasklist = async () => {
@@ -44,6 +49,7 @@ export const createTasklist = async (tasklist: any) => {
 
   const data = {
     listName: tasklist.listName,
+    periodFilter:"All",
     googleAccount: [{ id: userId }],
   };
 

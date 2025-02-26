@@ -14,9 +14,6 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTas
     if (!allTasklists) {
       return [];
     }
-
-    console.log("Alltasklists",allTasklists)
-    allTasklists.forEach((tasklist)=>{console.log("This is tasklist",tasklist)})
     const tabs = allTasklists.map((tasklist, index) => ({
       key: tasklist.taskId,
       label: tasklist.listName,
