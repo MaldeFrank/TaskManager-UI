@@ -7,12 +7,14 @@ import {
   useGetAssingedTasks,
 } from "../../services/queries";
 import { addAccToTasklist, getTasklist } from "../../services/apiTasklist";
-import { message } from "antd";
+import { Button, message } from "antd";
 import {
   addGoogleAccByEmail,
   getProfileByGoogleEmail,
 } from "../../services/apiProfile";
 import TaskFetchOptions from "../TaskFetchOptions";
+import ShareSection from "../ShareSection";
+import { AntDesignOutlined } from "@ant-design/icons";
 
 interface props {
   setProfiles: any;
@@ -29,7 +31,6 @@ function AssignedTasklist({
   setAssignedTasks,
   assignedTasks,
 }: props) {
-  
   const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
 
   useEffect(() => {
@@ -39,8 +40,8 @@ function AssignedTasklist({
       console.log("Tasklist fetched with given id: ", task);
     };
     fetchTasklist();
-  }, [tasklistId]); 
-  
+  }, [tasklistId]);
+
   const { data, refetch } = useGetAssingedTasks(tasklistId);
 
   const { data: weeklyTasks, refetch: refecthWeekly } =
@@ -53,21 +54,23 @@ function AssignedTasklist({
 
   const [email, setEmail] = useState("");
 
+  const [shareVisible, setShareVisible] = useState(false);
+
   useEffect(() => {
     switch (taskFilter) {
       case "All":
         refetch();
-        console.log("All")
-        setShownData(data)
+        console.log("All");
+        setShownData(data);
         break;
       case "Weekly":
         refecthWeekly();
-        console.log("Weekly")
+        console.log("Weekly");
         setShownData(weeklyTasks);
         break;
       case "Monthly":
         refecthMonthly();
-        console.log("Monthly")
+        console.log("Monthly");
         setShownData(monthlyTasks);
         break;
       default:
@@ -75,26 +78,30 @@ function AssignedTasklist({
         setShownData(data);
         break;
     }
-  }, [data,weeklyTasks,monthlyTasks, setAssignedTasks, assignedTasks, taskFilter]);
+  }, [
+    data,
+    weeklyTasks,
+    monthlyTasks,
+    setAssignedTasks,
+    assignedTasks,
+    taskFilter,
+  ]);
 
   const addProfiles = async () => {
     await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc
     const response = await getProfileByGoogleEmail(email);
-    console.log("Profile found with email: ", response);
-    console.log("Id of the profile found: ", response.id);
     await addGoogleAccByEmail(response.id, localStorage.getItem("Email")); //Adds reciever profile to sender
   };
 
   const addUserToTasklist = async () => {
     const response = await addAccToTasklist(email, tasklistId);
-    
+
     if (response === false) {
       message.error("Bruger med mail ikke fundet");
     } else {
       message.success("Bruger tilføjet til tasklist");
       addProfiles();
     }
-    
   };
 
   const handleEmailChange = (e: any) => {
@@ -102,12 +109,13 @@ function AssignedTasklist({
   };
 
   return (
-    <>
+    <div>
       <div>
-        <TaskFetchOptions 
-        tasklistId={tasklistId}
-        setTaskFilter={setTaskFilter} 
-        taskFilter={taskFilter} />
+        <TaskFetchOptions
+          tasklistId={tasklistId}
+          setTaskFilter={setTaskFilter}
+          taskFilter={taskFilter}
+        />
       </div>
 
       <AssignedTasks
@@ -116,13 +124,16 @@ function AssignedTasklist({
         setProfiles={setProfiles}
         profiles={profiles}
       />
-       <input
-          onChange={(e) => handleEmailChange(e)}
-          type="text"
-          placeholder="Email.."
-        />
-        <button onClick={() => addUserToTasklist()}>Del</button>
-    </>
+      <ShareSection
+        onClickSendEmail={addUserToTasklist}
+        onInputChange={handleEmailChange}
+        isVisible={shareVisible}
+      />
+      <Button type="primary" size="large" icon={<AntDesignOutlined />} onClick={() => setShareVisible(!shareVisible)}>
+        Del
+      </Button>
+
+    </div>
   );
 }
 
