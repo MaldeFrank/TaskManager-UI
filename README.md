@@ -1,5 +1,5 @@
 # CleanApp-UI
-Frontend for clean application.
+Frontend for taskmanager application.
 
 
 ## Bugs
