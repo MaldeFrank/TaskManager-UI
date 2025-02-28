@@ -1,5 +1,7 @@
-import type { FC } from 'react';
+
 import AssignedTasklist from "./tabs/AssignedTasklist"
+import EditableTabLabel from "./EditableTabLabel";
+import { updateTaskListName } from "../services/apiTasklist";
 
 interface Props {
   allTasklists: any[],
@@ -10,13 +12,20 @@ interface Props {
 }
 
 function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTasks,assignedTasks }: Props) {
+
+  const onNameChange = (id:string, name:string)=>{
+    updateTaskListName(id,name)
+  }
+
   const generateSavedTabs = () => {
     if (!allTasklists) {
       return [];
     }
     const tabs = allTasklists.map((tasklist, index) => ({
       key: tasklist.taskId,
-      label: tasklist.listName,
+      label: (
+        <EditableTabLabel initialName={tasklist.listName} taskId={tasklist.taskId} onNameChange={onNameChange}></EditableTabLabel> //So user can change name
+      ),
       closable: true,
       children: (
         <AssignedTasklist

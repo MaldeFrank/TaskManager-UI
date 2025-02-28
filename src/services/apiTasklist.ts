@@ -24,6 +24,21 @@ export const getTasklist = async (id: number) => {
  
 };
 
+export const updateTaskListName = async (id:string, name:string) =>{
+  console.log("Update tasklist with")
+  const data = {
+  listName: name,
+  }
+
+  try{
+    const response = await axiosInstance.put(`tasklist/updateTasklist/${id}`,data,{
+    headers: {"Content-Type": "application/json"}
+    })
+  }catch(error){
+   console.log(error)
+  }
+}
+
 export const getAllTasklist = async () => {
   const response = await axiosInstance.get(`tasklist/getAll`, {
     headers: { "Content-Type": "application/json" },
