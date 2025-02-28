@@ -2,7 +2,7 @@ import { List } from "antd";
 import "../styles/ShareSection.css";
 import ShareButton from "./ShareButton";
 import { useGetAllTasklistUsers } from "../services/queries";
-import { useEffect } from "react";
+import { UserOutlined } from "@ant-design/icons";
 
 interface Props {
   isVisible?: boolean;
@@ -20,7 +20,12 @@ function ShareSection({
   const { data, refetch } = useGetAllTasklistUsers(tasklistId);
 
   const listData = data?.map((item: any) => ({
-    title: item.email
+    title: (
+      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <UserOutlined />
+        {item.email}
+      </span>
+    ),
   }));
 
   if (!isVisible) return null;
@@ -41,9 +46,13 @@ function ShareSection({
 
         <h2>Personer med adgang</h2>
         <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-          <List dataSource={listData} renderItem={(item:any, index)=>{
-            return <List.Item key={index}>{item.title}</List.Item>
-          }} className="share-list" />
+          <List
+            dataSource={listData}
+            renderItem={(item: any, index) => {
+              return <List.Item key={index}>{item.title}</List.Item>;
+            }}
+            className="share-list"
+          />
         </div>
       </div>
     </div>
