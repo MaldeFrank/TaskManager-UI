@@ -125,6 +125,7 @@ function AssignedTasklist({
         profiles={profiles}
       />
       <ShareSection
+        tasklistId={tasklistId}
         onClickSendEmail={addUserToTasklist}
         onInputChange={handleEmailChange}
         isVisible={shareVisible}

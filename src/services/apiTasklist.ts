@@ -124,3 +124,12 @@ export const setPeriodFilter = async (id: number, period: string) => {
     throw error;
   }
 };
+
+export const getTasklistUsers = async (id: number) => {
+  try {
+    const response = await axiosInstance.get(`tasklist/getAllUsers/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting tasklist users", error);
+  }
+}

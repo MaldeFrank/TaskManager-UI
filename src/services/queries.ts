@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllTasks } from "./apiTasks";
 import { getAllAssignTasks, getAssignedTasksByProfileId } from "./apiAssignedTasks";
 import { getAllProfiles } from "./apiProfile";
-import { getAllTasklist, getAssignedTaskMonthly, getAssignedTasks, getAssignedTaskWeekly } from "./apiTasklist";
+import { getAllTasklist, getAssignedTaskMonthly, getAssignedTasks, getAssignedTaskWeekly, getTasklistUsers } from "./apiTasklist";
 import { getAccAssignedTasks, getAllAccProfiles, getAllAccTasklist, getAllAccTasks } from "./apiGoogleAccount";
 
 export function useGetAllTasks() {
@@ -92,4 +92,11 @@ export function useGetAssignedTasksByTasklistMonthly(id:any){
     enabled:false,
   });
 };
+
+export function useGetAllTasklistUsers(id:any){
+  return useQuery({
+    queryKey:["getTasklistUsers",id],
+    queryFn: ()=> getTasklistUsers(id),
+  });
+}
 
