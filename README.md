@@ -7,8 +7,7 @@ Frontend for taskmanager application.
   
 ## Future development
 - Options should be added to change how long an assignment is visible.
-- Each assignment tab should have the names of each Google account that can be seen, so there is an overview of who the list is shared with.
-- When a task is completed, the points should be allocated to the assigned user.
+- New system for points should be implemented - like adding a table for point distribution.
 
 ## Future features
 - Schema: A schema should be added, which is a list you can add tasks to, so you dont have to take each task each week onto a list, but can just choose a schema with the tasks you want.
