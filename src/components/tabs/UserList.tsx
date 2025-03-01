@@ -21,7 +21,7 @@ function UsersList({ setProfiles, profiles }: props) {
   }, [data,setProfiles])
 
   function addUser() {
-    const newProfile: Profile = {
+    const newProfile: any = {
       id: 0,
       name: "",
       points: 0,

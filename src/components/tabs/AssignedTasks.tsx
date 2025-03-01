@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   useGetAllAccProfiles,
 } from "../../services/queries";
@@ -6,12 +6,14 @@ import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
+import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
 
 interface props {
   setAssignedTasks: any;
   assignedTasks: AssignedTask[];
   setProfiles: any;
   profiles: any[];
+  tasklistId?: any;
 }
 
 function AssignedTasks({
@@ -19,6 +21,7 @@ function AssignedTasks({
   assignedTasks,
   setProfiles,
   profiles,
+  tasklistId
 }: props) {
 
 
@@ -44,6 +47,16 @@ function AssignedTasks({
       );
 
       record.completed?record.assignedTo.points += record.task.points:record.assignedTo.points -= record.task.points // On completion of task points goes up and opposite
+
+      if(record.completed===true){
+        console.log("Tasklist id", tasklistId)
+        addPoints(record.assignedTo.id, record.task.points, record.task.title, tasklistId)
+      }
+
+      if(record.completed===false){
+        deletePointScoreByName(record.task.title,record.task.id,record.assignedTo.id)
+      }
+
       updateAssignTask(record);
     }else{
       message.warning("Opgave er ikke tildelt")
@@ -146,3 +159,4 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 }
 
 export default AssignedTasks;
+

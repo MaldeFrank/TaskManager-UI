@@ -7,7 +7,7 @@ interface Props {
   task: any;
   setAssignedTasks: any;
 }
-
+// Adds the dropdown with all the tasklists, and is resposible for setting a task to a tasklist, creating an assignedtask
 function AddTask({ tasklists, task, setAssignedTasks }: Props) {
   const items: MenuProps["items"] = tasklists.map((tasklist) => ({
     key: tasklist.taskId,

@@ -123,6 +123,7 @@ function AssignedTasklist({
         assignedTasks={shownData != null ? shownData : []}
         setProfiles={setProfiles}
         profiles={profiles}
+        tasklistId={tasklistId}
       />
       <ShareSection
         tasklistId={tasklistId}
