@@ -70,3 +70,11 @@
       max-width: 250px;
     }
   }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto; 
+    padding-top: 10px;
+  }

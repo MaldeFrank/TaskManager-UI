@@ -1,18 +1,21 @@
-import { List } from "antd";
+import { Button, List } from "antd";
 import "../styles/ShareSection.css";
 import ShareButton from "./ShareButton";
 import { useGetAllTasklistUsers } from "../services/queries";
-import { UserOutlined } from "@ant-design/icons";
+import { AlignRightOutlined, UserOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 interface Props {
   isVisible?: boolean;
+  setIsVisible?: any;
   onInputChange: any;
   onClickSendEmail: (event: React.MouseEvent<HTMLElement>) => void;
   tasklistId: number;
 }
 
 function ShareSection({
-  isVisible = true,
+  isVisible,
+  setIsVisible,
   onInputChange,
   onClickSendEmail,
   tasklistId,
@@ -21,7 +24,7 @@ function ShareSection({
 
   const listData = data?.map((item: any) => ({
     title: (
-      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <UserOutlined />
         {item.email}
       </span>
@@ -39,7 +42,7 @@ function ShareSection({
             className="share-input"
             onChange={(e) => onInputChange(e)}
             type="text"
-            placeholder="Email.."
+            placeholder="Indtast email.."
           />
           <ShareButton onClickEvent={onClickSendEmail}></ShareButton>
         </div>
@@ -53,6 +56,16 @@ function ShareSection({
             }}
             className="share-list"
           />
+        </div>
+        <div className="button-wrapper">
+          <Button
+            onClick={() => setIsVisible(false)}
+            type="primary"
+            danger
+            ghost
+          >
+            Luk
+          </Button>
         </div>
       </div>
     </div>

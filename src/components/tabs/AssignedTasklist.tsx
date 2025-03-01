@@ -129,6 +129,7 @@ function AssignedTasklist({
         onClickSendEmail={addUserToTasklist}
         onInputChange={handleEmailChange}
         isVisible={shareVisible}
+        setIsVisible={setShareVisible}
       />
       <Button type="primary" size="large" icon={<AntDesignOutlined />} onClick={() => setShareVisible(!shareVisible)}>
         Del
