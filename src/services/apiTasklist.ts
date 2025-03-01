@@ -80,6 +80,10 @@ export const createTasklist = async (tasklist: any) => {
 };
 
 export const addAccToTasklist = async (email: any, tasklistId: any) => {
+  if(email.length === 0|| email === undefined || email === null){
+    console.log("Email is empty")
+    return
+  }
   try {
     const response = await axiosInstance.put(
       `tasklist/addUser/${email}/${tasklistId}`,

@@ -59,14 +59,20 @@ export const addGoogleAcc = async (id: any, googleId: any) => {
 }
 
 export const addGoogleAccByEmail = async (profileId: any, googleAccEmail: any) => {
+  if(!profileId || !googleAccEmail) return;
+  try{
   const response = await axiosInstance.put(`/profile/addGoogleAccByEmail/${profileId}/${googleAccEmail}`, {
     headers: { "Content-Type": "application/json" }, 
   });
 
   return response.data;
+}catch(error){
+  console.log("Error adding google acc by email", error)
+}
 }
 
 export const getProfileByGoogleEmail = async (email: string) => {
+  if (!email) return;
   try {
     const response = await axiosInstance.get(`/getProfileByGoogleEmail/${email}`);
     return response.data;

@@ -96,7 +96,7 @@ function AssignedTasklist({
   const addUserToTasklist = async () => {
     const response = await addAccToTasklist(email, tasklistId);
 
-    if (response === false) {
+    if (response === false||response===undefined) {
       message.error("Bruger med mail ikke fundet");
     } else {
       message.success("Bruger tilføjet til tasklist");
