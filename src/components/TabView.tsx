@@ -101,7 +101,7 @@ function TabView() {
       // Now add the new tab with the correct tasklistId
       const newPanes = [...items];
       newPanes.push({
-        key: newActiveKey,
+        key: response.taskId,
         label: newTabName,
         closable: true,
         children: (

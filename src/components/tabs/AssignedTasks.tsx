@@ -46,15 +46,14 @@ function AssignedTasks({
         })
       );
 
-      record.completed?record.assignedTo.points += record.task.points:record.assignedTo.points -= record.task.points // On completion of task points goes up and opposite
-
       if(record.completed===true){
         console.log("Tasklist id", tasklistId)
         addPoints(record.assignedTo.id, record.task.points, record.task.title, tasklistId)
       }
 
       if(record.completed===false){
-        deletePointScoreByName(record.task.title,record.task.id,record.assignedTo.id)
+        console.log("Tasklist id", tasklistId)
+        deletePointScoreByName(record.task.title,tasklistId,record.assignedTo.id)
       }
 
       updateAssignTask(record);
