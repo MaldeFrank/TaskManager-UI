@@ -7,7 +7,6 @@ Frontend for taskmanager application.
   
 ## Future development
 - Options should be added to change how long an assignment is visible.
-- New system for points should be implemented - like adding a table for point distribution.
 
 ## Future features
 - Schema: A schema should be added, which is a list you can add tasks to, so you dont have to take each task each week onto a list, but can just choose a schema with the tasks you want.
