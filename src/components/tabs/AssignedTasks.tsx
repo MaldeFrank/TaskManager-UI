@@ -28,6 +28,7 @@ function AssignedTasks({
   const {
     data: profilesData,
     isError: isProfilesError,
+    refetch: refetchProfiles,
   } = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
 
 
@@ -85,9 +86,10 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 
   useEffect(() => {
     if (profilesData) {
+      refetchProfiles();
       setProfiles(profilesData);
     }
-  }, [profilesData, setProfiles]);
+  }, [profilesData, setProfiles, switchTaskState]);
 
 
   if (isProfilesError) {
