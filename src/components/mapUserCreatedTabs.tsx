@@ -21,7 +21,7 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTas
     if (!allTasklists) {
       return [];
     }
-    const tabs = allTasklists.map((tasklist) => ({
+    const tabs = allTasklists.map((tasklist, index) => ({
       key: tasklist.taskId,
       label: (
         <EditableTabLabel initialName={tasklist.listName} taskId={tasklist.taskId} onNameChange={onNameChange}></EditableTabLabel> //So user can change name
