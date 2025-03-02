@@ -1,8 +1,7 @@
-import React from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu } from 'antd';
 import AccountDropdown from './account/AccountDropdown';
 
-const { Header, Content } = Layout;
+const { Header } = Layout;
 
 interface Props {
   logout: any;
@@ -10,9 +9,6 @@ interface Props {
 }
 
  function TopBar({ logout, userName }: Props) {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   const items = [
     {

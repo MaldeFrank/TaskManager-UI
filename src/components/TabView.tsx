@@ -1,14 +1,12 @@
 import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
-import AssignedTasks from "./tabs/AssignedTasks";
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
-import { Profile } from "../model/Profile";
 import UsersList from "./tabs/UserList";
 import AssignedTasklist from "./tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
-import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
+import { useGetAllAccTasklist } from "../services/queries";
 import mapUserCreatedTabs from "./mapUserCreatedTabs";
 import MyTasks from "./tabs/MyTasks";
 
@@ -101,7 +99,7 @@ function TabView() {
       // Now add the new tab with the correct tasklistId
       const newPanes = [...items];
       newPanes.push({
-        key: newActiveKey,
+        key: response.taskId,
         label: newTabName,
         closable: true,
         children: (
@@ -147,9 +145,8 @@ function TabView() {
 
    // Update items when dependencies change
  useEffect(() => {
-  refetchTasklists();
   setItems(generateTabs());
-}, [tasks, assignedTasks, profiles, fetchedTasklists]);
+}, [fetchedTasklists]);
 
   return (
     <Tabs
