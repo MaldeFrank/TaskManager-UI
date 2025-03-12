@@ -13,11 +13,16 @@ steps:
         echo "Going to frontend folder"
         cd /var/www/frontend || mkdir -p /var/www/frontend && cd /var/www/frontend
         
+        if [ -d "TaskManager-UI" ]; then
+          echo "Directory exists, removing it"
+          rm -rf TaskManager-UI
+        fi
+        
         echo "Cloning git repository"
         git clone https://github.com/MaldeFrank/TaskManager-UI.git
         
         echo "Navigating into project directory"
         cd TaskManager-UI
         
-        echo "Starting docker-compose"
-        docker-compose up
+        echo "Starting docker-compose with rebuild"
+        docker-compose up -d --build
