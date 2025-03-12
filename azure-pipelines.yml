@@ -1,19 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: SSH@0
+    inputs:
+      sshEndpoint: 'DigitalOceanSSH'
+      runOptions: 'inline'
+      inline: |
+        echo "Going to frontend folder"
+        cd /var/www/frontend || mkdir -p /var/www/frontend && cd /var/www/frontend
+        
+        echo "Cloning git repository"
+        git clone https://github.com/MaldeFrank/TaskManager-UI.git
+        
+        echo "Creating docker image"
+        docker stop frontendContainer || echo "No container named frontendContainer"
+        docker rm frontendContainer || echo "No container named frontendContainer"
+        docker rmi frontendImage || echo "No image named frontendImage"
+        docker build -t frontendImage .
+        docker run -d --name frontendContainer -p 80:80 frontendImage
