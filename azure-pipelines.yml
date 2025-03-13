@@ -30,15 +30,7 @@ steps:
       sshEndpoint: 'DigitalOceanSSH'
       runOptions: 'inline'
       inline: |
+        echo "Stopper tidligere container"
+        docker-compose down
         echo "Opbygger og kører Docker"
-        docker-compose up --build -d # Tilføjet -d for at køre i baggrunden
-
-  - task: SSH@0 
-    displayName: "Rydder gamle billeder"
-    inputs:
-      sshEndpoint: 'DigitalOceanSSH'
-      runOptions: 'inline'
-      inline: |
-        echo "Rydder gamle billeder"
-        docker image prune -a -f # Fjern ubrugte billeder
-        docker container prune -f # Fjern stoppede containere
+        docker-compose up --build -d 
