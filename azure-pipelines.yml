@@ -40,6 +40,6 @@ steps:
         cd /var/www/frontend/TaskManager-UI || (echo "Kunne ikke skifte til mappe" && exit 1)
         docker-compose down
         docker rm taskmanager-ui-web-1
-        docker rmi taskmanager-ui-web-1
+        docker rmi taskmanager-ui-web
         echo "Opbygger og kører Docker"
         docker-compose up
