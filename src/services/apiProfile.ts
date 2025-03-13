@@ -1,6 +1,6 @@
 import { Profile } from "../model/Profile";
 import axios from "axios";
-const BASE_URL = "http://localhost:8080";
+import { BASE_URL } from "./baseURL";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const getAllProfiles = async (): Promise<any[]> => {

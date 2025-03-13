@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Task, TaskDto } from "../model/Task";
+import { Task } from "../model/Task";
+import { BASE_URL } from "./baseURL";
 
-const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const postTask = async (googleId:any, taskData:any) => { 
