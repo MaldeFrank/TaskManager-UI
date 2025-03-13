@@ -13,7 +13,7 @@ steps:
       inline: |
         echo "Gå til projektmappe"
         cd /var/www/frontend/TaskManager-UI || (echo "Mappe ikke fundet" && exit 1)
-
+        pwd
   - task: SSH@0
     displayName: "Hent kode"
     inputs:
