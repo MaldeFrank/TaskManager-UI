@@ -20,6 +20,9 @@ steps:
       sshEndpoint: 'DigitalOceanSSH'
       runOptions: 'inline'
       inline: |
+        echo "Tjekker path"
+        pwd
+        
         echo "Henter kode"
         git fetch
         git pull
