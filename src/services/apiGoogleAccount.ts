@@ -1,7 +1,8 @@
 import { Profile } from "../model/Profile";
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/googleAccount";
-const axiosInstance = axios.create({ baseURL: BASE_URL });
+import { GOOGLE_ACCOUNT_ENDPOINT } from "./baseURL";
+
+const axiosInstance = axios.create({ baseURL: GOOGLE_ACCOUNT_ENDPOINT });
 
 export const getAllAccounts = async (): Promise<Profile[]> => {
   const response = await axiosInstance.get("/getAll", {

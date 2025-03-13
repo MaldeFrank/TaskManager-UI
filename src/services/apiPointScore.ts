@@ -1,6 +1,6 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/pointScore";
-const axiosInstance = axios.create({ baseURL: BASE_URL });
+import { POINT_SCORE_ENDPOINT } from "./baseURL";
+const axiosInstance = axios.create({ baseURL: POINT_SCORE_ENDPOINT });
 
 const getProfileTasklistPoints = async (profileId: number, taskId: number) => {
   const response = await axiosInstance.get<any>(`/totalPointsByProfileId/${profileId}/${taskId}`,{

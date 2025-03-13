@@ -1,8 +1,7 @@
 import axios from "axios";
-import { Task, TaskDto } from "../model/Task";
-import { AssignedTask, AssignedTaskDto, AssignedTaskUpdateDto } from "../model/AssignedTask";
+import { AssignedTask, AssignedTaskUpdateDto } from "../model/AssignedTask";
+import { BASE_URL } from "./baseURL";
 
-const BASE_URL = "http://localhost:8080"
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const postAssignTask = async (assignedTaskDto:any) => {
