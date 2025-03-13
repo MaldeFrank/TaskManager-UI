@@ -6,18 +6,39 @@ pool:
 
 steps:
   - task: SSH@0
+    displayName: "Gå til projektmappe"
     inputs:
       sshEndpoint: 'DigitalOceanSSH'
       runOptions: 'inline'
       inline: |
-        echo "Going to frontend folder"
-        cd /var/www/frontend || mkdir -p /var/www/frontend && cd /var/www/frontend
-        
-        echo "Cloning git repository"
-        git clone https://github.com/MaldeFrank/TaskManager-UI.git
-        
-        echo "Navigating into project directory"
-        cd TaskManager-UI
-        
-        echo "Starting docker-compose"
-        docker-compose up
+        echo "Gå til projektmappe"
+        cd /var/www/frontend/TaskManager-UI || (echo "Mappe ikke fundet" && exit 1)
+
+  - task: SSH@0
+    displayName: "Hent kode"
+    inputs:
+      sshEndpoint: 'DigitalOceanSSH'
+      runOptions: 'inline'
+      inline: |
+        echo "Henter kode"
+        git fetch
+        git pull
+
+  - task: SSH@0
+    displayName: "Opbyg og kør Docker"
+    inputs:
+      sshEndpoint: 'DigitalOceanSSH'
+      runOptions: 'inline'
+      inline: |
+        echo "Opbygger og kører Docker"
+        docker-compose up --build -d # Tilføjet -d for at køre i baggrunden
+
+  - task: SSH@0 
+    displayName: "Rydder gamle billeder"
+    inputs:
+      sshEndpoint: 'DigitalOceanSSH'
+      runOptions: 'inline'
+      inline: |
+        echo "Rydder gamle billeder"
+        docker image prune -a -f # Fjern ubrugte billeder
+        docker container prune -f # Fjern stoppede containere
