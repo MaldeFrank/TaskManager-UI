@@ -13,7 +13,8 @@ steps:
       inline: |
         echo "Gå til projektmappe"
         cd /var/www/frontend/TaskManager-UI || (echo "Mappe ikke fundet" && exit 1)
-        pwd
+        /bin/pwd  # Explicitly show the path
+
   - task: SSH@0
     displayName: "Hent kode"
     inputs:
@@ -21,11 +22,11 @@ steps:
       runOptions: 'inline'
       inline: |
         echo "Tjekker path"
-        pwd
-        
+        cd /var/www/frontend/TaskManager-UI || (echo "Kunne ikke skifte til mappe" && exit 1)
+        /bin/pwd  # Confirm the directory
         echo "Henter kode"
-        git fetch
-        git pull
+        git fetch --verbose || echo "Fetch failed"
+        git pull --verbose || echo "Pull failed"
 
   - task: SSH@0
     displayName: "Opbyg og kør Docker"
@@ -34,6 +35,7 @@ steps:
       runOptions: 'inline'
       inline: |
         echo "Stopper tidligere container"
+        cd /var/www/frontend/TaskManager-UI || (echo "Kunne ikke skifte til mappe" && exit 1)
         docker-compose down
         echo "Opbygger og kører Docker"
-        docker-compose up --build -d 
+        docker-compose up --build -d
