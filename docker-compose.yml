@@ -5,4 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "80:80"  
+      - "443:443" 
+    volumes:
+      - /etc/letsencrypt/live/www.pligtlisten.dk/fullchain.pem:/etc/letsencrypt/live/www.pligtlisten.dk/fullchain.pem:ro
+      - /etc/letsencrypt/live/www.pligtlisten.dk/privkey.pem:/etc/letsencrypt/live/www.pligtlisten.dk/privkey.pem:ro
+    restart: unless-stopped
