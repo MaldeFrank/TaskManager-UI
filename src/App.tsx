@@ -7,27 +7,6 @@ import TopBar from './components/TopBar';
 import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
 import { addGoogleAcc, createGoogleProfile, getProfileByName } from './services/apiProfile';
 
-// Declare google global type
-declare global {
-  interface Window {
-    google: {
-      accounts: {
-        id: {
-          initialize: (config: {
-            client_id: string;
-            callback: (response: { credential: string }) => void;
-          }) => void;
-          renderButton: (
-            element: HTMLElement | null,
-            options: { theme: string; size: string }
-          ) => void;
-          disableAutoSelect: () => void;
-        };
-      };
-    };
-  }
-}
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -89,6 +68,7 @@ function App() {
           console.error("Error in account creation flow:", error);
       }
   }
+  
   };
 
   const handleLogout = () => {

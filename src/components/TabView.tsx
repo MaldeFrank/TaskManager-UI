@@ -1,10 +1,8 @@
 import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
-import AssignedTasks from "./tabs/AssignedTasks";
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
 import Tasks from "./tabs/Tasks";
-import { Profile } from "../model/Profile";
 import UsersList from "./tabs/UserList";
 import AssignedTasklist from "./tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
@@ -20,6 +18,7 @@ function TabView() {
   const newTabIndex = useRef(0);
   const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
 
+  
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
     allTasklists: fetchedTasklists,
     setProfiles,
@@ -67,6 +66,7 @@ function TabView() {
 
 
 
+  // Custom renderTabBar to style the tab bar and make it sticky
   const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
     <StickyBox offsetTop={0} offsetBottom={20} style={{ zIndex: 1 }}>
       <DefaultTabBar

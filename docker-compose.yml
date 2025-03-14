@@ -11,3 +11,9 @@ services:
       - /etc/letsencrypt/live/www.pligtlisten.dk/fullchain.pem:/etc/letsencrypt/live/www.pligtlisten.dk/fullchain.pem:ro
       - /etc/letsencrypt/live/www.pligtlisten.dk/privkey.pem:/etc/letsencrypt/live/www.pligtlisten.dk/privkey.pem:ro
     restart: unless-stopped
+    networks:
+      - my-shared-network
+
+networks:
+  my-shared-network:
+    external: true

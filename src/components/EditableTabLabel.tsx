@@ -30,7 +30,8 @@ function EditableTabLabel({
       }
     }
   };
-
+  
+  //If function has been passed to change name, call it
   const handleBlur = () => {
     setIsEditing(false);
     if (onNameChange) {
@@ -38,6 +39,7 @@ function EditableTabLabel({
     }
   };
 
+//Return span if not editing, return input if editing is true
   return isEditing ? (
     <Input
       value={name}
