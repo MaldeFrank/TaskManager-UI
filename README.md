@@ -1,4 +1,4 @@
-# CleanApp-UI
+# TaskManager-UI
 Frontend for taskmanager application.
 
 
