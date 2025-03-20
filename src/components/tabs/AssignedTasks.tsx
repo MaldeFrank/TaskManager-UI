@@ -4,9 +4,9 @@ import {
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
 import { switchTaskState } from "../../util/assignedtasks/switchTaskState";
+import { handleMenuClick } from "../../util/assignedtasks/handleMenuClick";
 
 interface props {
   setAssignedTasks: any;
@@ -25,29 +25,9 @@ function AssignedTasks({
 }: props) {
 
 
-  const {
-    data: profilesData,
-    isError: isProfilesError,
-    refetch: refetchProfiles,
-  } = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
+  const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
 
   
-
-// Handles clicks on dropdown items
-const handleMenuClick = (record: AssignedTask) => (e: any) => {
-  const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
-  if (selectedProfile) {
-    setAssignedTasks((prev: AssignedTask[]) =>
-      prev.map((task) =>
-        task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
-      ),
-      record.assignedTo=selectedProfile
-    );
-    message.info("User assigned successfully");
-    updateAssignTask(record);
-  }
-};
-
   const items: MenuProps["items"] = profiles.map((profile) => ({
     key: profile.id,
     label: profile.name,
@@ -88,7 +68,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record)(e),
+            onClick: (e) => handleMenuClick(record, setAssignedTasks, profiles)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}
@@ -119,7 +99,6 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 
   return(
   <div>
-    
     <h2 style={{textAlign:"center", color:"red"}}><Tag color="red">Ikke udført</Tag></h2>
   <Table dataSource={assignedTasks.filter((task)=>task.completed===false)} columns={columns}/>
     <h2 style={{textAlign:"center", color:"green"}}><Tag color="green">Udført</Tag></h2>
