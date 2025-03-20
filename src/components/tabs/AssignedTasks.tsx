@@ -6,7 +6,7 @@ import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
-import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
+import { switchTaskState } from "../../util/assignedtasks/switchTaskState";
 
 interface props {
   setAssignedTasks: any;
@@ -31,37 +31,7 @@ function AssignedTasks({
     refetch: refetchProfiles,
   } = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
 
-
-  //Function to switch state to done and back
-  const switchTaskState = (record: any) => {
-    
-    if(record.assignedTo){
-      setAssignedTasks((prev: any[]) =>
-        prev.map((task) => {
-          if (task.id === record.id) {
-            task.completed = !task.completed;
-            return task;
-          } else {
-            return task;
-          }
-        })
-      );
-
-      if(record.completed===true){
-        console.log("Tasklist id", tasklistId)
-        addPoints(record.assignedTo.id, record.task.points, record.task.title, tasklistId)
-      }
-
-      if(record.completed===false){
-        console.log("Tasklist id", tasklistId)
-        deletePointScoreByName(record.task.title,tasklistId,record.assignedTo.id)
-      }
-
-      updateAssignTask(record);
-    }else{
-      message.warning("Opgave er ikke tildelt")
-    }
-  };
+  
 
 // Handles clicks on dropdown items
 const handleMenuClick = (record: AssignedTask) => (e: any) => {
@@ -140,7 +110,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record)}
+          onClick={() => switchTaskState(record, setAssignedTasks, tasklistId)}
         />
       ),
       width:100,
