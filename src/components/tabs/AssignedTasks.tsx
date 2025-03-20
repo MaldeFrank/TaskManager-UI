@@ -91,7 +91,6 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
     }
   }, [profilesData, setProfiles, switchTaskState]);
 
-
   if (isProfilesError) {
     return <div>Error loading profiles</div>;
   }

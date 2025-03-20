@@ -102,7 +102,7 @@ function TabView() {
       console.log("This is the tasklist id:", response.taskId);
     
   
-      // Now add the new tab with the correct tasklistId
+      //Add the new tab with the correct tasklistId
       const newPanes = [...items];
       newPanes.push({
         key: response.taskId,

@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
-import {
-  useGetAssignedTasksByTasklistMonthly,
-  useGetAssignedTasksByTasklistWeekly,
-  useGetAssingedTasks,
-} from "../../services/queries";
-import { addAccToTasklist, getTasklist } from "../../services/apiTasklist";
-import { Button, message } from "antd";
-import {
-  addGoogleAccByEmail,
-  getProfileByGoogleEmail,
-} from "../../services/apiProfile";
+import { getTasklist } from "../../services/apiTasklist";
+import { Button} from "antd";
 import TaskFetchOptions from "../TaskFetchOptions";
 import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
