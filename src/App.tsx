@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
 import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
 import { addGoogleAcc, createGoogleProfile, getProfileByName } from './services/apiProfile';
+import { handleCallbackResponse } from './util/googleSignIn/handleCallbackResponse';
 
 const queryClient = new QueryClient();
 
@@ -18,58 +19,7 @@ function App() {
   } | null>(null);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
 
-  const handleCallbackResponse = async (response: { credential: string }) => {
-    // Decode the JWT token
-    const decodedToken = JSON.parse(atob(response.credential.split('.')[1]));
-    
-    // Set user information
-    setUser({
-      email: decodedToken.email,
-      name: decodedToken.name,
-      picture: decodedToken.picture
-    });
-    
-    setIsAuthenticated(true);
-    
-    // Tokens stored in local each time user logs in
-    localStorage.setItem('google_token', response.credential);
-    localStorage.setItem('user_id', decodedToken.sub);
-    localStorage.setItem('Email', decodedToken.email);
-    const profile:any = await getProfileByName(decodedToken.name);
-    console.log("Profile:", profile);
-    console.log("ProfileId:", profile.id);
-    localStorage.setItem('profile_id', profile.id);
-    const doesExist = await checkIfAccountExists(decodedToken.sub);
-    console.log("Does account exist", doesExist);
-
-    //Creates the account if it does not already exist in the db
-    if (!doesExist) {  
-      const acc = {
-          googleId: decodedToken.sub,
-          name: decodedToken.name,
-          email: decodedToken.email,
-      };
-  
-      try {
-          const createdAccount = await createAccount(acc); //Create account in db
-          //Set a profile with the account
-          const profile ={
-            name: decodedToken.name,
-            points: 0,
-          }
-
-          const response = await createGoogleProfile(profile);
-          const profileId = response.id;
-          localStorage.setItem('profile_id', profileId);
-          await addGoogleAcc(profileId, decodedToken.sub);
-          console.log("Account created and returned:", createdAccount);
-
-      } catch (error) {
-          console.error("Error in account creation flow:", error);
-      }
-  }
-  
-  };
+ 
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -86,7 +36,9 @@ function App() {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.initialize({
         client_id: "144539137320-fjf8rp49u33evb065t053u95d50mndah.apps.googleusercontent.com",
-        callback: handleCallbackResponse
+        callback: (response) => {
+          handleCallbackResponse(response, setUser, setIsAuthenticated);
+        }
       });
 
       // Render the Google Sign-In button if not authenticated
