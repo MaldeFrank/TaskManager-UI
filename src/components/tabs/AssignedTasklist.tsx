@@ -15,6 +15,7 @@ import {
 import TaskFetchOptions from "../TaskFetchOptions";
 import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
+import { useTaskData } from "../../hooks/tabs/AssignedTasklist/useTaskData";
 
 interface props {
   setProfiles: any;
@@ -23,7 +24,10 @@ interface props {
   setAssignedTasks: any;
   assignedTasks: any;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: AssignedTasklist
+    Purpose: To show a tasklist and all its AssignedTask.
+    --------------------------------------------------------------------- */}
 function AssignedTasklist({
   setProfiles,
   profiles,
@@ -37,55 +41,14 @@ function AssignedTasklist({
     const fetchTasklist = async () => {
       const task = await getTasklist(tasklistId);
       setTaskFilter(task.periodFilter);
-      console.log("Tasklist fetched with given id: ", task);
     };
     fetchTasklist();
   }, [tasklistId]);
 
-  const { data, refetch } = useGetAssingedTasks(tasklistId);
-
-  const { data: weeklyTasks, refetch: refecthWeekly } =
-    useGetAssignedTasksByTasklistWeekly(tasklistId);
-
-  const { data: monthlyTasks, refetch: refecthMonthly } =
-    useGetAssignedTasksByTasklistMonthly(tasklistId);
-
-  const [shownData, setShownData] = useState<any[]>([]); //Shows assignedTasks based on taskfilter
-
+  const [shownData, setShownData] = useTaskData(tasklistId, taskFilter, setAssignedTasks, assignedTasks); //Added setAssignedTasks and assignedTasks to update showData when new is added
   const [email, setEmail] = useState("");
-
   const [shareVisible, setShareVisible] = useState(false);
 
-  useEffect(() => {
-    switch (taskFilter) {
-      case "All":
-        refetch();
-        console.log("All");
-        setShownData(data);
-        break;
-      case "Weekly":
-        refecthWeekly();
-        console.log("Weekly");
-        setShownData(weeklyTasks);
-        break;
-      case "Monthly":
-        refecthMonthly();
-        console.log("Monthly");
-        setShownData(monthlyTasks);
-        break;
-      default:
-        refetch();
-        setShownData(data);
-        break;
-    }
-  }, [
-    data,
-    weeklyTasks,
-    monthlyTasks,
-    setAssignedTasks,
-    assignedTasks,
-    taskFilter,
-  ]);
 
   const addProfiles = async () => {
     await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc
@@ -120,7 +83,7 @@ function AssignedTasklist({
 
       <AssignedTasks
         setAssignedTasks={setShownData}
-        assignedTasks={shownData != null ? shownData : []}
+        assignedTasks={Array.isArray(shownData) ? shownData : []}
         setProfiles={setProfiles}
         profiles={profiles}
         tasklistId={tasklistId}

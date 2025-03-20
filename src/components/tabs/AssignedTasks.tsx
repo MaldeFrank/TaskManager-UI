@@ -10,7 +10,7 @@ import { addPoints, deletePointScoreByName } from "../../services/apiPointScore"
 
 interface props {
   setAssignedTasks: any;
-  assignedTasks: AssignedTask[];
+  assignedTasks: any[];
   setProfiles: any;
   profiles: any[];
   tasklistId?: any;

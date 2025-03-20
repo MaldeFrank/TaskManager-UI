@@ -2,14 +2,18 @@ import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
-import Tasks from "./tabs/Tasks";
-import UsersList from "./tabs/UserList";
-import AssignedTasklist from "./tabs/AssignedTasklist";
+import Tasks from "../components/tabs/Tasks";
+import UsersList from "../components/tabs/UserList";
+import AssignedTasklist from "../components/tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
 import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
-import mapUserCreatedTabs from "./mapUserCreatedTabs";
-import MyTasks from "./tabs/MyTasks";
+import mapUserCreatedTabs from "../components/mapUserCreatedTabs";
+import MyTasks from "../components/tabs/MyTasks";
 
+{/* ---------------------------------------------------------------------
+    Component: TabView
+    Purpose: Shows tab components using ANTD Tabs component.
+    --------------------------------------------------------------------- */}
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<any[]>([]); //Right now it is always empty and is just used to make child components rerender

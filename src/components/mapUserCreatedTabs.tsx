@@ -10,7 +10,10 @@ interface Props {
   setAssignedTasks:any,
   assignedTasks:any,
 }
-
+{/* ---------------------------------------------------------------------
+    Component: mapUserCreatedTabs
+    Purpose: Maps the user created tasklists to tabs
+    --------------------------------------------------------------------- */}
 function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTasks,assignedTasks }: Props) {
 
   const onNameChange = (id:string, name:string)=>{

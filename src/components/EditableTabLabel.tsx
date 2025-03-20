@@ -1,6 +1,9 @@
 import Input from "rc-input";
 import { useState } from "react";
-
+{/* ---------------------------------------------------------------------
+    Component: EditableTabLabel
+    Purpose: Is a label that can be edited by double clicking on it.
+    --------------------------------------------------------------------- */}
 function EditableTabLabel({ 
   initialName, 
   taskId, 

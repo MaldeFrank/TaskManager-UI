@@ -7,7 +7,10 @@ interface Props {
   task: any;
   setAssignedTasks: any;
 }
-// Adds the dropdown with all the tasklists, and is resposible for setting a task to a tasklist, creating an assignedtask
+{/* ---------------------------------------------------------------------
+    Component: AddTask
+    Purpose: Is a button resposible for setting a task to a tasklist, making the task an assignedtask.
+    --------------------------------------------------------------------- */}
 function AddTask({ tasklists, task, setAssignedTasks }: Props) {
   const items: MenuProps["items"] = tasklists.map((tasklist) => ({
     key: tasklist.taskId,
@@ -15,7 +18,6 @@ function AddTask({ tasklists, task, setAssignedTasks }: Props) {
   }));
 
   const postAssignedTaskFunction = async (task: Task, clickedItem: number) => {
-    console.log("clicked item", clickedItem);
     try {
       const assignedTaskDto = {
         assignedTo: 0, 
@@ -26,11 +28,9 @@ function AddTask({ tasklists, task, setAssignedTasks }: Props) {
       };
   
       const response = await postAssignTask(assignedTaskDto);
-      console.log("AssignedTask send up from AddTask", response);
       setAssignedTasks([]);
     } catch (error) {
       console.error("Error assigning task:", error);
-      // Show an error message to the user
     }
   };
 

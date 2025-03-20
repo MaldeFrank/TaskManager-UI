@@ -3,7 +3,10 @@ import { Button } from "antd";
 interface props{
 onClickEvent: (event: React.MouseEvent<HTMLElement>) => void;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: ShareButton
+    Purpose: a button with an onClick event.
+    --------------------------------------------------------------------- */}
 function ShareButton({
 onClickEvent
 }:props){
