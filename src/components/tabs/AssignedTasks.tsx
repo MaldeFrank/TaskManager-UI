@@ -39,7 +39,7 @@ function AssignedTasks({
 
   useEffect(() => {
     if (profilesData) {
-      refetchProfiles();
+      refetchProfiles(); //Might not make sense to refetch here.
       setProfiles(profilesData);
     }
   }, [profilesData, setProfiles, switchTaskState]);

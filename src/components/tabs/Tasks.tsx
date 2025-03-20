@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useGetAllAccTasks } from "../../services/queries";
-import { Button, Space, Table, Form, Input, InputNumber } from "antd";
+import { Button, Space, Table, Form} from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask, usePutTask } from "../../services/mutations";
-import { EditableCellProps } from "../../types/Cells";
 import { postTask } from "../../services/apiTasks";
 import AddTask from "../AddTask";
+import EditableCell from "../EditableCell";
+import { save } from "../../util/tasks/save";
+import { createNewTask } from "../../util/tasks/createNewTask";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -14,47 +16,11 @@ interface Props {
   tasklists:any[];
 }
 
-
-const EditableCell: React.FC<EditableCellProps> = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{ margin: 0 }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
-
 function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
   const { data, isLoading, isError, error } = useGetAllAccTasks(localStorage.getItem("user_id"));
   const { mutate: deleteTask } = useDeleteTask();
-  const { mutate: updateTask } = usePutTask();
 
   const isEditing = (record: Task) => record.id === editingKey;
 
@@ -67,41 +33,6 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
     setEditingKey(-1);
   };
 
-  const save = async (id: number) => {
-    try {
-      const row = await form.validateFields();
-      const updatedTask = { ...row, id };
-      updateTask(updatedTask);
-      setTasks((prevTasks: Task[]) =>
-        prevTasks.map((task) => (task.id === id ? updatedTask : task))
-      );
-      setEditingKey(-1);
-    } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
-    }
-  };
-
-  const createNewTask = async () => {
-    const userId = localStorage.getItem("user_id");
-
-    if(userId === null) {
-      console.error("User not logged in");
-      return;
-    }
-
-    const newTask: any = {
-      title: "Edit",
-      description: "Edit",
-      points: 0,
-      googleId: userId,
-    };
-  
-    const createdTask = await postTask(userId,newTask);
-    console.log("Created task", createdTask);
-    setTasks((prev: Task[]) => {
-      return [...prev, createdTask];
-    });
-  };
 
   const deleteTaskFunction = (id: number) => {
     deleteTask(id);
@@ -147,7 +78,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
           <Space>
             {editable ? (
               <>
-                <Button onClick={() => save(record.id)} type="primary">
+                <Button onClick={() => save(record,setTasks,setEditingKey,form)} type="primary">
                   Gem
                 </Button>
                 <Button onClick={cancel}>Annuller</Button>
@@ -197,7 +128,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
         columns={mergedColumns}
         rowClassName="editable-row"
       />
-      <Button type="primary" onClick={createNewTask}>Tilføj opgave</Button>
+      <Button type="primary" onClick={()=>createNewTask(setTasks)}>Tilføj opgave</Button>
     </Form>
   );
 }

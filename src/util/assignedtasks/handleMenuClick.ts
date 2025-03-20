@@ -2,7 +2,10 @@ import { message } from "antd";
 import { AssignedTask } from "../../model/AssignedTask";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 
-// Handles clicks on dropdown of users, and assigns picked user to task.
+ {/* ---------------------------------------------------------------------
+    Function: handleMenuClick
+    Purpose: Assigns an AssignedTask to a user
+    --------------------------------------------------------------------- */}
 export const handleMenuClick = (record: AssignedTask, setAssignedTasks:any, profiles:any[]) => (e: any) => {
     const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
     if (selectedProfile) {

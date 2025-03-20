@@ -2,7 +2,10 @@ import { message } from "antd";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
 
- //Function to switch state to done and back
+  {/* ---------------------------------------------------------------------
+    Function: switchTaskState
+    Purpose: Switches the state of the task from completed to not completed
+    --------------------------------------------------------------------- */}
   export const switchTaskState = (record: any, setAssignedTasks:any, tasklistId:any) => {
     
     if(record.assignedTo){
