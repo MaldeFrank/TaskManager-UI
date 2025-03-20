@@ -4,8 +4,8 @@ import { addGoogleAccByEmail, getProfileByGoogleEmail } from '../../../services/
 import { addAccToTasklist } from '../../../services/apiTasklist';
 
 {/* ---------------------------------------------------------------------
-    Component: useShareTasklist
-    Purpose: Handle the share functionality for a tasklist.
+    Hook: useShareTasklist
+    Purpose: Handle the share functionality for a tasklist, so a user can share the tasklist with another user.
     --------------------------------------------------------------------- */}
 export const useShareTasklist = (tasklistId: number) => {
   const [email, setEmail] = useState('');
