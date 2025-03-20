@@ -1,6 +1,9 @@
 import { checkIfAccountExists, createAccount } from "../../services/apiGoogleAccount";
 import { addGoogleAcc, createGoogleProfile, getProfileByName } from "../../services/apiProfile";
-
+  {/* ---------------------------------------------------------------------
+    Function: handleCallbackResponse
+    Purpose: Handle the response from Google Sign-In
+    --------------------------------------------------------------------- */}
  export const handleCallbackResponse = async (response: { credential: string }, setUser:any, setIsAuthenticated:any) => {
     // Decode the JWT token
     const decodedToken = JSON.parse(atob(response.credential.split('.')[1]));

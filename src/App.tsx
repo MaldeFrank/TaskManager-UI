@@ -4,8 +4,6 @@ import router from './router/Router';
 import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
-import { checkIfAccountExists, createAccount } from './services/apiGoogleAccount';
-import { addGoogleAcc, createGoogleProfile, getProfileByName } from './services/apiProfile';
 import { handleCallbackResponse } from './util/googleSignIn/handleCallbackResponse';
 
 const queryClient = new QueryClient();
