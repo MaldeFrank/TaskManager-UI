@@ -7,7 +7,7 @@ import { putTask } from "../../services/apiTasks";
     Function: save
     Purpose: Saves the updated task to the database
     --------------------------------------------------------------------- */}
-export const save = async (record: any, setTasks:any,setEditingKey:any, form:any) => {
+export const save = async (record: any, setTasks:any, setEditingKey:any, form:any) => {
 
   try {
     const updatedInfo = await form.validateFields(); //Gets the updated info from the form

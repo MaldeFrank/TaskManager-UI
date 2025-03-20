@@ -131,7 +131,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
         columns={mergedColumns}
         rowClassName="editable-row"
       />
-      <Button type="primary" onClick={()=>createNewTask(setTasks)}>Tilføj opgave</Button>
+      <Button type="primary" onClick={()=>createNewTask(setTasks,setEditingKey,form)}>Tilføj opgave</Button>
     </Form>
   );
 }
