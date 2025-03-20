@@ -16,6 +16,7 @@ import TaskFetchOptions from "../TaskFetchOptions";
 import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
 import { useTaskData } from "../../hooks/tabs/AssignedTasklist/useTaskData";
+import { useShareTasklist } from "../../hooks/tabs/AssignedTasklist/useShareTasklist";
 
 interface props {
   setProfiles: any;
@@ -46,31 +47,9 @@ function AssignedTasklist({
   }, [tasklistId]);
 
   const [shownData, setShownData] = useTaskData(tasklistId, taskFilter, setAssignedTasks, assignedTasks); //Added setAssignedTasks and assignedTasks to update showData when new is added
-  const [email, setEmail] = useState("");
-  const [shareVisible, setShareVisible] = useState(false);
+  const {shareVisible, setShareVisible, addUserToTasklist, handleEmailChange } = useShareTasklist(tasklistId); //Handles share functionality.
 
-
-  const addProfiles = async () => {
-    await addGoogleAccByEmail(localStorage.getItem("profile_id"), email); //Adds profile to receiver google acc
-    const response = await getProfileByGoogleEmail(email);
-    await addGoogleAccByEmail(response.id, localStorage.getItem("Email")); //Adds reciever profile to sender
-  };
-
-  const addUserToTasklist = async () => {
-    const response = await addAccToTasklist(email, tasklistId);
-
-    if (response === false||response===undefined) {
-      message.error("Bruger med mail ikke fundet");
-    } else {
-      message.success("Bruger tilføjet til tasklist");
-      addProfiles();
-    }
-  };
-
-  const handleEmailChange = (e: any) => {
-    setEmail(e.target.value);
-  };
-
+  
   return (
     <div>
       <div>

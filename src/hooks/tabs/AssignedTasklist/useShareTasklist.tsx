@@ -3,7 +3,10 @@ import { message } from 'antd';
 import { addGoogleAccByEmail, getProfileByGoogleEmail } from '../../../services/apiProfile';
 import { addAccToTasklist } from '../../../services/apiTasklist';
 
-
+{/* ---------------------------------------------------------------------
+    Component: useShareTasklist
+    Purpose: Handle the share functionality for a tasklist.
+    --------------------------------------------------------------------- */}
 export const useShareTasklist = (tasklistId: number) => {
   const [email, setEmail] = useState('');
   const [shareVisible, setShareVisible] = useState(false);
@@ -30,8 +33,6 @@ export const useShareTasklist = (tasklistId: number) => {
   };
 
   return {
-    email,
-    setEmail,
     shareVisible,
     setShareVisible,
     addUserToTasklist,
