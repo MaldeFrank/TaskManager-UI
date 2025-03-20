@@ -15,7 +15,10 @@ interface Props {
   setAssignedTasksWeekly: any;
   tasklists:any[];
 }
-
+{/* ---------------------------------------------------------------------
+    Component: Tasks
+    Purpose: Show all tasks in a table, and allow the user to edit, delete and create new tasks
+    --------------------------------------------------------------------- */}
 function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
