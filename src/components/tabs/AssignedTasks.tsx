@@ -15,7 +15,10 @@ interface props {
   profiles: any[];
   tasklistId?: any;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: AssignedTasks
+    Purpose: Displays given list of AssignedTasks, and handles the state of the AssignedTasks.
+    --------------------------------------------------------------------- */}
 function AssignedTasks({
   setAssignedTasks,
   assignedTasks,
