@@ -36,7 +36,6 @@ function AssignedTasks({
     label: profile.name,
   }));
 
-
   useEffect(() => {
     if (profilesData) {
       setProfiles(profilesData);
@@ -102,9 +101,17 @@ function AssignedTasks({
   return(
   <div>
     <h2 style={{textAlign:"center", color:"red"}}><Tag color="red">Ikke udført</Tag></h2>
-  <Table dataSource={assignedTasks.filter((task)=>task.completed===false)} columns={columns}/>
+  <Table
+   dataSource={assignedTasks.filter((task)=>task.completed===false)} 
+   columns={columns}
+   rowKey={(record) => record.id}
+   />
     <h2 style={{textAlign:"center", color:"green"}}><Tag color="green">Udført</Tag></h2>
-  <Table dataSource={assignedTasks.filter((task)=>task.completed===true)} columns={columns}/>
+  <Table
+   dataSource={assignedTasks.filter((task)=>task.completed===true)}
+   columns={columns}
+   rowKey={(record) => record.id}
+   />
   </div>
 ) 
 }
