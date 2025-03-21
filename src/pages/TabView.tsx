@@ -98,10 +98,7 @@ function TabView() {
     try {
       // Create the tasklist first
       const response = await createTasklist(tasklist);
-      console.log("Here is tasklist: ", response);
-      console.log("This is the tasklist id:", response.taskId);
     
-  
       //Add the new tab with the correct tasklistId
       const newPanes = [...items];
       newPanes.push({
@@ -164,7 +161,6 @@ function TabView() {
       onChange={setActiveKey}
       onEdit={onEdit}
       items={items}
-      onTabClick={()=>console.log("Hello")}
     />
   );
 }
