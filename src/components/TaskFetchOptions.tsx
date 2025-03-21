@@ -6,7 +6,10 @@ interface props {
   taskFilter:any;
   tasklistId:any;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: TaskFetchOptions
+    Purpose: Displays a set of options for the user, that affects fetching of AsignedTasks.
+    --------------------------------------------------------------------- */}
 function TaskFetchOptions({ setTaskFilter,taskFilter,tasklistId }: props) {
 
   const onClick = (e: RadioChangeEvent) => {

@@ -10,6 +10,10 @@ interface props {
   assignedTasks: any;
 }
 
+{/* ---------------------------------------------------------------------
+    Component: MyTasks
+    Purpose: Shows the logged in user's assigned tasks.
+    --------------------------------------------------------------------- */}
 function MyTasks({
   setProfiles,
   profiles,

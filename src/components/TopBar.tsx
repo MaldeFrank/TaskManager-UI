@@ -1,6 +1,5 @@
 import React from 'react';
 import { Layout, Menu, theme } from 'antd';
-import AccountDropdown from './account/AccountDropdown';
 
 const { Header, Content } = Layout;
 
@@ -19,8 +18,6 @@ interface Props {
       key: 1,
       label: <button onClick={logout}>Logout</button>,  
     },
-    { key: 2,
-      label: <AccountDropdown></AccountDropdown>},
   ];
 
   return (

@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import TabView from "../components/TabView";
+import TabView from "../pages/TabView";
+
 
 const routes: RouteObject[] = [
   {

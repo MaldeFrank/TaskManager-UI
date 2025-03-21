@@ -2,14 +2,18 @@ import { Tabs, TabsProps } from "antd";
 import StickyBox from "react-sticky-box";
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../model/Task";
-import Tasks from "./tabs/Tasks";
-import UsersList from "./tabs/UserList";
-import AssignedTasklist from "./tabs/AssignedTasklist";
+import Tasks from "../components/tabs/Tasks";
+import UsersList from "../components/tabs/UserList";
+import AssignedTasklist from "../components/tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
 import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
-import mapUserCreatedTabs from "./mapUserCreatedTabs";
-import MyTasks from "./tabs/MyTasks";
+import mapUserCreatedTabs from "../components/mapUserCreatedTabs";
+import MyTasks from "../components/tabs/MyTasks";
 
+{/* ---------------------------------------------------------------------
+    Component: TabView
+    Purpose: Shows tab components using ANTD Tabs component.
+    --------------------------------------------------------------------- */}
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [assignedTasks, setAssignedTasks] = useState<any[]>([]); //Right now it is always empty and is just used to make child components rerender
@@ -29,7 +33,7 @@ function TabView() {
 
   const generateTabs = () => [
     {
-      key: "1",
+      key: "static1",
       label: "1. Mine opgaver",
       closable: false,
       children: (
@@ -41,7 +45,7 @@ function TabView() {
       ),
     },
     {
-      key: "2",
+      key: "static2",
       label: "2. Opret opgaver",
       closable: false,
       children: (
@@ -54,7 +58,7 @@ function TabView() {
       ),
     },
     {
-      key: "3",
+      key: "static3",
       label: "3. Brugere",
       closable: false,
       children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
@@ -94,11 +98,8 @@ function TabView() {
     try {
       // Create the tasklist first
       const response = await createTasklist(tasklist);
-      console.log("Here is tasklist: ", response);
-      console.log("This is the tasklist id:", response.taskId);
     
-  
-      // Now add the new tab with the correct tasklistId
+      //Add the new tab with the correct tasklistId
       const newPanes = [...items];
       newPanes.push({
         key: response.taskId,
@@ -160,7 +161,6 @@ function TabView() {
       onChange={setActiveKey}
       onEdit={onEdit}
       items={items}
-      onTabClick={()=>console.log("Hello")}
     />
   );
 }

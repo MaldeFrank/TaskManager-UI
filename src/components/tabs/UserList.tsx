@@ -22,7 +22,6 @@ function UsersList({ setProfiles, profiles }: props) {
 
   function addUser() {
     const newProfile: any = {
-      id: 0,
       name: "",
       points: 0,
     };

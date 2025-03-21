@@ -5,7 +5,6 @@ import { BASE_URL } from "./baseURL";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const postTask = async (googleId:any, taskData:any) => { 
-  console.log('Google id received', googleId);
   const data = {
     title: taskData?.title,
     description: taskData?.description,

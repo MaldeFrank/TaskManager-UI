@@ -2,8 +2,7 @@ import { Button, List } from "antd";
 import "../styles/ShareSection.css";
 import ShareButton from "./ShareButton";
 import { useGetAllTasklistUsers } from "../services/queries";
-import { AlignRightOutlined, UserOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
 
 interface Props {
   isVisible?: boolean;
@@ -12,7 +11,10 @@ interface Props {
   onClickSendEmail: (event: React.MouseEvent<HTMLElement>) => void;
   tasklistId: number;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: ShareSection
+    Purpose: Shows a share section for sharing a tasklist with a user.
+    --------------------------------------------------------------------- */}
 function ShareSection({
   isVisible,
   setIsVisible,

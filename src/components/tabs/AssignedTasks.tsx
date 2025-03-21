@@ -4,18 +4,21 @@ import {
 } from "../../services/queries";
 import { Dropdown, MenuProps, message, Switch, Table, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { AssignedTask } from "../../model/AssignedTask";
-import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
+import { switchTaskState } from "../../util/assignedtasks/switchTaskState";
+import { handleMenuClick } from "../../util/assignedtasks/handleMenuClick";
 
 interface props {
   setAssignedTasks: any;
-  assignedTasks: AssignedTask[];
+  assignedTasks: any[];
   setProfiles: any;
   profiles: any[];
   tasklistId?: any;
 }
-
+{/* ---------------------------------------------------------------------
+    Component: AssignedTasks
+    Purpose: Displays given list of AssignedTasks, and handles the state of the AssignedTasks.
+    --------------------------------------------------------------------- */}
 function AssignedTasks({
   setAssignedTasks,
   assignedTasks,
@@ -25,72 +28,19 @@ function AssignedTasks({
 }: props) {
 
 
-  const {
-    data: profilesData,
-    isError: isProfilesError,
-    refetch: refetchProfiles,
-  } = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
+  const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
 
-
-  //Function to switch state to done and back
-  const switchTaskState = (record: any) => {
-    
-    if(record.assignedTo){
-      setAssignedTasks((prev: any[]) =>
-        prev.map((task) => {
-          if (task.id === record.id) {
-            task.completed = !task.completed;
-            return task;
-          } else {
-            return task;
-          }
-        })
-      );
-
-      if(record.completed===true){
-        console.log("Tasklist id", tasklistId)
-        addPoints(record.assignedTo.id, record.task.points, record.task.title, tasklistId)
-      }
-
-      if(record.completed===false){
-        console.log("Tasklist id", tasklistId)
-        deletePointScoreByName(record.task.title,tasklistId,record.assignedTo.id)
-      }
-
-      updateAssignTask(record);
-    }else{
-      message.warning("Opgave er ikke tildelt")
-    }
-  };
-
-// Handles clicks on dropdown items
-const handleMenuClick = (record: AssignedTask) => (e: any) => {
-  const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
-  if (selectedProfile) {
-    setAssignedTasks((prev: AssignedTask[]) =>
-      prev.map((task) =>
-        task.id === record.id ? { ...task, assignedTo: selectedProfile } : task
-      ),
-      record.assignedTo=selectedProfile
-    );
-    message.info("User assigned successfully");
-    updateAssignTask(record);
-  }
-};
-
+  
   const items: MenuProps["items"] = profiles.map((profile) => ({
     key: profile.id,
     label: profile.name,
   }));
 
-
   useEffect(() => {
     if (profilesData) {
-      refetchProfiles();
       setProfiles(profilesData);
     }
   }, [profilesData, setProfiles, switchTaskState]);
-
 
   if (isProfilesError) {
     return <div>Error loading profiles</div>;
@@ -119,7 +69,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record)(e),
+            onClick: (e) => handleMenuClick(record, setAssignedTasks, profiles)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}
@@ -141,7 +91,7 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record)}
+          onClick={() => switchTaskState(record, setAssignedTasks)}
         />
       ),
       width:100,
@@ -150,11 +100,18 @@ const handleMenuClick = (record: AssignedTask) => (e: any) => {
 
   return(
   <div>
-    
     <h2 style={{textAlign:"center", color:"red"}}><Tag color="red">Ikke udført</Tag></h2>
-  <Table dataSource={assignedTasks.filter((task)=>task.completed===false)} columns={columns}/>
+  <Table
+   dataSource={assignedTasks.filter((task)=>task.completed===false)} 
+   columns={columns}
+   rowKey={(record) => record.id}
+   />
     <h2 style={{textAlign:"center", color:"green"}}><Tag color="green">Udført</Tag></h2>
-  <Table dataSource={assignedTasks.filter((task)=>task.completed===true)} columns={columns}/>
+  <Table
+   dataSource={assignedTasks.filter((task)=>task.completed===true)}
+   columns={columns}
+   rowKey={(record) => record.id}
+   />
   </div>
 ) 
 }
