@@ -39,7 +39,6 @@ function AssignedTasks({
 
   useEffect(() => {
     if (profilesData) {
-      refetchProfiles(); //Might not make sense to refetch here.
       setProfiles(profilesData);
     }
   }, [profilesData, setProfiles, switchTaskState]);
@@ -93,7 +92,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, setAssignedTasks, tasklistId)}
+          onClick={() => switchTaskState(record, setAssignedTasks)}
         />
       ),
       width:100,

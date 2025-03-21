@@ -6,7 +6,7 @@ import { addPoints, deletePointScoreByName } from "../../services/apiPointScore"
     Function: switchTaskState
     Purpose: Switches the state of the task from completed to not completed
     --------------------------------------------------------------------- */}
-  export const switchTaskState = (record: any, setAssignedTasks:any, tasklistId:any) => {
+  export const switchTaskState = (record: any, setAssignedTasks:any) => {
     
     if(record.assignedTo){
       setAssignedTasks((prev: any[]) =>
@@ -21,13 +21,13 @@ import { addPoints, deletePointScoreByName } from "../../services/apiPointScore"
       );
 
       if(record.completed===true){
-        console.log("Tasklist id", tasklistId)
-        addPoints(record.assignedTo.id, record.task.points, record.task.title, tasklistId)
+        console.log("Tasklist", record)
+        addPoints(record.assignedTo.id, record.task.points, record.task.title, record.tasklistId)
       }
 
       if(record.completed===false){
-        console.log("Tasklist id", tasklistId)
-        deletePointScoreByName(record.task.title,tasklistId,record.assignedTo.id)
+        console.log("Tasklist", record.tasklist)
+        deletePointScoreByName(record.task.title,record.tasklistId,record.assignedTo.id)
       }
 
       updateAssignTask(record);
