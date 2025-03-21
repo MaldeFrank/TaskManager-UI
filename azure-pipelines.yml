@@ -9,7 +9,7 @@ steps:
       sshEndpoint: 'DigitalOceanSSH'
       runOptions: 'inline'
       inline: |
-        echo "Gå til projektmappe"
+        echo "Go to project folder"
         cd /var/www/frontend/TaskManager-UI || (echo "Mappe ikke fundet" && exit 1)
         /bin/pwd
 
@@ -34,10 +34,10 @@ steps:
       sshEndpoint: 'DigitalOceanSSH'
       runOptions: 'inline'
       inline: |
-        echo "Stopper tidligere container"
+        echo "Stopping earlier container"
         cd /var/www/frontend/TaskManager-UI || (echo "Kunne ikke skifte til mappe" && exit 1)
-        docker-compose down
-        docker rm taskmanager-ui-web-1
-        docker rmi taskmanager-ui-web
-        echo "Opbygger og kører Docker"
-        docker-compose up
+        docker-compose down 2>&1
+        docker rm taskmanager-ui-web-1 2>&1
+        docker rmi taskmanager-ui-web 2>&1
+        echo "Running docker-compose up"
+        docker-compose up 2>&1
