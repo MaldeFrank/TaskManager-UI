@@ -1,18 +1,87 @@
-.logo_1{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
+.logo_1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1000px; /* Suitable for large screens */
 }
 
-.signInDiv{
+.signInDiv {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loginScreen {
+  display: absolute;
+  width: 1920px; /* Fits a standard large screen */
+  height: 1080px;
+  margin: auto;
+}
+
+.description {
+  text-align: left;
+}
+
+.expandable-container {
    
 }
 
-.loginScreen{
-    background-color: #FFF9E6;
-    width: 100%;
-    height: 100%;
+/* Large Computer Screen (e.g., 2560px or 4K) */
+@media screen and (min-width: 1921px) {
+  .loginScreen {
+    width: 2560px;
+    height: 1440px;
     margin: auto;
-    border: 3px solid #73AD21;
+  }
+  .logo_1 {
+    width: 1200px;
+  }
+}
+
+/* Medium/Normal Screen (e.g., tablets or small laptops, ~768px to 1920px) */
+@media screen and (max-width: 1920px) {
+  .loginScreen {
+    width: 100%;
+    max-width: 1200px;
+    height: 800px;
+    margin: auto;
+  }
+  .logo_1 {
+    width: 500px;
+  }
+}
+
+/* Small Screen (e.g., mobile landscape or small tablets, ~360px to 767px) */
+@media screen and (max-width: 767px) {
+  .loginScreen {
+    width: 100%;
+    max-width: 600px;
+    height: 600px;
+    margin: auto;
+  }
+  .logo_1 {
+    width: 300px;
+  }
+  .signInDiv {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+/* Mobile Screen (e.g., ~360px or less) */
+@media screen and (max-width: 400px) {
+  .loginScreen {
+    width: 100%;
+    max-width: 360px;
+    height: 400px;
+    margin: auto;
+  }
+  .logo_1 {
+    width: 200px;
+  }
+  .signInDiv {
+    width: 100%;
+    max-width: 300px;
+    position: static;
+  }
 }
