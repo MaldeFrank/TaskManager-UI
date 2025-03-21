@@ -36,8 +36,6 @@ steps:
       inline: |
         echo "Stopping earlier container"
         cd /var/www/frontend/TaskManager-UI || (echo "Kunne ikke skifte til mappe" && exit 1)
-        docker-compose down 2>&1
-        docker rm taskmanager-ui-web-1 2>&1
-        docker rmi taskmanager-ui-web 2>&1
+        docker-compose build --no-cache 2>&1
         echo "Running docker-compose up"
         docker-compose up 2>&1
