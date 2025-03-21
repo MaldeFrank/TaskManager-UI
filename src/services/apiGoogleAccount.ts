@@ -64,7 +64,6 @@ export const getAllAccTasklist = async (userId:any) => {
   const response = await axiosInstance.get(`/tasklists/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log("Responses", response.data);
   return response.data;
 };
 
@@ -80,6 +79,5 @@ export const getAllAccProfiles = async (userId:any) => {
   const response = await axiosInstance.get(`/getAllProfile/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log("Responses", response.data);
   return response.data;
 }
