@@ -46,7 +46,6 @@ import { addGoogleAcc, createGoogleProfile, getProfileByName } from "../../servi
           const profileId = response.id;
           localStorage.setItem('profile_id', profileId);
           await addGoogleAcc(profileId, decodedToken.sub);
-          console.log("Account created and returned:", createdAccount);
 
       } catch (error) {
           console.error("Error in account creation flow:", error);
