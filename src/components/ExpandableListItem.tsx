@@ -11,8 +11,9 @@ interface props {
 {/* ---------------------------------------------------------------------
     Component: ExpandableListItem
     Purpose: Description and expanse functionality to show more.
+    Notice: Under development - not used.
     --------------------------------------------------------------------- */}
-function ExpandableListItem({ video, image, description, size}: props) {
+function ExpandableListItem({ video, image, description, size}: props) { 
 const [isExpanded, setExpanded] = useState(false)
 
   function videoDiv() {
@@ -54,7 +55,7 @@ const [isExpanded, setExpanded] = useState(false)
 
   return(<>
   <div>
-  <DescriptionTekst/>
+   <DescriptionTekst/>
   </div>
    
 
