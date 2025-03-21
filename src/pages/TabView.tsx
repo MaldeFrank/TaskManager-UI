@@ -33,7 +33,7 @@ function TabView() {
 
   const generateTabs = () => [
     {
-      key: "1",
+      key: "static1",
       label: "1. Mine opgaver",
       closable: false,
       children: (
@@ -45,7 +45,7 @@ function TabView() {
       ),
     },
     {
-      key: "2",
+      key: "static2",
       label: "2. Opret opgaver",
       closable: false,
       children: (
@@ -58,7 +58,7 @@ function TabView() {
       ),
     },
     {
-      key: "3",
+      key: "static3",
       label: "3. Brugere",
       closable: false,
       children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
