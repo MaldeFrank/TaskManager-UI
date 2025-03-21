@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
 import { handleCallbackResponse } from './util/googleSignIn/handleCallbackResponse';
+import LoginScreen from './pages/LogInScreen';
 
 const queryClient = new QueryClient();
 
@@ -16,8 +17,6 @@ function App() {
     picture: string;
   } | null>(null);
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
-
- 
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -88,14 +87,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="app">
         {!isAuthenticated ? (
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="p-8 bg-white rounded-lg shadow-md">
-              <h1 className="mb-6 text-2xl font-bold text-center">Welcome</h1>
-              <div id="signInDiv" className="mb-4"></div>
+          <div>
+            <div>
+              <LoginScreen/>
               {!isGoogleLoaded && (
-                <p className="text-gray-600 text-center">Loading sign-in...</p>
+                <p>Loading sign-in...</p>
               )}
             </div>
           </div>
@@ -105,7 +102,6 @@ function App() {
             <RouterProvider router={router} />
           </div>
         )}
-      </div>
     </QueryClientProvider>
   );
 }
