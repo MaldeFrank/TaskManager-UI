@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
+import { setTasklist } from "../../redux/slicers/assignedTaskSlicer";
 
 interface props {
   setProfiles: any;
@@ -22,11 +24,18 @@ function MyTasks({
 }: props) {
   const { data, refetch} = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id")));
   const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
-  
+  const tasklist = useAppSelector((state)=>state.assignedTaskList.list);
+  const dispatch = useAppDispatch();
+
+  function setList(){
+   dispatch(setTasklist(data))
+  }
+
   useEffect(() => { 
     if (data) { 
       refetch();
       setFilteredAssignedTasks(data);
+      setList() //Try to see if store state gets set
     } else {
       setFilteredAssignedTasks([]); 
     }
