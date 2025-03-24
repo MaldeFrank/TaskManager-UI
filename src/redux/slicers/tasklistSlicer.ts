@@ -17,12 +17,30 @@ const tasklistSlice = createSlice({
     initialState,
     reducers: {
       addTask(state, action: PayloadAction<{ id: any; task: any }>) {
-        const taskListObject: any = state.list.find(
-          (taskList) => taskList.id === action.payload.id
-        );
-      
-        if (taskListObject) {
-          taskListObject.tasks.push(action.payload.task);
+        const tasklistIndex = state.list.findIndex(item => item.id === action.payload.id);
+        
+        if (tasklistIndex !== -1) {
+          // Find the task within the tasklist
+          const taskIndex = state.list[tasklistIndex].tasklist.findIndex(
+            t => t.id === action.payload.task.id
+          );
+          
+          if (taskIndex !== -1) {
+            // Update existing task
+            state.list[tasklistIndex].tasklist[taskIndex] = {
+              ...state.list[tasklistIndex].tasklist[taskIndex],
+              ...action.payload.task
+            };
+          } else {
+            // If task doesn't exist, add it
+            state.list[tasklistIndex].tasklist.push(action.payload.task);
+          }
+        } else {
+          // If tasklist doesn't exist, create new one with the task
+          state.list.push({
+            id: action.payload.id,
+            tasklist: [action.payload.task]
+          });
         }
       },
       setTasklist(state, action: PayloadAction<{id:any,tasklist:[]}>){

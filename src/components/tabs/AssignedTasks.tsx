@@ -23,6 +23,7 @@ function AssignedTasks({
   assignedTasks,
   setProfiles,
   profiles,
+  tasklistId
 }: props) {
 
 
@@ -69,7 +70,7 @@ function AssignedTasks({
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record, profiles, dispatch, tasklistState)(e),
+            onClick: (e) => handleMenuClick(record, profiles, dispatch, tasklistId)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}
