@@ -1,35 +1,40 @@
-import { useState, useEffect } from 'react';
-import { useGetAssignedTasksByTasklistMonthly, useGetAssignedTasksByTasklistWeekly, useGetAssingedTasks } from '../../../services/queries';
-{/* ---------------------------------------------------------------------
-    Hook: AssignedTasklist
-    Purpose: Fetches AssignedTasks based on taskfilter.
-    --------------------------------------------------------------------- */}
-export const useTaskData = (tasklistId: number, taskFilter: string, setAssignedTasks:any, assignedTasks:any) => {
-  const { data: allTasks, refetch: refetchAll } = useGetAssingedTasks(tasklistId);
-  const { data: weeklyTasks, refetch: refetchWeekly } = useGetAssignedTasksByTasklistWeekly(tasklistId);
-  const { data: monthlyTasks, refetch: refetchMonthly } = useGetAssignedTasksByTasklistMonthly(tasklistId);
-  const [shownData, setShownData] = useState<any[]>([]);
+import { useEffect } from 'react';
+import { useGetAssignedTasksByTasklistMonthly, useGetAssignedTasksByTasklistWeekly } from '../../../services/queries';
+import { useAppDispatch } from '../../app/storeHook';
+import { setTasklist } from '../../../redux/slicers/tasklistSlicer';
+import { getAssignedTaskMonthly, getAssignedTasks, getAssignedTaskWeekly } from '../../../services/apiTasklist';
 
-  useEffect(() => {
-    switch (taskFilter) {
-      case 'All':
-        refetchAll();
-        setShownData(allTasks || []);
-        break;
-      case 'Weekly':
-        refetchWeekly();
-        setShownData(weeklyTasks || []);
-        break;
-      case 'Monthly':
-        refetchMonthly();
-        setShownData(monthlyTasks || []);
-        break;
-      default:
-        refetchAll();
-        setShownData(allTasks || []);
-        break;
-    }
-  }, [taskFilter, allTasks, weeklyTasks, monthlyTasks, refetchAll, refetchWeekly, refetchMonthly,setAssignedTasks,assignedTasks]);
+export const useTaskData = (tasklistId: number, taskFilter: string) => {
+    const { data: weeklyTasks } = useGetAssignedTasksByTasklistWeekly(tasklistId);
+    const { data: monthlyTasks } = useGetAssignedTasksByTasklistMonthly(tasklistId);
 
-  return [shownData, setShownData];
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const allTasks = await getAssignedTasks(tasklistId);
+                switch (taskFilter) {
+                    case 'All':
+                        if (allTasks) dispatch(setTasklist(allTasks));
+                        break;
+                    case 'Weekly':
+                        const weeklyTasks = await getAssignedTaskWeekly(tasklistId);
+                        if (weeklyTasks) dispatch(setTasklist(weeklyTasks));
+                        break;
+                    case 'Monthly':
+                        const monthlyTasks = await getAssignedTaskMonthly(tasklistId)
+                        if (monthlyTasks) dispatch(setTasklist(monthlyTasks));
+                        break;
+                    default:
+                        if (allTasks) dispatch(setTasklist(allTasks));
+                        break;
+                }
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+
+        fetchData();
+    }, [tasklistId, taskFilter, weeklyTasks, monthlyTasks, dispatch]);
 };

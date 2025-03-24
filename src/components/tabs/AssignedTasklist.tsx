@@ -8,6 +8,7 @@ import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
 import { useTaskData } from "../../hooks/tabs/AssignedTasklist/useTaskData";
 import { useShareTasklist } from "../../hooks/tabs/AssignedTasklist/useShareTasklist";
+import { useAppSelector } from "../../hooks/app/storeHook";
 
 interface props {
   setProfiles: any;
@@ -24,8 +25,6 @@ function AssignedTasklist({
   setProfiles,
   profiles,
   tasklistId,
-  setAssignedTasks,
-  assignedTasks,
 }: props) {
   const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
 
@@ -37,8 +36,9 @@ function AssignedTasklist({
     fetchTasklist();
   }, [tasklistId]);
 
-  const [shownData, setShownData] = useTaskData(tasklistId, taskFilter, setAssignedTasks, assignedTasks); //Added setAssignedTasks and assignedTasks to update showData when new is added
+  useTaskData(tasklistId, taskFilter); 
   const {shareVisible, setShareVisible, addUserToTasklist, handleEmailChange } = useShareTasklist(tasklistId); //Handles share functionality.
+  const tasklistState = useAppSelector((state)=>state.tasklist.list);
 
   return (
     <div>
@@ -51,8 +51,7 @@ function AssignedTasklist({
       </div>
 
       <AssignedTasks
-        setAssignedTasks={setShownData}
-        assignedTasks={Array.isArray(shownData) ? shownData : []}
+        assignedTasks={Array.isArray(tasklistState) ? tasklistState : []}
         setProfiles={setProfiles}
         profiles={profiles}
         tasklistId={tasklistId}

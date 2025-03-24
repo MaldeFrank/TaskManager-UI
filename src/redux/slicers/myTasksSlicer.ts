@@ -19,12 +19,12 @@ const myTasksSlice = createSlice({
     addTask(state, action: PayloadAction<any>) {
       state.list.push(action.payload)
     },
-    setTasklist(state, action: PayloadAction<any>){
+    setMyTasks(state, action: PayloadAction<any>){
     state.list = action.payload
     }
   }
 })
 
-export const { addTask: addTask, setTasklist: setTasklist } = myTasksSlice.actions
+export const { addTask: addTask, setMyTasks: setMyTasks } = myTasksSlice.actions
 
 export default myTasksSlice.reducer

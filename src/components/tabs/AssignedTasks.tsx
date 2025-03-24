@@ -7,9 +7,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { AssignedTask } from "../../model/AssignedTask";
 import { switchTaskState } from "../../util/assignedtasks/switchTaskState";
 import { handleMenuClick } from "../../util/assignedtasks/handleMenuClick";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 
 interface props {
-  setAssignedTasks: any;
   assignedTasks: any[];
   setProfiles: any;
   profiles: any[];
@@ -20,7 +20,6 @@ interface props {
     Purpose: Displays given list of AssignedTasks, and handles the state of the AssignedTasks.
     --------------------------------------------------------------------- */}
 function AssignedTasks({
-  setAssignedTasks,
   assignedTasks,
   setProfiles,
   profiles,
@@ -28,8 +27,10 @@ function AssignedTasks({
 
 
   const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
-
+  const dispatch = useAppDispatch();
+  const tasklistState = useAppSelector((state)=>state.tasklist.list);
   
+
   const items: MenuProps["items"] = profiles.map((profile) => ({
     key: profile.id,
     label: profile.name,
@@ -68,7 +69,7 @@ function AssignedTasks({
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record, setAssignedTasks, profiles)(e),
+            onClick: (e) => handleMenuClick(record, profiles, dispatch, tasklistState)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}
@@ -90,7 +91,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, setAssignedTasks)}
+          onClick={() => switchTaskState(record, dispatch, tasklistState)}
         />
       ),
       width:100,

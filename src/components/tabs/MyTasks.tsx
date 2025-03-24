@@ -3,7 +3,7 @@ import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
-import { setTasklist } from "../../redux/slicers/myTasksSlicer";
+import { setMyTasks } from "../../redux/slicers/myTasksSlicer";
 
 interface props {
   setProfiles: any;
@@ -23,11 +23,11 @@ function MyTasks({
   assignedTasks
 }: props) {
   const { data, refetch} = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id")));
-  const tasklist = useAppSelector((state)=>state.assignedTaskList.list);
+  const tasklist = useAppSelector((state)=>state.myTaskList.list);
   const dispatch = useAppDispatch();
 
   function setList(){
-   dispatch(setTasklist(data))
+   dispatch(setMyTasks(data))
   }
 
   useEffect(() => { 
@@ -43,7 +43,6 @@ function MyTasks({
   return (
     <>
       <AssignedTasks
-        setAssignedTasks={setList}
         assignedTasks={data != null ? tasklist : []} 
         setProfiles={setProfiles}
         profiles={profiles}

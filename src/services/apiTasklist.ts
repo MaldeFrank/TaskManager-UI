@@ -7,7 +7,7 @@ export const getAssignedTasks = async (id: number): Promise<any> => {
   const response = await axiosInstance.get(`tasklist/assignedTasks/${id}`, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log("Responses", response.data);
+  console.log("This is the assignedTasks fetched",response.data)
   return response.data;
 };
 
@@ -16,7 +16,7 @@ export const getTasklist = async (id: number) => {
     const response = await axiosInstance.get(`tasklist/getTasklist/${id}`, {
       headers: { "Content-Type": "application/json" },
     });
-    console.log("Responses", response.data);
+    
     return response.data;
   }catch (error){
     console.log("Tasklist could not be fetched")
