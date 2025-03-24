@@ -24,7 +24,6 @@ function AssignedTasks({
   assignedTasks,
   setProfiles,
   profiles,
-  tasklistId
 }: props) {
 
 

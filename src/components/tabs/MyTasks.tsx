@@ -23,7 +23,6 @@ function MyTasks({
   assignedTasks
 }: props) {
   const { data, refetch} = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id")));
-  const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
   const tasklist = useAppSelector((state)=>state.assignedTaskList.list);
   const dispatch = useAppDispatch();
 
@@ -34,10 +33,9 @@ function MyTasks({
   useEffect(() => { 
     if (data) { 
       refetch();
-      setFilteredAssignedTasks(data);
-      setList() //Try to see if store state gets set
+      setList() 
     } else {
-      setFilteredAssignedTasks([]); 
+      
     }
   }, [data,setAssignedTasks,assignedTasks]); 
 
@@ -45,8 +43,8 @@ function MyTasks({
   return (
     <>
       <AssignedTasks
-        setAssignedTasks={setFilteredAssignedTasks}
-        assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}
+        setAssignedTasks={setList}
+        assignedTasks={data != null ? tasklist : []}
         setProfiles={setProfiles}
         profiles={profiles}
       />
