@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface tasklistObject{
+  id:any;
+  tasklist:any[];
+}
 
 interface tasklist{
-    list: any[];
+    list: tasklistObject[];
 }
 
 const initialState:tasklist = {
@@ -12,11 +16,20 @@ const tasklistSlice = createSlice({
     name: 'tasklistSlicer',
     initialState,
     reducers: {
-      addTask(state, action: PayloadAction<any>) {
-        state.list.push(action.payload)
+      addTask(state, action: PayloadAction<{ id: any; task: any }>) {
+        const taskListObject: any = state.list.find(
+          (taskList) => taskList.id === action.payload.id
+        );
+      
+        if (taskListObject) {
+          taskListObject.tasks.push(action.payload.task);
+        }
       },
-      setTasklist(state, action: PayloadAction<any>){
-      state.list = action.payload
+      setTasklist(state, action: PayloadAction<{id:any,tasklist:[]}>){
+      state.list.push({
+        id:action.payload.id,
+        tasklist: action.payload.tasklist
+      })
       }
     }
   })

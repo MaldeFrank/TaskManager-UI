@@ -38,7 +38,7 @@ function AssignedTasklist({
 
   useTaskData(tasklistId, taskFilter); 
   const {shareVisible, setShareVisible, addUserToTasklist, handleEmailChange } = useShareTasklist(tasklistId); //Handles share functionality.
-  const tasklistState = useAppSelector((state)=>state.tasklist.list);
+  const tasklistState:any = useAppSelector((state)=>state.tasklist.list.find((tasklistObject) => tasklistObject.id === tasklistId));
 
   return (
     <div>
@@ -51,7 +51,7 @@ function AssignedTasklist({
       </div>
 
       <AssignedTasks
-        assignedTasks={Array.isArray(tasklistState) ? tasklistState : []}
+        assignedTasks={Array.isArray(tasklistState?.tasklist) ? tasklistState.tasklist : []}
         setProfiles={setProfiles}
         profiles={profiles}
         tasklistId={tasklistId}

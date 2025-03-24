@@ -30,7 +30,7 @@ function TabView() {
     setAssignedTasks: setAssignedTasks,
     assignedTasks: assignedTasks,
   }) : [];
-
+  
   const generateTabs = () => [
     {
       key: "static1",
@@ -67,7 +67,6 @@ function TabView() {
   ];
 
   const [items, setItems] = useState(generateTabs());
-
 
 
   // Custom renderTabBar to style the tab bar and make it sticky
