@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userlistReducer from "../redux/slicers/userlistSlicer"
-import assignedReducer from "../redux/slicers/assignedTaskSlicer"
+import assignedReducer from "../redux/slicers/myTasksSlicer"
 
 //Store that holds reducers for performing state management
 const store = configureStore({

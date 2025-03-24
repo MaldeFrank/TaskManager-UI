@@ -12,8 +12,8 @@ const initialState:assignedTaskState = {
     Function: userSlice
     Purpose: To manage userlist state with the reducer functions
     --------------------------------------------------------------------- */}
-const userSlice = createSlice({
-  name: 'assignedTaskList',
+const myTasksSlice = createSlice({
+  name: 'myTasksSlicer',
   initialState,
   reducers: {
     addTask(state, action: PayloadAction<any>) {
@@ -25,6 +25,6 @@ const userSlice = createSlice({
   }
 })
 
-export const { addTask: addTask, setTasklist: setTasklist } = userSlice.actions
+export const { addTask: addTask, setTasklist: setTasklist } = myTasksSlice.actions
 
-export default userSlice.reducer
+export default myTasksSlice.reducer

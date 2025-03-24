@@ -3,7 +3,7 @@ import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
-import { setTasklist } from "../../redux/slicers/assignedTaskSlicer";
+import { setTasklist } from "../../redux/slicers/myTasksSlicer";
 
 interface props {
   setProfiles: any;
@@ -44,7 +44,7 @@ function MyTasks({
     <>
       <AssignedTasks
         setAssignedTasks={setList}
-        assignedTasks={data != null ? tasklist : []}
+        assignedTasks={data != null ? tasklist : []} 
         setProfiles={setProfiles}
         profiles={profiles}
       />
