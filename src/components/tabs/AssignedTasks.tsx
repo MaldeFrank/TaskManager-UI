@@ -26,7 +26,6 @@ function AssignedTasks({
   tasklistId
 }: props) {
 
-
   const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
   const dispatch = useAppDispatch();
   const tasklistState = useAppSelector((state)=>state.tasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
@@ -92,7 +91,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, dispatch, tasklistId)}
+          onClick={() => switchTaskState(record, dispatch)}
         />
       ),
       width:100,

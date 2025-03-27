@@ -7,16 +7,16 @@ import { addAssTask } from "../../redux/slicers/tasklistSlicer";
     Function: switchTaskState
     Purpose: Switches the state of the task from completed to not completed
     --------------------------------------------------------------------- */}
-    export const switchTaskState = (record: any, dispatch:any, tasklistId:any) => {
+    export const switchTaskState = (record: any, dispatch:any) => {
       if (record.assignedTo) {
 
-        const updatedTasklist = { //Change completed
+        const updatedTask = { //Change completed
          ...record,
          completed: !record.completed
         }
         
-
-        dispatch(addAssTask({id: tasklistId, task:updatedTasklist})) //Set the new state/new task
+        console.log("updatedTask: ", updatedTask)
+        dispatch(addAssTask({id: updatedTask.tasklistId, task:updatedTask})) //Set the new state/new task
   
           const updatedRecord = { ...record, completed: !record.completed }; 
   
