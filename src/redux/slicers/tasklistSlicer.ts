@@ -35,22 +35,26 @@ const tasklistSlice = createSlice({
             // If task doesn't exist, add it
             state.list[tasklistIndex].tasklist.push(action.payload.task);
           }
-        } else {
-          // If tasklist doesn't exist, create new one with the task
-          state.list.push({
-            id: action.payload.id,
-            tasklist: [action.payload.task]
-          });
-        }
-      },
+      }
+    },
       setTasklist(state, action: PayloadAction<{id:any,tasklist:[]}>){
-      state.list.push({
-        id:action.payload.id,
-        tasklist: action.payload.tasklist
-      })
+        if (!state.list.find((tasklist) => tasklist.id === action.payload.id)) { // More common way to check
+          state.list = [...state.list, {
+            id: action.payload.id,
+            tasklist: action.payload.tasklist
+          }];
+        }
+
+      },
+      removeTasklist(state, action: PayloadAction<{ id: number }>) {
+        const tasklistIndex = state.list.findIndex(item => item.id === action.payload.id);
+        console.log("This is the id: ", action.payload.id)
+        if (tasklistIndex !== -1) { // Check if the item was found
+          state.list.splice(tasklistIndex, 1);
+        }
       }
     }
   })
 
-export const {addTask:addAssTask,setTasklist:setTasklist} = tasklistSlice.actions;
+export const {addTask:addAssTask,setTasklist:setTasklist, removeTasklist:removeTasklist} = tasklistSlice.actions;
 export default tasklistSlice.reducer;

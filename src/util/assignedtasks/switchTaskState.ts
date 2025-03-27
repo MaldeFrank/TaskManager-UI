@@ -1,24 +1,22 @@
 import { message } from "antd";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
-import { setTasklist } from "../../redux/slicers/tasklistSlicer";
+import { addAssTask } from "../../redux/slicers/tasklistSlicer";
 
   {/* ---------------------------------------------------------------------
     Function: switchTaskState
     Purpose: Switches the state of the task from completed to not completed
     --------------------------------------------------------------------- */}
-    export const switchTaskState = (record: any, dispatch:any, tasklistState:any) => {
+    export const switchTaskState = (record: any, dispatch:any, tasklistId:any) => {
       if (record.assignedTo) {
 
-        const updatedTasklist = tasklistState.map((task:any) => { //Makes new reference, so useSelector detects change
-            if (task.id === record.id) {
-                return { ...task, completed: !task.completed };
-            } else {
-                return task;
-            }
-        })
+        const updatedTasklist = { //Change completed
+         ...record,
+         completed: !record.completed
+        }
+        
 
-        dispatch(setTasklist(updatedTasklist)) //Set the new state/new tasklist
+        dispatch(addAssTask({id: tasklistId, task:updatedTasklist})) //Set the new state/new task
   
           const updatedRecord = { ...record, completed: !record.completed }; 
   

@@ -9,6 +9,8 @@ import { createTasklist, deleteTasklist } from "../services/apiTasklist";
 import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
 import mapUserCreatedTabs from "../components/mapUserCreatedTabs";
 import MyTasks from "../components/tabs/MyTasks";
+import { useAppDispatch } from "../hooks/app/storeHook";
+import {removeTasklist } from "../redux/slicers/tasklistSlicer";
 
 {/* ---------------------------------------------------------------------
     Component: TabView
@@ -21,7 +23,7 @@ function TabView() {
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
   const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
-
+  const dispatch = useAppDispatch()
   
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
     allTasklists: fetchedTasklists,
@@ -125,6 +127,7 @@ function TabView() {
 
   const remove = (targetKey: string) => {
     const newItems = items.filter((item) => item.key !== targetKey);
+    dispatch(removeTasklist({ id: Number(targetKey) }));
     setItems(newItems);
 
     // If the active tab is being removed, switch to the first tab

@@ -29,7 +29,7 @@ function AssignedTasks({
 
   const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
   const dispatch = useAppDispatch();
-  const tasklistState = useAppSelector((state)=>state.tasklist.list);
+  const tasklistState = useAppSelector((state)=>state.tasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
   
 
   const items: MenuProps["items"] = profiles.map((profile) => ({
@@ -92,7 +92,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, dispatch, tasklistState)}
+          onClick={() => switchTaskState(record, dispatch, tasklistId)}
         />
       ),
       width:100,
