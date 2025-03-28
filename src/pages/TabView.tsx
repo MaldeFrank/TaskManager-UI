@@ -6,11 +6,12 @@ import Tasks from "../components/tabs/Tasks";
 import UsersList from "../components/tabs/UserList";
 import AssignedTasklist from "../components/tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
-import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
+import { useGetAllAccTasklist } from "../services/queries";
 import mapUserCreatedTabs from "../components/mapUserCreatedTabs";
 import MyTasks from "../components/tabs/MyTasks";
 import { useAppDispatch } from "../hooks/app/storeHook";
 import {removeTasklist } from "../redux/slicers/tasklistSlicer";
+import { removeAssignedTasks } from "../redux/slicers/myTasksSlicer";
 
 {/* ---------------------------------------------------------------------
     Component: TabView
@@ -127,7 +128,8 @@ function TabView() {
 
   const remove = (targetKey: string) => {
     const newItems = items.filter((item) => item.key !== targetKey);
-    dispatch(removeTasklist({ id: Number(targetKey) }));
+    dispatch(removeTasklist({ id: Number(targetKey) })); //Removes tasklist from state
+    dispatch(removeAssignedTasks(targetKey)) //Removes all assignedtasks from users own list
     setItems(newItems);
 
     // If the active tab is being removed, switch to the first tab

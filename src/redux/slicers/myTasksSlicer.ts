@@ -29,9 +29,12 @@ const myTasksSlice = createSlice({
     setMyTasks(state, action: PayloadAction<AssignedTask[]>) {
       state.list = action.payload;
     },
+    removeAssignedTasks(state, action:PayloadAction<string>){ //Removes all assignedTasks with given id
+      state.list = state.list.filter((assignedTask) => assignedTask.id === action.payload);
+    }
   },
 });
 
-export const { addTask: addTask, setMyTasks: setMyTasks } = myTasksSlice.actions;
+export const { addTask: addTask, setMyTasks: setMyTasks,removeAssignedTasks } = myTasksSlice.actions;
 
 export default myTasksSlice.reducer;

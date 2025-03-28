@@ -17,7 +17,7 @@ import { addTask } from "../../redux/slicers/myTasksSlicer";
          completed: !record.completed
         }
         
-        if(updatedTask.assignedTo.id===Number(localStorage.getItem("profile_id"))){
+        if(updatedTask.assignedTo.id===Number(localStorage.getItem("profile_id"))){ //If profile is users own set to their personal task list
           dispatch(addTask(updatedTask))
         }
 
