@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AssignedTask } from "../../model/AssignedTask";
 interface tasklistObject{
-  id:any;
+  id:number;
   tasklist:AssignedTask[];
 }
 
@@ -18,8 +18,7 @@ const tasklistSlice = createSlice({
     initialState,
     reducers: {
       addTask(state, action: PayloadAction<AssignedTask>) {
-        console.log("Tasklist has id ? ",action.payload)
-        const tasklistIndex = state.list.findIndex(item => item.id === action.payload.tasklistId); //Finds the tasklist
+        const tasklistIndex = state.list.findIndex(tasklist => tasklist.id === action.payload.tasklistId); //Finds the tasklist
         
         if (tasklistIndex !== -1) {
           // Find the task within the tasklist

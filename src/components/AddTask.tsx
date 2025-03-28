@@ -1,17 +1,19 @@
 import { Dropdown, MenuProps } from "antd";
 import { Task } from "../model/Task";
 import { postAssignTask } from "../services/apiAssignedTasks";
+import { addAssTask } from "../redux/slicers/tasklistSlicer";
+import { AssignedTask } from "../model/AssignedTask";
 
 interface Props {
   tasklists: any[];
   task: any;
-  setAssignedTasks: any;
+  dispatch:any;
 }
 {/* ---------------------------------------------------------------------
     Component: AddTask
     Purpose: Is a button resposible for setting a task to a tasklist, making the task an assignedtask.
     --------------------------------------------------------------------- */}
-function AddTask({ tasklists, task, setAssignedTasks }: Props) {
+function AddTask({ tasklists, task, dispatch }: Props) {
   const items: MenuProps["items"] = tasklists.map((tasklist) => ({
     key: tasklist.taskId,
     label: tasklist.listName,
@@ -28,7 +30,13 @@ function AddTask({ tasklists, task, setAssignedTasks }: Props) {
       };
   
       const response = await postAssignTask(assignedTaskDto);
-      setAssignedTasks([]);
+
+      const updatedData = {
+       ...response.data,
+       tasklistId: response.data.tasklist?.taskId,
+      }
+    
+      dispatch(addAssTask(updatedData))
     } catch (error) {
       console.error("Error assigning task:", error);
     }

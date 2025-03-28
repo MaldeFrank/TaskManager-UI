@@ -11,7 +11,7 @@ export interface AssignedTask {
   completed: boolean;
   dateTime: string;
   task: Task;
-  userId: string;
+  userId: string|null;
   tasklistId: number;
   tasklist: Tasklist;
   googleAccount: GoogleAccount[];

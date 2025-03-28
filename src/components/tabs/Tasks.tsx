@@ -20,7 +20,7 @@ interface Props {
     Component: Tasks
     Purpose: Show all tasks in a table, and allow the user to edit, delete and create new tasks
     --------------------------------------------------------------------- */}
-function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
+function Tasks({setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
   const { mutate: deleteTask } = useDeleteTask();
@@ -92,7 +92,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
                 <Button danger onClick={() => deleteTaskFunction(record.id)}>
                   Slet
                 </Button>
-                <AddTask setAssignedTasks={setAssignedTasksWeekly} tasklists={tasklists} task={record}/>
+                <AddTask tasklists={tasklists} task={record} dispatch={dispatch}/>
               </>
             )}
           </Space>
