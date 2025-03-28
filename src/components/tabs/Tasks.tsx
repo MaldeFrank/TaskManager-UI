@@ -35,7 +35,6 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
     setEditingKey(-1);
   };
 
-
   const deleteTaskFunction = (id: number) => {
     deleteTask(id);
     setTasks((prevTasks: Task[]) => prevTasks.filter((task) => task.id !== id));
