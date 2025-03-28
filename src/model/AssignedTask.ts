@@ -12,6 +12,7 @@ export interface AssignedTask {
   dateTime: string;
   task: Task;
   userId: string;
+  tasklistId: number;
   tasklist: Tasklist;
   googleAccount: GoogleAccount[];
 }

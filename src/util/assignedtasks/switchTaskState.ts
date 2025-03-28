@@ -18,21 +18,21 @@ import { addTask } from "../../redux/slicers/myTasksSlicer";
         }
         
         if(updatedTask.assignedTo.id===Number(localStorage.getItem("profile_id"))){
-          dispatch(addTask(record))
+          dispatch(addTask(updatedTask))
         }
 
-        dispatch(addAssTask({id: updatedTask.tasklist.taskId, task:updatedTask})) //Set the new state/new task
+        dispatch(addAssTask(updatedTask)) //Set the new state/new task
   
           const updatedRecord = { ...record, completed: !record.completed }; 
   
           if (record.completed === true) {
               console.log("Tasklist", record);
-              addPoints(record.assignedTo.id, record.task.points, record.task.title, record.tasklist.taskId);
+              addPoints(record.assignedTo.id, record.task.points, record.task.title, record.tasklistId);
           }
   
           if (record.completed === false) {
               console.log("Tasklist", record.tasklist);
-              deletePointScoreByName(record.task.title, record.tasklist.taskId, record.assignedTo.id);
+              deletePointScoreByName(record.task.title, record.tasklistId, record.assignedTo.id);
           }
   
           updateAssignTask(updatedRecord); 

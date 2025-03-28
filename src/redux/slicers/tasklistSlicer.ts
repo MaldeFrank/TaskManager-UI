@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AssignedTask } from "../../model/AssignedTask";
 interface tasklistObject{
   id:any;
-  tasklist:any[];
+  tasklist:AssignedTask[];
 }
 
 interface tasklist{
@@ -16,24 +17,25 @@ const tasklistSlice = createSlice({
     name: 'tasklistSlicer',
     initialState,
     reducers: {
-      addTask(state, action: PayloadAction<{ id: any; task: any }>) {
-        const tasklistIndex = state.list.findIndex(item => item.id === action.payload.id);
+      addTask(state, action: PayloadAction<AssignedTask>) {
+        console.log("Tasklist has id ? ",action.payload)
+        const tasklistIndex = state.list.findIndex(item => item.id === action.payload.tasklistId); //Finds the tasklist
         
         if (tasklistIndex !== -1) {
           // Find the task within the tasklist
-          const taskIndex = state.list[tasklistIndex].tasklist.findIndex(
-            t => t.id === action.payload.task.id
+          const AssignedTaskIndex = state.list[tasklistIndex].tasklist.findIndex( //Finds the index of the AssignedTask
+            t => t.id === action.payload.id
           );
           
-          if (taskIndex !== -1) {
+          if (AssignedTaskIndex !== -1) {
             // Update existing task
-            state.list[tasklistIndex].tasklist[taskIndex] = {
-              ...state.list[tasklistIndex].tasklist[taskIndex],
-              ...action.payload.task
+            state.list[tasklistIndex].tasklist[AssignedTaskIndex] = {
+              ...state.list[tasklistIndex].tasklist[AssignedTaskIndex],
+              ...action.payload
             };
           } else {
             // If task doesn't exist, add it
-            state.list[tasklistIndex].tasklist.push(action.payload.task);
+            state.list[tasklistIndex].tasklist.push(action.payload);
           }
       }
     },

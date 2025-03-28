@@ -2,7 +2,7 @@ import { message } from "antd";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { addAssTask } from "../../redux/slicers/tasklistSlicer";
 
-export const handleMenuClick = (record: any, profiles: any[], dispatch: any, tasklistId: any) => (e: any) => {
+export const handleMenuClick = (record: any, profiles: any[], dispatch: any) => (e: any) => {
   const selectedProfile = profiles.find(profile => profile.id === parseInt(e.key));
   
   if (selectedProfile) {
@@ -13,10 +13,7 @@ export const handleMenuClick = (record: any, profiles: any[], dispatch: any, tas
     };
     
     // Dispatch the updated task
-    dispatch(addAssTask({
-      id: tasklistId,
-      task: updatedTask
-    }));
+    dispatch(addAssTask(updatedTask));
     
     // Update task in backend
     updateAssignTask(updatedTask)

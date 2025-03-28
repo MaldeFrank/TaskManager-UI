@@ -69,7 +69,7 @@ function AssignedTasks({
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record, profiles, dispatch, tasklistId)(e),
+            onClick: (e) => handleMenuClick(record, profiles, dispatch)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}

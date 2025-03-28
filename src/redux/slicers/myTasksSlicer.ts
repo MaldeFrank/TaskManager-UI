@@ -14,7 +14,7 @@ const myTasksSlice = createSlice({
   initialState,
   reducers: {
     addTask(state, action: PayloadAction<AssignedTask>) { //Updates or adds the given AssignedTask
-      const assignedTaskIndex = state.list.findIndex((item) => Number(item.id) === action.payload.task.id);
+      const assignedTaskIndex = state.list.findIndex((item) => item.id === action.payload.id);
       if (assignedTaskIndex !== -1) {
         // Update existing task
         state.list[assignedTaskIndex] = {
