@@ -2,12 +2,13 @@ import { message } from "antd";
 import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
 import { addAssTask } from "../../redux/slicers/tasklistSlicer";
+import { AssignedTask } from "../../model/AssignedTask";
 
   {/* ---------------------------------------------------------------------
     Function: switchTaskState
     Purpose: Switches the state of the task from completed to not completed
     --------------------------------------------------------------------- */}
-    export const switchTaskState = (record: any, dispatch:any) => {
+    export const switchTaskState = (record: AssignedTask, dispatch:any) => {
       if (record.assignedTo) {
 
         const updatedTask = { 
@@ -15,22 +16,22 @@ import { addAssTask } from "../../redux/slicers/tasklistSlicer";
          completed: !record.completed
         }
         
-        if(updatedTask.assignedTo===localStorage.getItem("profile_id")){
+        if(updatedTask.assignedTo.id===Number(localStorage.getItem("profile_id"))){
           dispatch()
         }
 
-        dispatch(addAssTask({id: updatedTask.tasklistId, task:updatedTask})) //Set the new state/new task
+        dispatch(addAssTask({id: updatedTask.tasklist.taskId, task:updatedTask})) //Set the new state/new task
   
           const updatedRecord = { ...record, completed: !record.completed }; 
   
           if (record.completed === true) {
               console.log("Tasklist", record);
-              addPoints(record.assignedTo.id, record.task.points, record.task.title, record.tasklistId);
+              addPoints(record.assignedTo.id, record.task.points, record.task.title, record.tasklist.taskId);
           }
   
           if (record.completed === false) {
               console.log("Tasklist", record.tasklist);
-              deletePointScoreByName(record.task.title, record.tasklistId, record.assignedTo.id);
+              deletePointScoreByName(record.task.title, record.tasklist.taskId, record.assignedTo.id);
           }
   
           updateAssignTask(updatedRecord); 

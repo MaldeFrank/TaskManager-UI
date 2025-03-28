@@ -4,11 +4,11 @@ import { Task } from "./Task";
 import { Tasklist } from "./Tasklist";
 
 export interface GoogleAccount {
-  id: string | undefined;
-  name: string | undefined;
-  email: string | undefined;
-  profiles: Profile[] | undefined;
-  tasklists: Tasklist[] | undefined;
-  assignedTasks: AssignedTask[] | undefined;
-  task: Task[] | undefined;
+  id: string ;
+  name: string;
+  email: string;
+  profiles: Profile[];
+  tasklists: Tasklist[];
+  assignedTasks: AssignedTask[];
+  task: Task[];
 }

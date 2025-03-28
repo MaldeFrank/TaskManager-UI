@@ -3,9 +3,9 @@ import { GoogleAccount } from "./GoogleAccount";
 
 export interface Task {
   id: number;
-  title: string | undefined;
-  description: string | undefined;
-  points: number | undefined;
-  googleAccount: GoogleAccount | undefined; 
+  title: string;
+  description: string;
+  points: number;
+  googleAccount: GoogleAccount; 
 }
 

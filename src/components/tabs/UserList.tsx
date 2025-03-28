@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Button, List } from "antd";
-import { Profile, ProfileCreateDTO } from "../../model/Profile";
+import { Profile } from "../../model/Profile";
 import { addGoogleAcc, createProfile, deleteProfile } from "../../services/apiProfile";
 import { UserDeleteOutlined } from "@ant-design/icons";
 import { useGetAllAccProfiles } from "../../services/queries";

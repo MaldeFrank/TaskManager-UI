@@ -4,22 +4,23 @@ import { Task } from "./Task";
 import { Tasklist } from "./Tasklist";
 
 
+
 export interface AssignedTask {
   id: string;
-  assignedTo: Profile | undefined;
-  completed: boolean | undefined;
-  dateTime: string | undefined;
-  task: Task | undefined;
-  userId: string | undefined;
-  tasklist: Tasklist | undefined;
-  googleAccount: GoogleAccount[] | undefined;
+  assignedTo: Profile;
+  completed: boolean;
+  dateTime: string;
+  task: Task;
+  userId: string;
+  tasklist: Tasklist;
+  googleAccount: GoogleAccount[];
 }
 
 export interface UpdateAssignedTaskDTO {
   id: string;
-  assignedTo: Profile | undefined;
-  completed: boolean | undefined;
-  dateTime: string | undefined;
-  task: Task | undefined;
+  assignedTo: Profile;
+  completed: boolean;
+  dateTime: string;
+  task: Task;
 }
 
