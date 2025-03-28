@@ -3,6 +3,7 @@ import { updateAssignTask } from "../../services/apiAssignedTasks";
 import { addPoints, deletePointScoreByName } from "../../services/apiPointScore";
 import { addAssTask } from "../../redux/slicers/tasklistSlicer";
 import { AssignedTask } from "../../model/AssignedTask";
+import { addTask } from "../../redux/slicers/myTasksSlicer";
 
   {/* ---------------------------------------------------------------------
     Function: switchTaskState
@@ -17,7 +18,7 @@ import { AssignedTask } from "../../model/AssignedTask";
         }
         
         if(updatedTask.assignedTo.id===Number(localStorage.getItem("profile_id"))){
-          dispatch()
+          dispatch(addTask(record))
         }
 
         dispatch(addAssTask({id: updatedTask.tasklist.taskId, task:updatedTask})) //Set the new state/new task

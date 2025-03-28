@@ -13,17 +13,17 @@ const myTasksSlice = createSlice({
   name: 'myTasksSlicer',
   initialState,
   reducers: {
-    addTask(state, action: PayloadAction<{ id: any; task: AssignedTask }>) {
-      const tasklistIndex = state.list.findIndex((item) => item.id === action.payload.id);
-      if (tasklistIndex !== -1) {
+    addTask(state, action: PayloadAction<AssignedTask>) { //Updates or adds the given AssignedTask
+      const assignedTaskIndex = state.list.findIndex((item) => Number(item.id) === action.payload.task.id);
+      if (assignedTaskIndex !== -1) {
         // Update existing task
-        state.list[tasklistIndex] = {
-          ...state.list[tasklistIndex],
-          ...action.payload.task,
+        state.list[assignedTaskIndex] = {
+          ...state.list[assignedTaskIndex],
+          ...action.payload,
         };
       } else {
         // If task doesn't exist, add it
-        state.list.push(action.payload.task);
+        state.list.push(action.payload);
       }
     },
     setMyTasks(state, action: PayloadAction<AssignedTask[]>) {
