@@ -25,8 +25,6 @@ import { addGoogleAcc, createGoogleProfile, getProfileByName } from "../../servi
     
     if(doesExist){
       const profile:any = await getProfileByName(decodedToken.name);
-      console.log("Profile name: ",decodedToken.name)
-      console.log("Profile = ",profile)
       localStorage.setItem('profile_id', profile.id);
     } else {   //Creates the account if it does not already exist in the db
       const acc = {
