@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Button, List } from "antd";
-import { Profile } from "../../model/Profile";
+import { Profile, ProfileCreateDTO } from "../../model/Profile";
 import { addGoogleAcc, createProfile, deleteProfile } from "../../services/apiProfile";
 import { UserDeleteOutlined } from "@ant-design/icons";
 import { useGetAllAccProfiles } from "../../services/queries";
@@ -62,10 +62,13 @@ function UsersList({ setProfiles, profiles }: props) {
                         event.preventDefault();
                         const newItems = [...profiles]; //Sets a list on the new event with all the profiles including the added empty profile
 
-                        const newProfile: Profile = { // Sets the input username in a profile
+                        const newProfile: Profile = {
                           id: 0,
                           name: newUserName,
                           points: 0,
+                          pointScores: undefined,
+                          googleAccounts: undefined,
+                          assignedTasks: undefined
                         };
 
                         newItems[index] = newProfile; //Sets the empty profile to be the new one with added name.

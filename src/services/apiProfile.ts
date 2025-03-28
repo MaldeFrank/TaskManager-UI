@@ -1,4 +1,4 @@
-import { ProfileDto1 } from "../model/Profile";
+import { Profile } from "../model/Profile";
 import axios from "axios";
 import { BASE_URL } from "./baseURL";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -18,7 +18,7 @@ export const getProfileByName = async (name: any): Promise<any> => {
   return response.data;
 };
 
-export const createProfile = async (profile: ProfileDto1) => {
+export const createProfile = async (profile: Profile) => {
   const data = {
     name: profile.name,
     points: profile.points,
@@ -42,7 +42,7 @@ export const createGoogleProfile = async (profile: any) => {
 };
 
 export const deleteProfile = async (id: number) => {
-  const response = await axiosInstance.delete<ProfileDto1>(`/profile/${id}`, {
+  const response = await axiosInstance.delete<Profile>(`/profile/${id}`, {
     headers: { "Content-Type": "application/json" },
   });
 

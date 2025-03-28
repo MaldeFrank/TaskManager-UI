@@ -2,7 +2,7 @@ import { GoogleAccount } from "./GoogleAccount";
 
 
 export interface Task {
-  id: number | undefined;
+  id: number;
   title: string | undefined;
   description: string | undefined;
   points: number | undefined;

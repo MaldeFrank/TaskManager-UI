@@ -5,7 +5,7 @@ import { Tasklist } from "./Tasklist";
 
 
 export interface AssignedTask {
-  id: number | undefined;
+  id: string;
   assignedTo: Profile | undefined;
   completed: boolean | undefined;
   dateTime: string | undefined;
@@ -16,7 +16,7 @@ export interface AssignedTask {
 }
 
 export interface UpdateAssignedTaskDTO {
-  id: number | undefined;
+  id: string;
   assignedTo: Profile | undefined;
   completed: boolean | undefined;
   dateTime: string | undefined;

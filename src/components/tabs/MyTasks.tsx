@@ -4,6 +4,7 @@ import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 import { setMyTasks } from "../../redux/slicers/myTasksSlicer";
+import { AssignedTask } from "../../model/AssignedTask";
 
 interface props {
   setProfiles: any;
@@ -22,7 +23,7 @@ function MyTasks({
   setAssignedTasks,
   assignedTasks
 }: props) {
-  const { data, refetch} = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id")));
+  const { data, refetch } = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id"))) as { data: AssignedTask[], refetch: () => void };
   const tasklist = useAppSelector((state)=>state.myTaskList.list);
   const dispatch = useAppDispatch();
 
