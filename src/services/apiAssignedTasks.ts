@@ -54,6 +54,7 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
 };
 
 export const getAssignedTasksByProfileId = async (id: any) => {
+  console.log("Profile_id: ", id)
   try {
     const response = await axiosInstance.get<any[]>(
       `/assignedTasksByProfile/${id}`,

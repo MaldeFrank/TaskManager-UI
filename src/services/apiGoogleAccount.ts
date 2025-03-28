@@ -21,7 +21,6 @@ export const getAccount = async (id: number) => {
 };
 
 export const checkIfAccountExists = async (id: String) => {
-    console.log("Checking if account exists", id);
     const response = await axiosInstance.get<any>(`/checkIfExists/${id}`, {
       headers: { "Content-Type": "application/json" },
     });
