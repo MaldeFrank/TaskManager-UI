@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Task } from "../model/Task";
+import { TaskDto1 } from "../model/Task";
 import { BASE_URL } from "./baseURL";
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -27,11 +27,11 @@ export const putTask = async (taskData: any) => {
       points: taskData?.points,
   }
   
-  return await axiosInstance.put<Task>(`/tasks/${taskData.id}`, responseBody, { headers: { "Content-Type": "application/json" } });
+  return await axiosInstance.put<TaskDto1>(`/tasks/${taskData.id}`, responseBody, { headers: { "Content-Type": "application/json" } });
 };
 
-export const getAllTasks = async (): Promise<Task[]> => {
-    const response = await axiosInstance.get<Task[]>("/tasks", {
+export const getAllTasks = async (): Promise<TaskDto1[]> => {
+    const response = await axiosInstance.get<TaskDto1[]>("/tasks", {
         headers: {"Content-Type": "application/json"}
     });
     return response.data;
@@ -40,7 +40,7 @@ export const getAllTasks = async (): Promise<Task[]> => {
 
 export const deleteTask = async (id: number) => {
     try {
-      const response = await axiosInstance.delete<Task>(`/tasks/${id}`, {
+      const response = await axiosInstance.delete<TaskDto1>(`/tasks/${id}`, {
         headers: { "Content-Type": "application/json" },
       });
   

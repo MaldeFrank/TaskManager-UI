@@ -1,11 +1,11 @@
-import { Task } from "../model/Task";
+import { TaskDto1 } from "../model/Task";
 
 export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean;
     dataIndex: string;
     title: string;
     inputType: 'text' | 'number';
-    record: Task;
+    record: TaskDto1;
     index: number;
     children: React.ReactNode;
   }

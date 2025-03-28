@@ -1,16 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import { Task } from "../model/Task";
+import { TaskDto1 } from "../model/Task";
 import { deleteTask, postTask, putTask } from "./apiTasks";
 import { postAssignTask } from "./apiAssignedTasks";
 import { AssignedTaskDto } from "../model/AssignedTask";
 import { createProfile } from "./apiProfile";
-import { Profile } from "../model/Profile";
+import { ProfileDto1 } from "../model/Profile";
 
 
 
 export function usePutTask(){
     return useMutation({
-        mutationFn: (data: Task) => putTask(data)
+        mutationFn: (data: TaskDto1) => putTask(data)
     })
 }
 
@@ -28,6 +28,6 @@ export function useCreateAssignTask(){
 
 export function useCreateProfile(){
     return useMutation({
-        mutationFn: (data:Profile)=> createProfile(data)
+        mutationFn: (data:ProfileDto1)=> createProfile(data)
     })
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";

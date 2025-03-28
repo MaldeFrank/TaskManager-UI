@@ -1,10 +1,10 @@
-import { Profile } from "../model/Profile";
+import { ProfileDto1 } from "../model/Profile";
 import axios from "axios";
 import { GOOGLE_ACCOUNT_ENDPOINT } from "./baseURL";
 
 const axiosInstance = axios.create({ baseURL: GOOGLE_ACCOUNT_ENDPOINT });
 
-export const getAllAccounts = async (): Promise<Profile[]> => {
+export const getAllAccounts = async (): Promise<ProfileDto1[]> => {
   const response = await axiosInstance.get("/getAll", {
     headers: { "Content-Type": "application/json" },
   });

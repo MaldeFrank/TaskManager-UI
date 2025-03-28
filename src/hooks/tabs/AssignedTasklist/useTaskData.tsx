@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
-import {
-  useGetAssignedTasksByTasklistMonthly,
-  useGetAssignedTasksByTasklistWeekly,
-} from "../../../services/queries";
+import { useEffect } from "react";
 import { useAppDispatch } from "../../app/storeHook";
 import { setTasklist } from "../../../redux/slicers/tasklistSlicer";
 import {

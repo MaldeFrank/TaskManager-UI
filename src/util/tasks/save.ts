@@ -1,4 +1,4 @@
-import { Task } from "../../model/Task";
+import { TaskDto1 } from "../../model/Task";
 import { putTask } from "../../services/apiTasks";
 
 
@@ -13,7 +13,7 @@ export const save = async (record: any, setTasks:any, setEditingKey:any, form:an
     const updatedInfo = await form.validateFields(); //Gets the updated info from the form
     const updatedTask = { ...updatedInfo, id: record.id }; //Sets the id of the row
     putTask(updatedTask); //Saves the updated task to the database
-    setTasks((prevTasks: Task[]) =>
+    setTasks((prevTasks: TaskDto1[]) =>
       prevTasks.map((task) => (task.id === record.id ? updatedTask : task))
     );
     setEditingKey(-1);

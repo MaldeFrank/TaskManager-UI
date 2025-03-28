@@ -1,4 +1,4 @@
-import { Task } from "../../model/Task";
+import { TaskDto1 } from "../../model/Task";
 import { postTask } from "../../services/apiTasks";
 
   {/* ---------------------------------------------------------------------
@@ -21,7 +21,7 @@ import { postTask } from "../../services/apiTasks";
       };
     
       const createdTask = await postTask(userId, newTask);
-      setTasks((prev: Task[]) => {
+      setTasks((prev: TaskDto1[]) => {
         return [...prev, createdTask];
       });
     

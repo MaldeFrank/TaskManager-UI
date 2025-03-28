@@ -1,26 +1,25 @@
+import { GoogleAccount } from "./GoogleAccount";
 import { Profile } from "./Profile";
 import { Task } from "./Task";
+import { Tasklist } from "./Tasklist";
+
 
 export interface AssignedTask {
-  id: number;
-  assignedTo: Profile;
-  completed: boolean;
-  dateTime: string;
-  task: Task;
+  id: number | undefined;
+  assignedTo: Profile | undefined;
+  completed: boolean | undefined;
+  dateTime: string | undefined;
+  task: Task | undefined;
+  userId: string | undefined;
+  tasklist: Tasklist | undefined;
+  googleAccount: GoogleAccount[] | undefined;
 }
 
-export interface AssignedTaskDto {
-  assignedTo: number;
-  completed: boolean;
-  task: Task;
-  userId:any;
-}
-
-export interface AssignedTaskUpdateDto {
-  id: number;
-  assignedTo: number;
-  completed: boolean;
-  dateTime: string;
-  task: Task;
+export interface UpdateAssignedTaskDTO {
+  id: number | undefined;
+  assignedTo: Profile | undefined;
+  completed: boolean | undefined;
+  dateTime: string | undefined;
+  task: Task | undefined;
 }
 

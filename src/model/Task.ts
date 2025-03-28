@@ -1,13 +1,11 @@
+import { GoogleAccount } from "./GoogleAccount";
 
-export interface Task{
-  id: number;
-  title: string;
-  description: string;
-  points: number;
+
+export interface Task {
+  id: number | undefined;
+  title: string | undefined;
+  description: string | undefined;
+  points: number | undefined;
+  googleAccount: GoogleAccount | undefined; 
 }
 
-export interface TaskDto{
-  title: string;
-  description: string;
-  points: number;
-}

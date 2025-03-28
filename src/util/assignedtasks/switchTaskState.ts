@@ -10,12 +10,15 @@ import { addAssTask } from "../../redux/slicers/tasklistSlicer";
     export const switchTaskState = (record: any, dispatch:any) => {
       if (record.assignedTo) {
 
-        const updatedTask = { //Change completed
+        const updatedTask = { 
          ...record,
          completed: !record.completed
         }
         
-        console.log("updatedTask: ", updatedTask)
+        if(updatedTask.assignedTo===localStorage.getItem("profile_id")){
+          dispatch()
+        }
+
         dispatch(addAssTask({id: updatedTask.tasklistId, task:updatedTask})) //Set the new state/new task
   
           const updatedRecord = { ...record, completed: !record.completed }; 
