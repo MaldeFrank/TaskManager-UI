@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useGetAllAccTasks } from "../../services/queries";
 import { Button, Space, Table, Form} from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask } from "../../services/mutations";
@@ -7,6 +6,9 @@ import AddTask from "../AddTask";
 import EditableCell from "../EditableCell";
 import { save } from "../../util/tasks/save";
 import { createNewTask } from "../../util/tasks/createNewTask";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
+import { getAllAccTasks } from "../../services/apiGoogleAccount";
+import { removeTask, setTasklist } from "../../redux/slicers/taskSlicer";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -21,8 +23,10 @@ interface Props {
 function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
-  const { data, isLoading, isError, error } = useGetAllAccTasks(localStorage.getItem("user_id"));
   const { mutate: deleteTask } = useDeleteTask();
+
+  const tasklistState = useAppSelector((state)=>state.tasklist.list);
+  const dispatch = useAppDispatch();
 
   const isEditing = (record: Task) => record.id === editingKey;
 
@@ -35,24 +39,20 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
     setEditingKey(-1);
   };
 
+  async function setList(){ //Function to set tasklist
+    const response = await getAllAccTasks(localStorage.getItem("user_id"))
+    dispatch(setTasklist(response));
+  }
+
   const deleteTaskFunction = (id: number) => {
     deleteTask(id);
-    setTasks((prevTasks: Task[]) => prevTasks.filter((task) => task.id !== id));
+    dispatch(removeTask(id))
   };
 
   useEffect(() => {
-    if (data) {
-      setTasks(data);
-    }
-  }, [data, setTasks]);
+    setList();
+  }, []);
 
-  if (isLoading) {
-    return <div>Loading tasks...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
 
   const columns = [
     {
@@ -79,7 +79,7 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
           <Space>
             {editable ? (
               <>
-                <Button onClick={() => save(record,setTasks,setEditingKey,form)} type="primary">
+                <Button onClick={() => save(record,dispatch,setEditingKey,form)} type="primary">
                   Gem
                 </Button>
                 <Button onClick={cancel}>Annuller</Button>
@@ -125,11 +125,11 @@ function Tasks({ setTasks, tasks, setAssignedTasksWeekly, tasklists }: Props) {
             cell: EditableCell,
           },
         }}
-        dataSource={tasks}
+        dataSource={tasklistState}
         columns={mergedColumns}
         rowClassName="editable-row"
       />
-      <Button type="primary" onClick={()=>createNewTask(setTasks,setEditingKey,form)}>Tilføj opgave</Button>
+      <Button type="primary" onClick={()=>createNewTask(dispatch,setEditingKey,form)}>Tilføj opgave</Button>
     </Form>
   );
 }

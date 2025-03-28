@@ -1,6 +1,7 @@
 import { Profile } from "../model/Profile";
 import axios from "axios";
 import { GOOGLE_ACCOUNT_ENDPOINT } from "./baseURL";
+import { Task } from "../model/Task";
 
 const axiosInstance = axios.create({ baseURL: GOOGLE_ACCOUNT_ENDPOINT });
 
@@ -67,7 +68,7 @@ export const getAllAccTasklist = async (userId:any) => {
 };
 
 export const getAllAccTasks = async (userId:any) => {
-  const response = await axiosInstance.get(`/getTasks/${userId}`, {
+  const response = await axiosInstance.get<Task[]>(`/getTasks/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
   console.log("Responses", response.data);

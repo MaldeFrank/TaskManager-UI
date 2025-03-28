@@ -28,7 +28,7 @@ function AssignedTasks({
 
   const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
   const dispatch = useAppDispatch();
-  const tasklistState = useAppSelector((state)=>state.tasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
+  const tasklistState = useAppSelector((state)=>state.assignedTasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
   
 
   const items: MenuProps["items"] = profiles.map((profile) => ({
