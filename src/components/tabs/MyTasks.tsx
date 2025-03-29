@@ -9,8 +9,6 @@ import { AssignedTask } from "../../model/AssignedTask";
 interface props {
   setProfiles: any;
   profiles: Profile[];
-  setAssignedTasks: any;
-  assignedTasks: any;
 }
 
 {/* ---------------------------------------------------------------------
@@ -20,8 +18,6 @@ interface props {
 function MyTasks({
   setProfiles,
   profiles,
-  setAssignedTasks,
-  assignedTasks
 }: props) {
   const { data, refetch } = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id"))) as { data: AssignedTask[], refetch: () => void };
   const tasklist = useAppSelector((state)=>state.myTaskList.list);
@@ -38,7 +34,7 @@ function MyTasks({
     } else {
       
     }
-  }, [data,setAssignedTasks,assignedTasks]); 
+  }, [data]); 
 
 
   return (

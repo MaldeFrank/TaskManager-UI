@@ -19,7 +19,6 @@ import { removeAssignedTasks } from "../redux/slicers/myTasksSlicer";
     --------------------------------------------------------------------- */}
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasks, setAssignedTasks] = useState<any[]>([]); //Right now it is always empty and is just used to make child components rerender
   const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
@@ -30,8 +29,6 @@ function TabView() {
     allTasklists: fetchedTasklists,
     setProfiles,
     profiles,
-    setAssignedTasks: setAssignedTasks,
-    assignedTasks: assignedTasks,
   }) : [];
   
   const generateTabs = () => [
@@ -41,8 +38,7 @@ function TabView() {
       closable: false,
       children: (
         <MyTasks
-          setAssignedTasks={setAssignedTasks}
-          assignedTasks={assignedTasks}
+        
           setProfiles={setProfiles}
           profiles={profiles}/>
       ),
@@ -56,7 +52,6 @@ function TabView() {
           tasklists={fetchedTasklists}
           setTasks={setTasks}
           tasks={tasks}
-          setAssignedTasksWeekly={setAssignedTasks}
         />
       ),
     },
@@ -109,8 +104,6 @@ function TabView() {
         closable: true,
         children: (
           <AssignedTasklist
-            setAssignedTasks={setAssignedTasks}
-            assignedTasks={assignedTasks}
             setProfiles={setProfiles}
             profiles={profiles}
             tasklistId={response.taskId} // Pass the newly created tasklistId
@@ -154,7 +147,7 @@ function TabView() {
  useEffect(() => {
   refetchTasklists();
   setItems(generateTabs());
-}, [tasks, assignedTasks, profiles, fetchedTasklists]);
+}, [tasks, profiles, fetchedTasklists]);
 
   return (
     <Tabs

@@ -8,14 +8,13 @@ import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
 import { useTaskData } from "../../hooks/tabs/AssignedTasklist/useTaskData";
 import { useShareTasklist } from "../../hooks/tabs/AssignedTasklist/useShareTasklist";
-import { useAppSelector } from "../../hooks/app/storeHook";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
+import { Tasklist } from "../../model/Tasklist";
 
 interface props {
   setProfiles: any;
   profiles: Profile[];
   tasklistId: number;
-  setAssignedTasks: any;
-  assignedTasks: any;
 }
 {/* ---------------------------------------------------------------------
     Component: AssignedTasklist
@@ -27,11 +26,12 @@ function AssignedTasklist({
   tasklistId,
 }: props) {
   const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
-
   useEffect(() => {
     const fetchTasklist = async () => {
-      const task = await getTasklist(tasklistId);
-      setTaskFilter(task.periodFilter);
+      const tasklist:Tasklist = await getTasklist(tasklistId);
+       setTaskFilter(tasklist.periodFilter);
+       console.log("tasklist_periodfilter_from_backend",tasklist.periodFilter)
+       console.log("Taskfiler_useEffect",taskFilter)
     };
     fetchTasklist();
   }, [tasklistId]);

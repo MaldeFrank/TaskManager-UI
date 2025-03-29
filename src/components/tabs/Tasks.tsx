@@ -13,14 +13,13 @@ import { removeTask, setTasklist } from "../../redux/slicers/taskSlicer";
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   tasks: Task[];
-  setAssignedTasksWeekly: any;
   tasklists:any[];
 }
 {/* ---------------------------------------------------------------------
     Component: Tasks
     Purpose: Show all tasks in a table, and allow the user to edit, delete and create new tasks
     --------------------------------------------------------------------- */}
-function Tasks({setAssignedTasksWeekly, tasklists }: Props) {
+function Tasks({tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
   const { mutate: deleteTask } = useDeleteTask();

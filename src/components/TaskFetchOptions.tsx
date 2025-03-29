@@ -14,6 +14,7 @@ function TaskFetchOptions({ setTaskFilter,taskFilter,tasklistId }: props) {
 
   const onClick = (e: RadioChangeEvent) => {
     setTaskFilter(e.target.value);
+    console.log("taskfilter in onClick: ",taskFilter)
     setPeriodFilter(tasklistId,e.target.value)
   };
 
