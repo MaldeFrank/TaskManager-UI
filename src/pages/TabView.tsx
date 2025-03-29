@@ -22,7 +22,7 @@ function TabView() {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
+  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string); //Passed to Tasks component to assing tasks to Tasklists.
   const dispatch = useAppDispatch()
   
   const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
@@ -113,7 +113,7 @@ function TabView() {
       setItems(newPanes);
       setActiveKey(newActiveKey);
   
-      refetchTasklists();
+      refetchTasklists(); //Refetch tasklists to update the list of tasklists
     } catch (error) {
       console.error("Failed to create tasklist:", error);
     }
