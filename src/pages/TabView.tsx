@@ -19,17 +19,12 @@ import { removeAssignedTasks } from "../redux/slicers/myTasksSlicer";
     --------------------------------------------------------------------- */}
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string); //Passed to Tasks component to assing tasks to Tasklists.
+  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string); 
   const dispatch = useAppDispatch()
   
-  const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
-    allTasklists: fetchedTasklists,
-    setProfiles,
-    profiles,
-  }) : [];
+  const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({allTasklists: fetchedTasklists}) : [];
   
   const generateTabs = () => [
     {
@@ -37,10 +32,7 @@ function TabView() {
       label: "1. Mine opgaver",
       closable: false,
       children: (
-        <MyTasks
-        
-          setProfiles={setProfiles}
-          profiles={profiles}/>
+        <MyTasks/>
       ),
     },
     {
@@ -104,8 +96,6 @@ function TabView() {
         closable: true,
         children: (
           <AssignedTasklist
-            setProfiles={setProfiles}
-            profiles={profiles}
             tasklistId={response.taskId} // Pass the newly created tasklistId
           />
         ),
@@ -147,7 +137,7 @@ function TabView() {
  useEffect(() => {
   refetchTasklists();
   setItems(generateTabs());
-}, [tasks, profiles, fetchedTasklists]);
+}, [tasks, fetchedTasklists]);
 
   return (
     <Tabs

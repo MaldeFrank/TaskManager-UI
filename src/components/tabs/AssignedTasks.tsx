@@ -11,8 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 
 interface props {
   assignedTasks: any[];
-  setProfiles: any;
-  profiles: any[];
   tasklistId?: any;
 }
 {/* ---------------------------------------------------------------------
@@ -21,32 +19,18 @@ interface props {
     --------------------------------------------------------------------- */}
 function AssignedTasks({
   assignedTasks,
-  setProfiles,
-  profiles,
   tasklistId
 }: props) {
-
-  const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
   const dispatch = useAppDispatch();
   const tasklistState = useAppSelector((state)=>state.assignedTasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
-  
+  const profilesState = useAppSelector((state) => state.profilelist.list);
 
-  const items: MenuProps["items"] = profiles.map((profile) => ({
+  const items: MenuProps["items"] = profilesState.map((profile) => ({
     key: profile.id,
     label: profile.name,
   }));
 
-  useEffect(() => {
-    if (profilesData) {
-      setProfiles(profilesData);
-    }
-  }, [profilesData, setProfiles, switchTaskState]);
-
-  if (isProfilesError) {
-    return <div>Error loading profiles</div>;
-  }
-
-  const columns = [
+   const columns = [
     {
       title: "Titel",
       dataIndex: ["task", "title"],
@@ -69,7 +53,7 @@ function AssignedTasks({
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record, profiles, dispatch)(e),
+            onClick: (e) => handleMenuClick(record, profilesState, dispatch)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}

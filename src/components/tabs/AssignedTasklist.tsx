@@ -12,8 +12,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 import { Tasklist } from "../../model/Tasklist";
 
 interface props {
-  setProfiles: any;
-  profiles: Profile[];
   tasklistId: number;
 }
 {/* ---------------------------------------------------------------------
@@ -21,8 +19,6 @@ interface props {
     Purpose: To show a tasklist and all its AssignedTask.
     --------------------------------------------------------------------- */}
 function AssignedTasklist({
-  setProfiles,
-  profiles,
   tasklistId,
 }: props) {
   const [taskFilter, setTaskFilter] = useState<any>("All"); // Default value for taskFilter
@@ -50,8 +46,6 @@ function AssignedTasklist({
 
       <AssignedTasks
         assignedTasks={Array.isArray(tasklistState?.tasklist) ? tasklistState.tasklist : []}
-        setProfiles={setProfiles}
-        profiles={profiles}
         tasklistId={tasklistId}
       />
       <ShareSection
