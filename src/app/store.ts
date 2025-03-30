@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userlistReducer from "../redux/slicers/userlistSlicer"
+import profilelistReducer from "../redux/slicers/profilelistSlicer"
 import assignedReducer from "../redux/slicers/myTasksSlicer"
 import tasklistReducer from "../redux/slicers/tasklistSlicer"
 import taskReducer from "../redux/slicers/taskSlicer"
@@ -7,7 +7,7 @@ import taskReducer from "../redux/slicers/taskSlicer"
 //Store that holds reducers for performing state management
 const store = configureStore({
   reducer: {
-    userlist: userlistReducer,
+    profilelist: profilelistReducer,
     myTaskList: assignedReducer,
     assignedTasklist: tasklistReducer,
     tasklist: taskReducer,

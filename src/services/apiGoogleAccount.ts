@@ -71,13 +71,22 @@ export const getAllAccTasks = async (userId:any) => {
   const response = await axiosInstance.get<Task[]>(`/getTasks/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log("Responses", response.data);
+
   return response.data;
 };
 
-export const getAllAccProfiles = async (userId:any) => {
-  const response = await axiosInstance.get(`/getAllProfile/${userId}`, {
-    headers: { "Content-Type": "application/json" },
-  });
-  return response.data;
-}
+export const getAllAccProfiles = async (userId: any): Promise<Profile[]> => { 
+  try {
+    const response = await axiosInstance.get<Profile[]>(`/getAllProfile/${userId}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log("Error fetching all accounts", error);
+    return []; 
+  }
+};

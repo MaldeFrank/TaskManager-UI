@@ -59,7 +59,7 @@ function TabView() {
       key: "static3",
       label: "3. Brugere",
       closable: false,
-      children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
+      children: <UsersList/>,
     },
     ...userCreatedTabs
   ];

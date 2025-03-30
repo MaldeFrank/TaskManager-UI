@@ -30,8 +30,6 @@ function AssignedTasklist({
     const fetchTasklist = async () => {
       const tasklist:Tasklist = await getTasklist(tasklistId);
        setTaskFilter(tasklist.periodFilter);
-       console.log("tasklist_periodfilter_from_backend",tasklist.periodFilter)
-       console.log("Taskfiler_useEffect",taskFilter)
     };
     fetchTasklist();
   }, [tasklistId]);

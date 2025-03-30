@@ -39,7 +39,7 @@ const tasklistSlice = createSlice({
       }
     },
       setTasklist(state, action: PayloadAction<{id:any,tasklist:[]}>){
-        if (!state.list.find((tasklist) => tasklist.id === action.payload.id)) { // More common way to check
+        if (!state.list.find((tasklist) => tasklist.id === action.payload.id)) { 
           state.list = [...state.list, {
             id: action.payload.id,
             tasklist: action.payload.tasklist
