@@ -49,7 +49,6 @@ const tasklistSlice = createSlice({
       },
       removeTasklist(state, action: PayloadAction<{ id: number }>) {
         const tasklistIndex = state.list.findIndex(item => item.id === action.payload.id);
-        console.log("This is the id: ", action.payload.id)
         if (tasklistIndex !== -1) { // Check if the item was found
           state.list.splice(tasklistIndex, 1);
         }
