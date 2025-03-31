@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Profile } from "../../model/Profile";
 import AssignedTasks from "./AssignedTasks";
 import { getTasklist } from "../../services/apiTasklist";
 import { Button} from "antd";
@@ -8,7 +7,7 @@ import ShareSection from "../ShareSection";
 import { AntDesignOutlined } from "@ant-design/icons";
 import { useTaskData } from "../../hooks/tabs/AssignedTasklist/useTaskData";
 import { useShareTasklist } from "../../hooks/tabs/AssignedTasklist/useShareTasklist";
-import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
+import {useAppSelector } from "../../hooks/app/storeHook";
 import { Tasklist } from "../../model/Tasklist";
 
 interface props {

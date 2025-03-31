@@ -22,7 +22,6 @@ function AssignedTasks({
   tasklistId
 }: props) {
   const dispatch = useAppDispatch();
-  const tasklistState = useAppSelector((state)=>state.assignedTasklist.list.find((tasklistObject)=>tasklistObject.id===tasklistId));
   const profilesState = useAppSelector((state) => state.profilelist.list);
 
   const items: MenuProps["items"] = profilesState.map((profile) => ({
