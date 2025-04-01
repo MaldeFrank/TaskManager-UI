@@ -21,11 +21,10 @@ const tasklistSlice = createSlice({
         const tasklistIndex = state.list.findIndex(tasklist => tasklist.id === action.payload.tasklistId); //Finds the tasklist
         
         if (tasklistIndex !== -1) {
-          // Find the task within the tasklist
           const AssignedTaskIndex = state.list[tasklistIndex].tasklist.findIndex( //Finds the index of the AssignedTask
             t => t.id === action.payload.id
           );
-          
+          console.log("AssignedTask_index: ",AssignedTaskIndex);
           if (AssignedTaskIndex !== -1) {
             // Update existing task
             state.list[tasklistIndex].tasklist[AssignedTaskIndex] = {

@@ -74,7 +74,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, dispatch)}
+          onClick={() => switchTaskState(record, dispatch, profilesState)}
         />
       ),
       width:100,
