@@ -7,12 +7,10 @@ import { UserOutlined } from "@ant-design/icons";
 import { AssignedTask } from "../../model/AssignedTask";
 import { switchTaskState } from "../../util/assignedtasks/switchTaskState";
 import { handleMenuClick } from "../../util/assignedtasks/handleMenuClick";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 
 interface props {
-  setAssignedTasks: any;
   assignedTasks: any[];
-  setProfiles: any;
-  profiles: any[];
   tasklistId?: any;
 }
 {/* ---------------------------------------------------------------------
@@ -20,33 +18,18 @@ interface props {
     Purpose: Displays given list of AssignedTasks, and handles the state of the AssignedTasks.
     --------------------------------------------------------------------- */}
 function AssignedTasks({
-  setAssignedTasks,
   assignedTasks,
-  setProfiles,
-  profiles,
   tasklistId
 }: props) {
+  const dispatch = useAppDispatch();
+  const profilesState = useAppSelector((state) => state.profilelist.list);
 
-
-  const {data: profilesData,isError: isProfilesError,refetch: refetchProfiles} = useGetAllAccProfiles(localStorage.getItem("user_id") as string);
-
-  
-  const items: MenuProps["items"] = profiles.map((profile) => ({
+  const items: MenuProps["items"] = profilesState.map((profile) => ({
     key: profile.id,
     label: profile.name,
   }));
 
-  useEffect(() => {
-    if (profilesData) {
-      setProfiles(profilesData);
-    }
-  }, [profilesData, setProfiles, switchTaskState]);
-
-  if (isProfilesError) {
-    return <div>Error loading profiles</div>;
-  }
-
-  const columns = [
+   const columns = [
     {
       title: "Titel",
       dataIndex: ["task", "title"],
@@ -69,7 +52,7 @@ function AssignedTasks({
         <Dropdown.Button
           menu={{
             items,
-            onClick: (e) => handleMenuClick(record, setAssignedTasks, profiles)(e),
+            onClick: (e) => handleMenuClick(record, profilesState, dispatch)(e),
           }}
           placement="bottom"
           icon={<UserOutlined />}
@@ -91,7 +74,7 @@ function AssignedTasks({
         <Switch
           checked={record.completed}
           style={{ backgroundColor: record.completed ? "green" : "red" }}
-          onClick={() => switchTaskState(record, setAssignedTasks)}
+          onClick={() => switchTaskState(record, dispatch, profilesState)}
         />
       ),
       width:100,

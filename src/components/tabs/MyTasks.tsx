@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { Profile } from "../../model/Profile";
+import { useEffect } from "react";
 import AssignedTasks from "./AssignedTasks";
 import { useGetAssignedTasksByProfileId } from "../../services/queries";
+import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
+import { setMyTasks } from "../../redux/slicers/myTasksSlicer";
+import { AssignedTask } from "../../model/AssignedTask";
 
 interface props {
-  setProfiles: any;
-  profiles: Profile[];
-  setAssignedTasks: any;
-  assignedTasks: any;
 }
 
 {/* ---------------------------------------------------------------------
@@ -15,31 +13,29 @@ interface props {
     Purpose: Shows the logged in user's assigned tasks.
     --------------------------------------------------------------------- */}
 function MyTasks({
-  setProfiles,
-  profiles,
-  setAssignedTasks,
-  assignedTasks
 }: props) {
-  const { data, refetch} = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id")));
-  const [filteredAssignedTasks, setFilteredAssignedTasks] = useState<any[]>([]); 
-  
+  const { data, refetch } = useGetAssignedTasksByProfileId(Number(localStorage.getItem("profile_id"))) as { data: AssignedTask[], refetch: () => void };
+  const tasklist = useAppSelector((state)=>state.myTaskList.list);
+  const dispatch = useAppDispatch();
+
+  function setList(){
+   dispatch(setMyTasks(data))
+  }
+
   useEffect(() => { 
     if (data) { 
       refetch();
-      setFilteredAssignedTasks(data);
+      setList() 
     } else {
-      setFilteredAssignedTasks([]); 
+      
     }
-  }, [data,setAssignedTasks,assignedTasks]); 
+  }, [data]); 
 
 
   return (
     <>
       <AssignedTasks
-        setAssignedTasks={setFilteredAssignedTasks}
-        assignedTasks={filteredAssignedTasks != null ? filteredAssignedTasks : []}
-        setProfiles={setProfiles}
-        profiles={profiles}
+        assignedTasks={data != null ? tasklist : []} 
       />
     </>
   );

@@ -4,17 +4,13 @@ import EditableTabLabel from "./EditableTabLabel";
 import { updateTaskListName } from "../services/apiTasklist";
 
 interface Props {
-  allTasklists: any[],
-  setProfiles: any,
-  profiles: any,
-  setAssignedTasks:any,
-  assignedTasks:any,
+  allTasklists: any[]
 }
 {/* ---------------------------------------------------------------------
     Component: mapUserCreatedTabs
     Purpose: Maps the user created tasklists to tabs
     --------------------------------------------------------------------- */}
-function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTasks,assignedTasks }: Props) {
+function mapUserCreatedTabs({ allTasklists}: Props) {
 
   const onNameChange = (id:string, name:string)=>{
     updateTaskListName(id,name)
@@ -32,10 +28,6 @@ function mapUserCreatedTabs({ allTasklists, setProfiles, profiles,setAssignedTas
       closable: true,
       children: (
         <AssignedTasklist
-          setAssignedTasks={setAssignedTasks}
-          assignedTasks={assignedTasks}
-          setProfiles={setProfiles}
-          profiles={profiles}
           tasklistId={tasklist.taskId} 
         />
       ),

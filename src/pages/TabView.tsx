@@ -6,9 +6,12 @@ import Tasks from "../components/tabs/Tasks";
 import UsersList from "../components/tabs/UserList";
 import AssignedTasklist from "../components/tabs/AssignedTasklist";
 import { createTasklist, deleteTasklist } from "../services/apiTasklist";
-import { useGetAllAccTasklist, useGetAllTasklist } from "../services/queries";
+import { useGetAllAccTasklist } from "../services/queries";
 import mapUserCreatedTabs from "../components/mapUserCreatedTabs";
 import MyTasks from "../components/tabs/MyTasks";
+import { useAppDispatch } from "../hooks/app/storeHook";
+import {removeTasklist } from "../redux/slicers/tasklistSlicer";
+import { removeAssignedTasks } from "../redux/slicers/myTasksSlicer";
 
 {/* ---------------------------------------------------------------------
     Component: TabView
@@ -16,32 +19,20 @@ import MyTasks from "../components/tabs/MyTasks";
     --------------------------------------------------------------------- */}
 function TabView() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [assignedTasks, setAssignedTasks] = useState<any[]>([]); //Right now it is always empty and is just used to make child components rerender
-  const [profiles, setProfiles] = useState<any[]>([]);
   const [activeKey, setActiveKey] = useState("1");
   const newTabIndex = useRef(0);
-  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string);
-
+  const {data:fetchedTasklists, refetch: refetchTasklists} = useGetAllAccTasklist(localStorage.getItem("user_id") as string); 
+  const dispatch = useAppDispatch()
   
-  const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({
-    allTasklists: fetchedTasklists,
-    setProfiles,
-    profiles,
-    setAssignedTasks: setAssignedTasks,
-    assignedTasks: assignedTasks,
-  }) : [];
-
+  const userCreatedTabs = fetchedTasklists ? mapUserCreatedTabs({allTasklists: fetchedTasklists}) : [];
+  
   const generateTabs = () => [
     {
       key: "static1",
       label: "1. Mine opgaver",
       closable: false,
       children: (
-        <MyTasks
-          setAssignedTasks={setAssignedTasks}
-          assignedTasks={assignedTasks}
-          setProfiles={setProfiles}
-          profiles={profiles}/>
+        <MyTasks/>
       ),
     },
     {
@@ -53,7 +44,6 @@ function TabView() {
           tasklists={fetchedTasklists}
           setTasks={setTasks}
           tasks={tasks}
-          setAssignedTasksWeekly={setAssignedTasks}
         />
       ),
     },
@@ -61,13 +51,12 @@ function TabView() {
       key: "static3",
       label: "3. Brugere",
       closable: false,
-      children: <UsersList setProfiles={setProfiles} profiles={profiles} />,
+      children: <UsersList/>,
     },
     ...userCreatedTabs
   ];
 
   const [items, setItems] = useState(generateTabs());
-
 
 
   // Custom renderTabBar to style the tab bar and make it sticky
@@ -107,10 +96,6 @@ function TabView() {
         closable: true,
         children: (
           <AssignedTasklist
-            setAssignedTasks={setAssignedTasks}
-            assignedTasks={assignedTasks}
-            setProfiles={setProfiles}
-            profiles={profiles}
             tasklistId={response.taskId} // Pass the newly created tasklistId
           />
         ),
@@ -118,7 +103,7 @@ function TabView() {
       setItems(newPanes);
       setActiveKey(newActiveKey);
   
-      refetchTasklists();
+      refetchTasklists(); //Refetch tasklists to update the list of tasklists
     } catch (error) {
       console.error("Failed to create tasklist:", error);
     }
@@ -126,6 +111,8 @@ function TabView() {
 
   const remove = (targetKey: string) => {
     const newItems = items.filter((item) => item.key !== targetKey);
+    dispatch(removeTasklist({ id: Number(targetKey) })); //Removes tasklist from state
+    dispatch(removeAssignedTasks(targetKey)) //Removes all assignedtasks from users own list
     setItems(newItems);
 
     // If the active tab is being removed, switch to the first tab
@@ -150,7 +137,7 @@ function TabView() {
  useEffect(() => {
   refetchTasklists();
   setItems(generateTabs());
-}, [tasks, assignedTasks, profiles, fetchedTasklists]);
+}, [tasks, fetchedTasklists]);
 
   return (
     <Tabs

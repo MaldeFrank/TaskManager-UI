@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AssignedTask, AssignedTaskUpdateDto } from "../model/AssignedTask";
+import { AssignedTask, UpdateAssignedTaskDTO} from "../model/AssignedTask";
 import { BASE_URL } from "./baseURL";
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -34,14 +34,14 @@ export const postAssignTaskNoTasklist = async (assignedTaskDto: any) => {
 };
 
 export const updateAssignTask = async (assignedTask: AssignedTask) => {
-  const assignedTaskDto: AssignedTask = {
+  const assignedTaskDto: UpdateAssignedTaskDTO = {
     id: assignedTask.id,
     assignedTo: assignedTask?.assignedTo,
     completed: assignedTask.completed,
     dateTime: assignedTask.dateTime,
     task: assignedTask.task,
   };
-  return await axiosInstance.put<AssignedTaskUpdateDto>(`/assignedTask/${assignedTaskDto.id}`,assignedTaskDto,
+  return await axiosInstance.put<UpdateAssignedTaskDTO>(`/assignedTask/${assignedTaskDto.id}`,assignedTaskDto,
     { headers: { "Content-Type": "application/json" } }
   );
 };
@@ -54,6 +54,7 @@ export const getAllAssignTasks = async (): Promise<AssignedTask[]> => {
 };
 
 export const getAssignedTasksByProfileId = async (id: any) => {
+  console.log("Profile_id: ", id)
   try {
     const response = await axiosInstance.get<any[]>(
       `/assignedTasksByProfile/${id}`,

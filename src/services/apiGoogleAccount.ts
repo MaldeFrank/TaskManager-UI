@@ -1,6 +1,7 @@
 import { Profile } from "../model/Profile";
 import axios from "axios";
 import { GOOGLE_ACCOUNT_ENDPOINT } from "./baseURL";
+import { Task } from "../model/Task";
 
 const axiosInstance = axios.create({ baseURL: GOOGLE_ACCOUNT_ENDPOINT });
 
@@ -21,7 +22,6 @@ export const getAccount = async (id: number) => {
 };
 
 export const checkIfAccountExists = async (id: String) => {
-    console.log("Checking if account exists", id);
     const response = await axiosInstance.get<any>(`/checkIfExists/${id}`, {
       headers: { "Content-Type": "application/json" },
     });
@@ -68,16 +68,25 @@ export const getAllAccTasklist = async (userId:any) => {
 };
 
 export const getAllAccTasks = async (userId:any) => {
-  const response = await axiosInstance.get(`/getTasks/${userId}`, {
+  const response = await axiosInstance.get<Task[]>(`/getTasks/${userId}`, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log("Responses", response.data);
+
   return response.data;
 };
 
-export const getAllAccProfiles = async (userId:any) => {
-  const response = await axiosInstance.get(`/getAllProfile/${userId}`, {
-    headers: { "Content-Type": "application/json" },
-  });
-  return response.data;
-}
+export const getAllAccProfiles = async (userId: any): Promise<Profile[]> => { 
+  try {
+    const response = await axiosInstance.get<Profile[]>(`/getAllProfile/${userId}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log("Error fetching all accounts", error);
+    return []; 
+  }
+};

@@ -21,13 +21,12 @@ import { addGoogleAcc, createGoogleProfile, getProfileByName } from "../../servi
     localStorage.setItem('google_token', response.credential);
     localStorage.setItem('user_id', decodedToken.sub);
     localStorage.setItem('Email', decodedToken.email);
-    const profile:any = await getProfileByName(decodedToken.name);
-    localStorage.setItem('profile_id', profile.id);
-
     const doesExist = await checkIfAccountExists(decodedToken.sub); //Check if account exists in db
     
-    //Creates the account if it does not already exist in the db
-    if (!doesExist) {  
+    if(doesExist){
+      const profile:any = await getProfileByName(decodedToken.name);
+      localStorage.setItem('profile_id', profile.id);
+    } else {   //Creates the account if it does not already exist in the db
       const acc = {
           googleId: decodedToken.sub,
           name: decodedToken.name,

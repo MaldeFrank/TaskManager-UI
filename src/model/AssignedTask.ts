@@ -1,24 +1,25 @@
+import { GoogleAccount } from "./GoogleAccount";
 import { Profile } from "./Profile";
 import { Task } from "./Task";
+import { Tasklist } from "./Tasklist";
+
+
 
 export interface AssignedTask {
-  id: number;
+  id: string;
   assignedTo: Profile;
   completed: boolean;
   dateTime: string;
   task: Task;
+  userId: string|null;
+  tasklistId: number;
+  tasklist: Tasklist;
+  googleAccount: GoogleAccount[];
 }
 
-export interface AssignedTaskDto {
-  assignedTo: number;
-  completed: boolean;
-  task: Task;
-  userId:any;
-}
-
-export interface AssignedTaskUpdateDto {
-  id: number;
-  assignedTo: number;
+export interface UpdateAssignedTaskDTO {
+  id: string;
+  assignedTo: Profile;
   completed: boolean;
   dateTime: string;
   task: Task;

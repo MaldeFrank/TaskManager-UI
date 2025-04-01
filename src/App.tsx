@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TopBar from './components/TopBar';
 import { handleCallbackResponse } from './util/googleSignIn/handleCallbackResponse';
 import LoginScreen from './pages/LogInScreen';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 const queryClient = new QueryClient();
 
@@ -86,6 +88,7 @@ function App() {
   }, []);
 
   return (
+    <Provider store={store}>
     <QueryClientProvider client={queryClient}>
         {!isAuthenticated ? (
           <div>
@@ -103,6 +106,7 @@ function App() {
           </div>
         )}
     </QueryClientProvider>
+    </Provider>
   );
 }
 
