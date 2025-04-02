@@ -1,32 +1,35 @@
 import { Button } from "antd";
 import "../../../src/styles/schema/note.css";
-import Icon from "@ant-design/icons";
+import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import React, { useState } from 'react';
+import AddSchema from "./AddSchema";
 interface props {
   title: any;
   list: any[];
+  tasklist:any[];
 }
 
 
-
-function TaskNote({ title, list }:props) {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+function TaskNote({ title, list, tasklist }:props) {
+    const [expanded, setExpanded] = useState(false);
 
     const toggleCollapse = () => {
-        setIsCollapsed(!isCollapsed);
+        setExpanded(!expanded);
     };
 
     return (
         <div className="note_box">
             <h2 className="note_title">
                 {title}
+                <AddSchema className={"add_schema_button"} tasklists={tasklist}></AddSchema>
                 <Button className="expand_button"
+                    type="primary"
                     shape="circle"
-                    icon={<Icon type={isCollapsed ? "up-square" : "down-square"} style={{ color: '#1890ff' }} />} 
+                    icon={expanded?<UpCircleOutlined/>:<DownCircleOutlined/>} 
                     onClick={toggleCollapse}
                 />
             </h2>
-            {!isCollapsed && (
+            {expanded && (
                 <div className="note_tasks">
                     <ol>
                         {list.map((item, index) => (

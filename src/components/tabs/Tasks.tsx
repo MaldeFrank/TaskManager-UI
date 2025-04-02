@@ -130,7 +130,7 @@ function Tasks({tasklists }: Props) {
         rowClassName="editable-row"
       />
       <Button type="primary" onClick={()=>createNewTask(dispatch,setEditingKey,form)}>Tilføj opgave</Button>
-     <TaskNote title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
+     <TaskNote tasklist={[{taskId:1, listName:"hey"},{taskId:2, listName:"hey"},{taskId:3, listName:"hey"}]} title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
     </Form>
   );
 }
