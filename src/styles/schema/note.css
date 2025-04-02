@@ -1,0 +1,45 @@
+.note_box {
+  border: 1px solid gray; 
+  border-radius: 10px;
+  width: 300px;
+  height: fit-content;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+  background-color: rgb(207, 222, 224);
+}
+
+.note_title {
+  display: flex;
+  border-bottom: 1px solid gray;
+  font-family: sans-serif;
+  font-size: 1.2em; 
+  color: #333; 
+  padding: 10px; 
+}
+
+.expand_button{
+  margin-left: auto;
+}
+.note_tasks{
+  display: flex;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.task_item{
+  width: 240px;
+  display: flex;
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.task_number{
+  margin-right: auto;
+}
+
+.button_remove_task{
+  margin-left: auto;
+}
+

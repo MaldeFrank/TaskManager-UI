@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Space, Table, Form} from "antd";
+import { Button, Space, Table, Form, List} from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask } from "../../services/mutations";
 import AddTask from "../AddTask";
@@ -9,6 +9,7 @@ import { createNewTask } from "../../util/tasks/createNewTask";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 import { getAllAccTasks } from "../../services/apiGoogleAccount";
 import { removeTask, setTasklist } from "../../redux/slicers/taskSlicer";
+import TaskNote from "../schema/TaskNote";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -129,6 +130,7 @@ function Tasks({tasklists }: Props) {
         rowClassName="editable-row"
       />
       <Button type="primary" onClick={()=>createNewTask(dispatch,setEditingKey,form)}>Tilføj opgave</Button>
+     <TaskNote title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
     </Form>
   );
 }
