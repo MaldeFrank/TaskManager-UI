@@ -131,48 +131,48 @@ function Tasks({ tasklists }: Props) {
   });
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        dataSource={tasklistState}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-      />
-      <Button
-        type="primary"
-        onClick={() => createNewTask(dispatch, setEditingKey, form)}
-      >
-        Tilføj opgave
-      </Button>
-      <ScheduleList
-      tasklists={[]}
-        removeTask={()=>console.log("Remove task")}
-        schedulelist={[
-          {
-            id: 1,
-            title: "Rengøring",
-            tasks: [
-              { title: "Støvsuge"},
-              { title: "Støvsuge"},
-              { title: "Støvsuge"},
-            ], 
-          },
-          {
-            id: 1,
-            title: "Rengøring",
-            tasks: [
-              { title: "Støvsuge"},
-              { title: "Støvsuge"},
-              { title: "Støvsuge"},
-            ], 
-          },
-        ]}
-      />
-    </Form>
+    <div className="tasks-container"> {/* Flex container */}
+      <div className="table-container"> {/* Table and button container */}
+        <Form form={form} component={false}>
+          <>
+            <Table
+              components={{
+                body: {
+                  cell: EditableCell,
+                },
+              }}
+              dataSource={tasklistState}
+              columns={mergedColumns}
+              rowClassName="editable-row"
+            />
+            <Button
+              type="primary"
+              onClick={() => createNewTask(dispatch, setEditingKey, form)}
+            >
+              Tilføj opgave
+            </Button>
+          </>
+        </Form>
+      </div>
+      <div className="schedule-list-container"> {/* ScheduleList container */}
+        <ScheduleList
+          tasklists={[]}
+          removeTask={() => console.log("Remove task")}
+          schedulelist={[
+            {
+              id: 1,
+              title: "Rengøring",
+              tasks: [{ title: "Støvsuge" }, { title: "Støvsuge" }, { title: "Støvsuge" }],
+            },
+            {
+              id: 1,
+              title: "Rengøring",
+              tasks: [{ title: "Støvsuge" }, { title: "Støvsuge" }, { title: "Støvsuge" }],
+            },
+          ]}
+        />
+      </div>
+    </div>
   );
 }
 

@@ -1,22 +1,46 @@
 .schedule_list {
-  margin-top: 20px;
-  width: fit-content;
-}
-
-.schedule_list_item {
-  width: fit-content;
-  margin-top: -20px;
-}
-
-.schedule_list_item {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.schedule_list_item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.schedule_list_item:not(:first-child) {
-  margin-bottom: 15px;
-}
+    margin-top: 60px;
+    width: fit-content;
+    margin-left: auto;
+  }
+  
+  .schedule_list_item {
+    width: fit-content;
+    margin-top: -20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .schedule_list_item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .schedule_list_item:not(:first-child) {
+    margin-bottom: 15px;
+  }
+  
+  .tasks-container {
+    display: flex;
+  }
+  
+  .table-container {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .schedule-list-container {
+    flex: 1;
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    .tasks-container {
+      flex-direction: column; /* Stack items vertically */
+    }
+  
+    .table-container,
+    .schedule-list-container {
+      flex: 1; 
+      padding-right: 0; 
+    }
+  }
