@@ -15,23 +15,21 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .schedule_list_item:not(:first-child) {
-    margin-bottom: 15px;
-  }
-  
   .tasks-container {
     display: flex;
   }
   
   .table-container {
-    flex: 1;
+    flex: 0;
     padding-right: 20px;
   }
   
   .schedule-list-container {
-    flex: 1;
+    margin-left: auto;
+    flex: 0;
   }
   
+
   /* Media query for mobile devices */
   @media (max-width: 768px) {
     .tasks-container {

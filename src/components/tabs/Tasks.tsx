@@ -133,6 +133,7 @@ function Tasks({ tasklists }: Props) {
   return (
     <div className="tasks-container"> {/* Flex container */}
       <div className="table-container"> {/* Table and button container */}
+        <h1>Opgaver</h1>
         <Form form={form} component={false}>
           <>
             <Table
@@ -144,6 +145,8 @@ function Tasks({ tasklists }: Props) {
               dataSource={tasklistState}
               columns={mergedColumns}
               rowClassName="editable-row"
+              scroll={{ y: 400, x:1000}}
+              pagination={false}
             />
             <Button
               type="primary"
@@ -155,6 +158,7 @@ function Tasks({ tasklists }: Props) {
         </Form>
       </div>
       <div className="schedule-list-container"> {/* ScheduleList container */}
+        <h1>Skemaer</h1>
         <ScheduleList
           tasklists={[]}
           removeTask={() => console.log("Remove task")}
