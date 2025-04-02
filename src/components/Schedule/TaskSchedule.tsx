@@ -1,16 +1,16 @@
 import { Button } from "antd";
-import "../../../src/styles/schema/note.css";
+import "../../../src/styles/schema/Schedule.css";
 import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import React, { useState } from 'react';
-import AddSchema from "./AddSchema";
+import AddSchedule from "./AddSchedule";
 interface props {
   title: any;
   list: any[];
   tasklist:any[];
+  removeTask:()=>void;
 }
 
-
-function TaskNote({ title, list, tasklist }:props) {
+function TaskNote({ title, list, tasklist,removeTask }:props) {
     const [expanded, setExpanded] = useState(false);
 
     const toggleCollapse = () => {
@@ -21,7 +21,7 @@ function TaskNote({ title, list, tasklist }:props) {
         <div className="note_box">
             <h2 className="note_title">
                 {title}
-                <AddSchema className={"add_schema_button"} tasklists={tasklist}></AddSchema>
+                <AddSchedule className={"add_schema_button"} tasklists={tasklist}></AddSchedule>
                 <Button className="expand_button"
                     type="primary"
                     shape="circle"
@@ -34,7 +34,7 @@ function TaskNote({ title, list, tasklist }:props) {
                     <ol>
                         {list.map((item, index) => (
                             <li className="task_item" key={index}>
-                            <span className="task_number">{index + 1}.</span> {item.name} <Button className="button_remove_task" danger>Fjern</Button>
+                            <span className="task_number">{index + 1}.</span> {item.name} <Button onClick={removeTask} className="button_remove_task" danger>Fjern</Button>
                             </li>
                         ))}
                     </ol>

@@ -8,7 +8,7 @@ className?:any;
     Component: AddSchema
     Purpose: To show tasklists in dropdown and assign the schema to a tasklist
     --------------------------------------------------------------------- */}
-function AddSchema({tasklists, className}:props){
+function AddSchedule({tasklists, className}:props){
   const items: MenuProps["items"] = tasklists.map((tasklist) => ({
     key: tasklist.taskId,
     label: tasklist.listName,
@@ -27,4 +27,4 @@ function AddSchema({tasklists, className}:props){
   </>)
 }
 
-export default AddSchema;
+export default AddSchedule;

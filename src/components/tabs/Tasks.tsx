@@ -9,7 +9,7 @@ import { createNewTask } from "../../util/tasks/createNewTask";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 import { getAllAccTasks } from "../../services/apiGoogleAccount";
 import { removeTask, setTasklist } from "../../redux/slicers/taskSlicer";
-import TaskNote from "../schema/TaskNote";
+import TaskNote from "../Schedule/TaskSchedule";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -130,7 +130,7 @@ function Tasks({tasklists }: Props) {
         rowClassName="editable-row"
       />
       <Button type="primary" onClick={()=>createNewTask(dispatch,setEditingKey,form)}>Tilføj opgave</Button>
-     <TaskNote tasklist={[{taskId:1, listName:"hey"},{taskId:2, listName:"hey"},{taskId:3, listName:"hey"}]} title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
+     <TaskNote removeTask={()=>console.log("Task removed")} tasklist={[{taskId:1, listName:"hey"},{taskId:2, listName:"hey"},{taskId:3, listName:"hey"}]} title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
     </Form>
   );
 }
