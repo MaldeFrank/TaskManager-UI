@@ -3,14 +3,18 @@ import "../../../src/styles/schema/Schedule.css";
 import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import React, { useState } from 'react';
 import AddSchedule from "./AddSchedule";
+import { Schedule as scheduleType } from "../../model/Schedule";
 interface props {
-  title: any;
-  list: any[];
-  tasklist:any[];
+  schedule:scheduleType;
   removeTask:()=>void;
+  tasklists:any;
 }
 
-function TaskNote({ title, list, tasklist,removeTask }:props) {
+ /* ---------------------------------------------------------------------
+    Component: Schedule
+    Purpose: Displays a Schedule entity from the backend
+    --------------------------------------------------------------------- */
+function Schedule({ schedule, removeTask, tasklists }:props) {
     const [expanded, setExpanded] = useState(false);
 
     const toggleCollapse = () => {
@@ -20,8 +24,8 @@ function TaskNote({ title, list, tasklist,removeTask }:props) {
     return (
         <div className="note_box">
             <h2 className="note_title">
-                {title}
-                <AddSchedule className={"add_schema_button"} tasklists={tasklist}></AddSchedule>
+                {schedule.title}
+                <AddSchedule className={"add_schema_button"} tasklists={tasklists}></AddSchedule>
                 <Button className="expand_button"
                     type="primary"
                     shape="circle"
@@ -32,9 +36,9 @@ function TaskNote({ title, list, tasklist,removeTask }:props) {
             {expanded && (
                 <div className="note_tasks">
                     <ol>
-                        {list.map((item, index) => (
+                        {schedule.tasks.map((item, index) => (
                             <li className="task_item" key={index}>
-                            <span className="task_number">{index + 1}.</span> {item.name} <Button onClick={removeTask} className="button_remove_task" danger>Fjern</Button>
+                            <span className="task_number">{index + 1}.</span> {item.title} <Button onClick={removeTask} className="button_remove_task" danger>Fjern</Button>
                             </li>
                         ))}
                     </ol>
@@ -44,4 +48,4 @@ function TaskNote({ title, list, tasklist,removeTask }:props) {
     );
 }
 
-export default TaskNote;
+export default Schedule;

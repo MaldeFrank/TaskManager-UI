@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Space, Table, Form, List} from "antd";
+import { Button, Space, Table, Form, List } from "antd";
 import { Task } from "../../model/Task";
 import { useDeleteTask } from "../../services/mutations";
 import AddTask from "../AddTask";
@@ -9,23 +9,26 @@ import { createNewTask } from "../../util/tasks/createNewTask";
 import { useAppDispatch, useAppSelector } from "../../hooks/app/storeHook";
 import { getAllAccTasks } from "../../services/apiGoogleAccount";
 import { removeTask, setTasklist } from "../../redux/slicers/taskSlicer";
-import TaskNote from "../Schedule/TaskSchedule";
+import Schedule from "../Schedule/Schedule";
+import ScheduleList from "../Schedule/ScheduleList";
 
 interface Props {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   tasks: Task[];
-  tasklists:any[];
+  tasklists: any[];
 }
-{/* ---------------------------------------------------------------------
+{
+  /* ---------------------------------------------------------------------
     Component: Tasks
     Purpose: Show all tasks in a table, and allow the user to edit, delete and create new tasks
-    --------------------------------------------------------------------- */}
-function Tasks({tasklists }: Props) {
+    --------------------------------------------------------------------- */
+}
+function Tasks({ tasklists }: Props) {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number>(-1);
   const { mutate: deleteTask } = useDeleteTask();
 
-  const tasklistState = useAppSelector((state)=>state.tasklist.list);
+  const tasklistState = useAppSelector((state) => state.tasklist.list);
   const dispatch = useAppDispatch();
 
   const isEditing = (record: Task) => record.id === editingKey;
@@ -39,20 +42,20 @@ function Tasks({tasklists }: Props) {
     setEditingKey(-1);
   };
 
-  async function setList(){ //Function to set tasklist
-    const response = await getAllAccTasks(localStorage.getItem("user_id"))
+  async function setList() {
+    //Function to set tasklist
+    const response = await getAllAccTasks(localStorage.getItem("user_id"));
     dispatch(setTasklist(response));
   }
 
   const deleteTaskFunction = (id: number) => {
     deleteTask(id);
-    dispatch(removeTask(id))
+    dispatch(removeTask(id));
   };
 
   useEffect(() => {
     setList();
   }, []);
-
 
   const columns = [
     {
@@ -69,7 +72,7 @@ function Tasks({tasklists }: Props) {
       title: "Points",
       dataIndex: "points",
       editable: true,
-      inputType: 'number',
+      inputType: "number",
     },
     {
       title: "Handlinger",
@@ -79,20 +82,30 @@ function Tasks({tasklists }: Props) {
           <Space>
             {editable ? (
               <>
-                <Button onClick={() => save(record,dispatch,setEditingKey,form)} type="primary">
+                <Button
+                  onClick={() => save(record, dispatch, setEditingKey, form)}
+                  type="primary"
+                >
                   Gem
                 </Button>
                 <Button onClick={cancel}>Annuller</Button>
               </>
             ) : (
               <>
-                <Button onClick={() => edit(record)} disabled={editingKey !== -1}>
+                <Button
+                  onClick={() => edit(record)}
+                  disabled={editingKey !== -1}
+                >
                   Rediger
                 </Button>
                 <Button danger onClick={() => deleteTaskFunction(record.id)}>
                   Slet
                 </Button>
-                <AddTask tasklists={tasklists} task={record} dispatch={dispatch}/>
+                <AddTask
+                  tasklists={tasklists}
+                  task={record}
+                  dispatch={dispatch}
+                />
               </>
             )}
           </Space>
@@ -109,7 +122,7 @@ function Tasks({tasklists }: Props) {
       ...col,
       onCell: (record: Task) => ({
         record,
-        inputType: col.dataIndex === 'points' ? 'number' : 'text',
+        inputType: col.dataIndex === "points" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -129,8 +142,36 @@ function Tasks({tasklists }: Props) {
         columns={mergedColumns}
         rowClassName="editable-row"
       />
-      <Button type="primary" onClick={()=>createNewTask(dispatch,setEditingKey,form)}>Tilføj opgave</Button>
-     <TaskNote removeTask={()=>console.log("Task removed")} tasklist={[{taskId:1, listName:"hey"},{taskId:2, listName:"hey"},{taskId:3, listName:"hey"}]} title={"Rengøring"} list={[{name:"Støvsuge"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"},{name:"Vaske gulv"}]}></TaskNote>
+      <Button
+        type="primary"
+        onClick={() => createNewTask(dispatch, setEditingKey, form)}
+      >
+        Tilføj opgave
+      </Button>
+      <ScheduleList
+      tasklists={[]}
+        removeTask={()=>console.log("Remove task")}
+        schedulelist={[
+          {
+            id: 1,
+            title: "Rengøring",
+            tasks: [
+              { title: "Støvsuge"},
+              { title: "Støvsuge"},
+              { title: "Støvsuge"},
+            ], 
+          },
+          {
+            id: 1,
+            title: "Rengøring",
+            tasks: [
+              { title: "Støvsuge"},
+              { title: "Støvsuge"},
+              { title: "Støvsuge"},
+            ], 
+          },
+        ]}
+      />
     </Form>
   );
 }
